@@ -36,7 +36,20 @@ void DrawScene(void)
 
     glPolygonMode(GL_FRONT, GL_FILL);
 
-    drawAxes(5);
+    // 床を描画
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,  floor_color);
+    glPushMatrix();
+    glNormal3f(0.0, 1.0, 0.0);
+    glBegin(GL_POLYGON);
+    glVertex3f(-100.0, 0.0, -100.0);
+    glVertex3f(-100.0, 0.0,  100.0);
+    glVertex3f( 100.0, 0.0,  100.0);
+    glVertex3f( 100.0, 0.0, -100.0);
+    glEnd();
+    glPopMatrix();
+
+    //drawAxes(5);
+
     glPushMatrix();
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  blue);
     glTranslatef(8, 2, -3);
@@ -55,17 +68,6 @@ void DrawScene(void)
     glutWireTeapot(5.0);
     glPopMatrix();
 
-    // 床を描画
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,  floor_color);
-    glPushMatrix();
-    glNormal3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    glVertex3f(-100.0, 0.0, -100.0);
-    glVertex3f(-100.0, 0.0,  100.0);
-    glVertex3f( 100.0, 0.0,  100.0);
-    glVertex3f( 100.0, 0.0, -100.0);
-    glEnd();
-    glPopMatrix();
 
 }
 
