@@ -78,37 +78,6 @@ double shadowMatrix[4][4]; // shadow projection matrix
 static float groundPlane[4] = { 0.0, 1.0, 0.0, 49.0 };
 static float lightPoint[4] = { 0.0, 8.0, 1.5, 0.0 };
 
-/*! Compute shadow matrix from ground equation (normal) and light position. */
-static void
-myShadowMatrix(float ground[4], float light[4], double shadowMat[4][4])
-{
-    double dot;
-
-    dot = ground[0] * light[0] +
-          ground[1] * light[1] +
-          ground[2] * light[2] +
-          ground[3] * light[3];
-
-    shadowMat[0][0] = dot - light[0] * ground[0];
-    shadowMat[1][0] = 0.0 - light[0] * ground[1];
-    shadowMat[2][0] = 0.0 - light[0] * ground[2];
-    shadowMat[3][0] = 0.0 - light[0] * ground[3];
-
-    shadowMat[0][1] = 0.0 - light[1] * ground[0];
-    shadowMat[1][1] = dot - light[1] * ground[1];
-    shadowMat[2][1] = 0.0 - light[1] * ground[2];
-    shadowMat[3][1] = 0.0 - light[1] * ground[3];
-
-    shadowMat[0][2] = 0.0 - light[2] * ground[0];
-    shadowMat[1][2] = 0.0 - light[2] * ground[1];
-    shadowMat[2][2] = dot - light[2] * ground[2]+0.0001;
-    shadowMat[3][2] = 0.0 - light[2] * ground[3];
-
-    shadowMat[0][3] = 0.0 - light[3] * ground[0];
-    shadowMat[1][3] = 0.0 - light[3] * ground[1];
-    shadowMat[2][3] = 0.0 - light[3] * ground[2];
-    shadowMat[3][3] = dot - light[3] * ground[3];
-}
 
 /*! Generate display list for checkered floor geometry */
 void
@@ -148,36 +117,11 @@ setupGL()
     glPointSize(3.0);
     glShadeModel(GL_FLAT);
 
-    sphereDL = glGenLists(1);
-    glNewList(sphereDL, GL_COMPILE);
-    glutWireSphere(10.0, 10, 10);
-    glEndList();
-
-    pointDL = glGenLists(1);
-    glNewList(pointDL, GL_COMPILE);
-    glutSolidSphere(2.0, 4, 4);
-    glEndList();
-
     floorDL = glGenLists(1);
     glNewList(floorDL, GL_COMPILE);
     makeFloor();
     glEndList();
 
-    myShadowMatrix(groundPlane, lightPoint, shadowMatrix);
-}
-
-/*! Draw points in list without setting the color */
-void
-drawPoints()
-{
-    list<Point3d>::iterator i;
-
-    for (i = points.begin(); i != points.end(); ++i) {
-        glPushMatrix();
-        glTranslatef(i->x, i->y, i->z);
-        glCallList(pointDL);
-        glPopMatrix();
-    }
 }
 
 /*! Draw the 3d cursor without setting color */
@@ -185,8 +129,8 @@ void
 drawCursor()
 {
     glPushMatrix();
-    glTranslatef(cursor.x, cursor.y, cursor.z);
-    glCallList(sphereDL);
+    glTranslatef(0, 1, 0);
+    glutSolidSphere(2.0, 4, 4);
     glPopMatrix();
 }
 
@@ -223,20 +167,12 @@ display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT); // clear screen
 
-    glCallList(floorDL); // draw floor
+    // glCallList(floorDL); // draw floor
 
-    glColor4f(1.0f, 1.0f, 0.2f, 1.0f);
-    drawPoints(); // draw the points
-
-    glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-    drawCursor(); // draw the cursor
-
-    // draw shadows of points and cursor
-    glColor4f(0.1f, 0.1f, 0.1f, 1.0f);
     glPushMatrix();
-    glMultMatrixd((GLdouble *)shadowMatrix);
-    drawPoints();
-    drawCursor();
+    glColor4f(1.0f, 1.0f, 0.2f, 1.0f);
+    glTranslatef(cursor.x, cursor.y, cursor.z);
+    glutSolidSphere(2.0, 4, 4);
     glPopMatrix();
 
     glutSwapBuffers(); // swap front and back buffers, we're double buffered

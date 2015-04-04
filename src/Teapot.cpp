@@ -15,7 +15,7 @@ void display(void)
     glPopMatrix();
 
     // 床を描画
-    glPushMatrix();
+    /* glPushMatrix();
     GLfloat floor_color[4] = { 0.8f, 0.f, 0.f, 1.0f };
     glMaterialfv(GL_FRONT, GL_DIFFUSE,  floor_color);
     glNormal3f(0.0, 1.0, 0.0);
@@ -25,7 +25,7 @@ void display(void)
     glVertex3f( 10.0, 0.0,  10.0);
     glVertex3f( 10.0, 0.0, -10.0);
     glEnd();
-    glPopMatrix();
+    glPopMatrix(); */
 
     glutSwapBuffers();
 }
