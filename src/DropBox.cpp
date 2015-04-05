@@ -1,4 +1,4 @@
-#include <GL/freeglut.h>
+#include "DrawObject.hpp"
 #include "arrow.hpp"
 
 using namespace std;
@@ -18,10 +18,8 @@ void DrawScene(void)
 {
     static const GLfloat spec[] = { 0.3f, 0.3f, 0.3f, 1.0f };    //鏡面反射色
     static const GLfloat ambi[] = { 0.1f, 0.1f, 0.1f, 1.0f };    //環境光
-    GLfloat floor_color[] = { 0.8f, 0.8f, 0.8f, 1.0f };
     GLfloat blue[] = { 0.4f, 0.4f, 1.0f, 1.0f };
     GLfloat green[] = { 0.4f, 1.0f, 0.4f, 1.0f };
-    GLfloat red[] = { 1.0f, 0.4f, 0.4f, 1.0f };
 
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
@@ -37,37 +35,13 @@ void DrawScene(void)
     glPolygonMode(GL_FRONT, GL_FILL);
 
     // 床を描画
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,  floor_color);
-    glPushMatrix();
-    glNormal3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    glVertex3f(-100.0, 0.0, -100.0);
-    glVertex3f(-100.0, 0.0,  100.0);
-    glVertex3f( 100.0, 0.0,  100.0);
-    glVertex3f( 100.0, 0.0, -100.0);
-    glEnd();
-    glPopMatrix();
+    drawFloor();
 
-    //drawAxes(5);
+    drawSphere();
 
-    glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,  blue);
-    glTranslatef(8, 2, -3);
-    glutSolidSphere(3, 30, 30);
-    glPopMatrix();
+    drawCube();
 
-    glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,  red);
-    glTranslatef(-8, 2, 0);
-    glutSolidSphere(3, 30, 30);
-    glPopMatrix();
-
-    glPushMatrix();
-    glMaterialfv(GL_FRONT, GL_DIFFUSE,  red);
-    glTranslatef(0, 0, 0);
-    glutWireTeapot(5.0);
-    glPopMatrix();
-
+    drawAxes(5);
 
 }
 
