@@ -1,5 +1,5 @@
-#include "DrawObject.hpp"
-#include "arrow.hpp"
+// #include "arrow.hpp"
+#include "Object.hpp"
 
 using namespace std;
 
@@ -12,14 +12,17 @@ const int HEIGHT = 3* 240;
 GLfloat lightpos[] = { 0.0, 100.0, 0.0, 0.0 };
 const GLfloat FOV = 60.0f;
 
+Sphere sphere;
+ObjectColor red(1.0, 0.0, 0.0);
+ObjectColor gray(0.8, 0.8, 0.8);
+Floor floor;
+
 
 //シーンの描画
 void DrawScene(void)
 {
     static const GLfloat spec[] = { 0.3f, 0.3f, 0.3f, 1.0f };    //鏡面反射色
     static const GLfloat ambi[] = { 0.1f, 0.1f, 0.1f, 1.0f };    //環境光
-    GLfloat blue[] = { 0.4f, 0.4f, 1.0f, 1.0f };
-    GLfloat green[] = { 0.4f, 1.0f, 0.4f, 1.0f };
 
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
@@ -34,14 +37,12 @@ void DrawScene(void)
 
     glPolygonMode(GL_FRONT, GL_FILL);
 
-    // 床を描画
-    drawFloor();
+    floor.draw();
+    sphere.draw();
 
-    drawSphere();
 
-    drawCube();
 
-    drawAxes(5);
+    //drawAxes(5);
 
 }
 
@@ -94,6 +95,9 @@ void Init(void)
 
 int main(int argc, char *argv[])
 {
+    sphere.setColor(red);
+    sphere.setPosition(0, 0, 0);
+    floor.setColor(gray);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(WIDTH, HEIGHT);
     glutInit(&argc, argv);
