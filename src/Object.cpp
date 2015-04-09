@@ -51,14 +51,45 @@ void Cube::draw() // protect someday
 
 void Floor::draw() // protect someday
 {
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, color.toArray());
-  glPushMatrix();
-  glNormal3f(0.0, 1.0, 0.0);
   glBegin(GL_POLYGON);
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, color.toArray());
+  //glPushMatrix();
+  glNormal3f(0.0, 1.0, 0.0);
   glVertex3f(-100.0, 0.0, -100.0);
   glVertex3f(-100.0, 0.0,  100.0);
   glVertex3f( 100.0, 0.0,  100.0);
   glVertex3f( 100.0, 0.0, -100.0);
   glEnd();
-  glPopMatrix();
+  //glPopMatrix();
+}
+
+void Axis::draw()
+{
+  glEnable(GL_COLOR_MATERIAL);
+  glDisable(GL_LIGHTING);
+
+  /* X axis */
+  glBegin(GL_LINES);
+  glColor3d(1.0, 0.0, 0.0);
+  glVertex3f(0.0 + xyz.x, 0.0, 0.0);
+  glVertex3f(5.0 + xyz.x, 0.0, 0.0);
+  glEnd();
+
+  /* Y axis */
+  glBegin(GL_LINES);
+  glColor3d(0.0, 1.0, 0.0);
+  glVertex3f(0.0,  0.0 + xyz.y, 0.0);
+  glVertex3f(0.0, 5.0 + xyz.y, 0.0);
+  glEnd();
+
+  /* Z axis */
+  glBegin(GL_LINES);
+  glColor3d(0.0, 0.0, 1.0);
+  glVertex3f(0.0, 0.0, 0.0 + xyz.z);
+  glVertex3f(0.0, 0.0, 5.0 + xyz.z);
+  glEnd();
+
+  glDisable(GL_COLOR_MATERIAL);
+
+  glEnable(GL_LIGHTING);
 }

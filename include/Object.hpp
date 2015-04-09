@@ -39,3 +39,9 @@ class Floor : public Object
 public:
   void draw() override; // protect someday
 };
+
+class Axis : public Object
+{
+public:
+  void draw();
+};

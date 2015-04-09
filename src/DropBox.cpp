@@ -16,6 +16,7 @@ Sphere sphere;
 ObjectColor red(1.0, 0.0, 0.0);
 ObjectColor gray(0.8, 0.8, 0.8);
 Floor floor;
+Axis axis;
 
 
 //シーンの描画
@@ -39,11 +40,7 @@ void DrawScene(void)
 
     floor.draw();
     sphere.draw();
-
-
-
-    //drawAxes(5);
-
+    axis.draw();
 }
 
 
@@ -59,7 +56,7 @@ void display(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glPushMatrix();
+    //glPushMatrix();
 
     //視点の設定
     gluLookAt(0.0,10,20, //カメラの座標
@@ -71,7 +68,7 @@ void display(void)
 
     DrawScene();
 
-    glPopMatrix();
+    //glPopMatrix();
 
     glutSwapBuffers();
 }
