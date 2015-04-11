@@ -11,8 +11,8 @@ typedef std::shared_ptr<Axis> pAxis;
 
 class GL
 {
-    int width{960};
-    int height{720};
+    int width {960};
+    int height {720};
     static void display();
     static void DrawScene(void);
     static void idle();

@@ -32,8 +32,8 @@ void display(void)
 
 void idle()
 {
-  glutPostRedisplay();
-  //Sleep(1);
+    glutPostRedisplay();
+    //Sleep(1);
 }
 
 
@@ -70,15 +70,15 @@ void Init(void)
 
 int main(int argc, char* argv[])
 {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(640, 480);
-	glutCreateWindow("Solid Teapot");
-	glutIdleFunc(idle);
-	glutDisplayFunc(display);
-  Init();
-	glutMainLoop();
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowPosition(100, 100);
+    glutInitWindowSize(640, 480);
+    glutCreateWindow("Solid Teapot");
+    glutIdleFunc(idle);
+    glutDisplayFunc(display);
+    Init();
+    glutMainLoop();
 
-	return 0;
+    return 0;
 }
