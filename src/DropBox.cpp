@@ -1,21 +1,20 @@
 #include "Object.hpp"
+#include <list>
+#include <iostream>
+
 
 using namespace std;
 
 
 #define ODE_MAX_CONTACTS 1024
 
-Sphere sphere;
-ObjectColor red(1.0, 0.0, 0.0);
-ObjectColor gray(0.8, 0.8, 0.8);
-Floor floor;
-Axis axis;
 
 class GL
 {
     int width  = 3 * 320;
     int height = 3* 240;
 
+    static list<Object*> object_list;
 public:
     void init(int argc, char *argv[])
     {
@@ -54,7 +53,7 @@ public:
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        gluLookAt(0.0,10,20, //カメラの座標
+        gluLookAt(0.0,20,-50, //カメラの座標
                   0.0,0.0,0.0, // 注視点の座標
                   0.0,1.0,0.0); // 画面の上方向を指すベクトル
     }
@@ -78,23 +77,46 @@ public:
 
     static void DrawScene(void)
     {
-        floor.draw();
-        sphere.draw();
-        axis.draw();
+      for(auto it = GL::object_list.begin(); it != GL::object_list.end(); ++it)
+      {
+        (*it) -> draw();
+      }
+      return;
+    }
+
+    void pushObject(Object* object)
+    {
+      GL::object_list.push_back(object);
+      return;
     }
 };
+
+list<Object*> GL::object_list;
 
 
 int main(int argc, char *argv[])
 {
+    ObjectColor red(1.0, 0.0, 0.0);
+    ObjectColor white(1.f, 1.f, 1.f);
+    ObjectColor gray(0.5, 0.5, 0.5);
+
+    Sphere* sphere = new Sphere;
+    Floor*  floor  = new Floor;
+    Axis*   axis   = new Axis;
+    sphere -> setColor(red);
+    sphere -> setPosition(0, 10, 0);
+    floor  -> setColor(gray);
     GL gl;
-    sphere.setColor(red);
-    sphere.setPosition(0, 0, 0);
-    floor.setColor(gray);
+    gl.pushObject(floor);
+    gl.pushObject(sphere);
+    gl.pushObject(axis);
     gl.init(argc, argv);
     gl.setCamera();
     gl.setLight();
     gl.run();
+    delete sphere;
+    delete floor;
+    delete axis;
 
     return 0;
 }

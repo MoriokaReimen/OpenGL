@@ -10,9 +10,9 @@ protected:
   // Attitude attitude; implement someday
   ObjectColor color{0,0,0};
 public:
-  Object(){}
+  Object() = default;
   virtual ~Object() = default;
-  virtual void draw() = 0;
+  virtual void draw(){};
   virtual void setPosition(double x, double y, double z);
   virtual void setPosition(Point point);
   virtual void setColor(ObjectColor bcolor);
@@ -43,5 +43,5 @@ public:
 class Axis : public Object
 {
 public:
-  void draw();
+  void draw() override;
 };

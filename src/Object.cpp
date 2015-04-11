@@ -32,7 +32,7 @@ void Object::setColor(GLfloat br, GLfloat bg, GLfloat bb)
 void Sphere::draw() // protect someday
 {
   glPushMatrix();
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, color.toArray());
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
   glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
   glutSolidSphere(3, 30, 30);
   glPopMatrix();
@@ -42,7 +42,7 @@ void Sphere::draw() // protect someday
 void Cube::draw() // protect someday
 {
   glPushMatrix();
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, color.toArray());
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
   glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
   glutSolidCube(3);
   glPopMatrix();
@@ -51,7 +51,8 @@ void Cube::draw() // protect someday
 
 void Floor::draw() // protect someday
 {
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, color.toArray());
+  glPushMatrix();
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
   glBegin(GL_QUADS);
   glNormal3f(0.0, 1.0, 0.0);
   glVertex3f(-100.0, 0.0, -100.0);
@@ -59,10 +60,13 @@ void Floor::draw() // protect someday
   glVertex3f( 100.0, 0.0,  100.0);
   glVertex3f( 100.0, 0.0, -100.0);
   glEnd();
+  glPopMatrix();
+  return;
 }
 
 void Axis::draw()
 {
+  glPushMatrix();
   glEnable(GL_COLOR_MATERIAL);
   glDisable(GL_LIGHTING);
 
@@ -88,6 +92,7 @@ void Axis::draw()
   glEnd();
 
   glDisable(GL_COLOR_MATERIAL);
-
   glEnable(GL_LIGHTING);
+  glPopMatrix();
+  return;
 }
