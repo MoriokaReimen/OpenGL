@@ -1,6 +1,6 @@
 #include "Object.hpp"
 #include <list>
-#include <iostream>
+#include <memory>
 
 
 using namespace std;
@@ -14,7 +14,7 @@ class GL
     int width  = 3 * 320;
     int height = 3* 240;
 
-    static list<Object*> object_list;
+    static list<shared_ptr<Object>> object_list;
 public:
     void init(int argc, char *argv[])
     {
@@ -84,14 +84,14 @@ public:
       return;
     }
 
-    void pushObject(Object* object)
+    void pushObject(shared_ptr<Object> object)
     {
       GL::object_list.push_back(object);
       return;
     }
 };
 
-list<Object*> GL::object_list;
+list<shared_ptr<Object>> GL::object_list;
 
 
 int main(int argc, char *argv[])
@@ -100,9 +100,9 @@ int main(int argc, char *argv[])
     ObjectColor white(1.f, 1.f, 1.f);
     ObjectColor gray(0.5, 0.5, 0.5);
 
-    Sphere* sphere = new Sphere;
-    Floor*  floor  = new Floor;
-    Axis*   axis   = new Axis;
+    shared_ptr<Sphere> sphere(new Sphere);
+    shared_ptr<Floor>  floor(new Floor);
+    shared_ptr<Axis>   axis (new Axis);
     sphere -> setColor(red);
     sphere -> setPosition(0, 10, 0);
     floor  -> setColor(gray);
@@ -114,9 +114,6 @@ int main(int argc, char *argv[])
     gl.setCamera();
     gl.setLight();
     gl.run();
-    delete sphere;
-    delete floor;
-    delete axis;
 
     return 0;
 }
