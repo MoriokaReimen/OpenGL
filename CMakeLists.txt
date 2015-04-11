@@ -10,5 +10,5 @@ LINK_DIRECTORIES("/usr/local/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 
-add_executable(OpenGLTest src/DropBox.cpp src/Object.cpp src/ObjectUtil.cpp include/Object.hpp include/ObjectUtil.hpp)
+add_executable(OpenGLTest src/DropBox.cpp src/Object.cpp src/ObjectUtil.cpp include/Object.hpp include/ObjectUtil.hpp include/GL.hpp src/GL.cpp)
 target_link_libraries(OpenGLTest ode joints OPCODE GLU GL glut pthread stdc++ X11)
