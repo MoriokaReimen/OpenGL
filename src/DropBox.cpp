@@ -1,16 +1,9 @@
-// #include "arrow.hpp"
 #include "Object.hpp"
 
 using namespace std;
 
-const int WIDTH = 3 * 320;
-const int HEIGHT = 3* 240;
 
 #define ODE_MAX_CONTACTS 1024
-
-//ライトの位置
-GLfloat lightpos[] = { 0.0, 100.0, 0.0, 0.0 };
-const GLfloat FOV = 60.0f;
 
 Sphere sphere;
 ObjectColor red(1.0, 0.0, 0.0);
@@ -18,91 +11,90 @@ ObjectColor gray(0.8, 0.8, 0.8);
 Floor floor;
 Axis axis;
 
-
-//シーンの描画
-void DrawScene(void)
+class GL
 {
-    static const GLfloat spec[] = { 0.3f, 0.3f, 0.3f, 1.0f };    //鏡面反射色
-    static const GLfloat ambi[] = { 0.1f, 0.1f, 0.1f, 1.0f };    //環境光
+    int width  = 3 * 320;
+    int height = 3* 240;
 
-    glEnable(GL_LIGHTING);
-    glEnable(GL_DEPTH_TEST);
-    glCullFace(GL_BACK);
-    glEnable(GL_CULL_FACE);
-    glDisable(GL_COLOR_MATERIAL);
+public:
+    void init(int argc, char *argv[])
+    {
+        /* Make Window */
+        glutInit(&argc, argv);
+        glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+        glutInitWindowPosition(100, 100);
+        glutInitWindowSize(this->width, this->height);
+        glutCreateWindow("Hello ODE World!!");
+        glutDisplayFunc(GL::display);
+        glutIdleFunc(GL::idle);
 
-    // 材質を設定
-    glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
-    glMaterialfv(GL_FRONT, GL_AMBIENT,  ambi);
-    glMaterialf(GL_FRONT, GL_SHININESS, 50.0);
+        /* Set Background Color and Depth Buffer */
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+        glClearDepth(1.0);
+        glEnable(GL_DEPTH_TEST);
+    }
 
-    glPolygonMode(GL_FRONT, GL_FILL);
+    void setLight()
+    {
+        const GLfloat lightpos[] = { 0.0, 100.0, 0.0, 0.0 };
+        glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+        glEnable(GL_LIGHT0);
+        glEnable(GL_LIGHTING);
+        glEnable(GL_NORMALIZE);
+    }
 
-    floor.draw();
-    sphere.draw();
-    axis.draw();
-}
+    void setCamera()
+    {
+        //視点の設定
+        glViewport(0, 0, this->width, this->height);
 
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluPerspective(60.f, (float)this->width/(float)this->height, 0.1f, 100.0f);
 
-void display(void)
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glViewport(0, 0, WIDTH, HEIGHT);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        gluLookAt(0.0,10,20, //カメラの座標
+                  0.0,0.0,0.0, // 注視点の座標
+                  0.0,1.0,0.0); // 画面の上方向を指すベクトル
+    }
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(FOV, (float)WIDTH/(float)HEIGHT, 0.1f, 100.0f);
+    static void display()
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        GL::DrawScene();
+        glutSwapBuffers();
+    }
 
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
+    static void idle()
+    {
+        glutPostRedisplay();
+    }
 
-    //glPushMatrix();
+    void run()
+    {
+        glutMainLoop();
+    }
 
-    //視点の設定
-    gluLookAt(0.0,10,20, //カメラの座標
-              0.0,0.0,0.0, // 注視点の座標
-              0.0,1.0,0.0); // 画面の上方向を指すベクトル
+    static void DrawScene(void)
+    {
+        floor.draw();
+        sphere.draw();
+        axis.draw();
+    }
+};
 
-    // 光源位置
-    glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
-
-    DrawScene();
-
-    //glPopMatrix();
-
-    glutSwapBuffers();
-}
-
-
-void idle(void)
-{
-    glutPostRedisplay();
-    //Sleep(1);
-}
-
-void Init(void)
-{
-    // 背景色
-    glClearColor(1.0, 1.0, 1.0, 1.0);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
-    glEnable(GL_LIGHT0);
-    glEnable(GL_NORMALIZE);
-}
 
 int main(int argc, char *argv[])
 {
+    GL gl;
     sphere.setColor(red);
     sphere.setPosition(0, 0, 0);
     floor.setColor(gray);
-    glutInitWindowPosition(100, 100);
-    glutInitWindowSize(WIDTH, HEIGHT);
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
-    glutCreateWindow("Hello ODE World!!");
-    glutDisplayFunc(display);
-    glutIdleFunc(idle);
-    Init();
-    glutMainLoop();
+    gl.init(argc, argv);
+    gl.setCamera();
+    gl.setLight();
+    gl.run();
+
     return 0;
 }
