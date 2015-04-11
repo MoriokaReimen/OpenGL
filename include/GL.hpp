@@ -11,17 +11,19 @@ typedef std::shared_ptr<Axis> pAxis;
 
 class GL
 {
-    int width {960};
-    int height {720};
+    int width;
+    int height;
     static void display();
     static void DrawScene(void);
     static void idle();
 
     static std::list<pObject> object_list;
 public:
-    GL(int argc, char** argv);
-    void setLight();
+    GL(int argc, char** argv, int bwidth = 960, int bheight = 720);
+    void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
+    void setLight(const Point& xyz);
     void setCamera();
+    void setCamera(const Point& camera_pos, const Point& look_at);
     void run();
     void pushObject(pObject object);
 };
