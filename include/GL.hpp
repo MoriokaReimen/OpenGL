@@ -4,10 +4,6 @@
 #include <list>
 #include <memory>
 
-typedef std::shared_ptr<Sphere> pSphere;
-typedef std::shared_ptr<Object> pObject;
-typedef std::shared_ptr<Floor> pFloor;
-typedef std::shared_ptr<Axis> pAxis;
 
 class GL
 {

@@ -96,3 +96,34 @@ void Axis::draw()
     glPopMatrix();
     return;
 }
+
+Cylinder::Cylinder()
+{
+  this->quad = gluNewQuadric();
+  if(!quad)
+    throw;
+  return;
+}
+
+void Cylinder::draw()
+{
+    GLfloat radius = 10;
+    GLfloat height = 30;
+    glPushMatrix();
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+    gluCylinder(this->quad, radius, radius, height, 50, 50);
+    glNormal3f(0.0, 0.0, 1.0);
+    gluDisk(quad, 0.f, radius, 50, 1);
+    glTranslatef(0, 0, height);
+    glNormal3f(0.0, 0.0, -1.0);
+    gluDisk(quad, 0.f, radius, 50, 1);
+    glPopMatrix();
+    return;
+}
+
+Cylinder::~Cylinder()
+{
+  if(quad)
+    gluDeleteQuadric(quad);
+}
+

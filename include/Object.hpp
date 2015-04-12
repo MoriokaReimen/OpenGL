@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectUtil.hpp"
+#include <memory>
 
 
 class Object
@@ -44,3 +45,18 @@ class Axis : public Object
 public:
     void draw() override;
 };
+
+class Cylinder : public Object
+{
+  GLUquadric* quad;
+public:
+  Cylinder();
+  ~Cylinder();
+  void draw() override;
+};
+
+typedef std::shared_ptr<Sphere> pSphere;
+typedef std::shared_ptr<Object> pObject;
+typedef std::shared_ptr<Floor> pFloor;
+typedef std::shared_ptr<Axis> pAxis;
+typedef std::shared_ptr<Cylinder> pCylinder;
