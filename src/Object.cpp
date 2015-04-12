@@ -28,6 +28,13 @@ void Object::setColor(GLfloat br, GLfloat bg, GLfloat bb)
     return;
 }
 // virtual void Object::setAttitude() = 0; implement someday
+//
+//
+void Object::setTexture(Texture& texture)
+{
+  this-> texture = texture;
+  return;
+}
 
 void Sphere::draw() // protect someday
 {
@@ -51,6 +58,25 @@ void Cube::draw() // protect someday
 
 void Floor::draw() // protect someday
 {
+  GLuint texture[0];
+  /* if(this->texture.getID())
+  {
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, this->texture.getID());
+    glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glPushMatrix();
+    glBegin(GL_QUADS);
+    glNormal3f(0.0, 1.0, 0.0);
+    glTexCoord2f(0.f, 0.f);glVertex3f(-100.0, 0.0, -100.0);
+    glTexCoord2f(0.f, 1.f);glVertex3f(-100.0, 0.0,  100.0);
+    glTexCoord2f(1.f, 1.f);glVertex3f( 100.0, 0.0,  100.0);
+    glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
+  } else {
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
     glBegin(GL_QUADS);
@@ -61,6 +87,25 @@ void Floor::draw() // protect someday
     glVertex3f( 100.0, 0.0, -100.0);
     glEnd();
     glPopMatrix();
+  }
+  */
+ texture[0] = SOIL_load_OGL_texture // load an image file directly as a new OpenGL texture
+    (
+        "toyoura.png",
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+    );
+// allocate a texture name
+
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+  glBegin(GL_QUADS);
+    glNormal3f(0.0, 1.0, 0.0);
+    glTexCoord2f(0.f, 0.f);glVertex3f(-100.0, 0.0, -100.0);
+    glTexCoord2f(0.f, 1.f);glVertex3f(-100.0, 0.0,  100.0);
+    glTexCoord2f(1.f, 1.f);glVertex3f( 100.0, 0.0,  100.0);
+    glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
+    glEnd();
     return;
 }
 

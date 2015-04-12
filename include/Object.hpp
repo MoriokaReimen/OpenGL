@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectUtil.hpp"
+#include "Texture.hpp"
 #include <memory>
 
 
@@ -9,6 +10,7 @@ protected:
     Point xyz {0, 0, 0};
     // Attitude attitude; implement someday
     ObjectColor color {0,0,0};
+    Texture texture;
 public:
     Object() = default;
     virtual ~Object() = default;
@@ -17,6 +19,7 @@ public:
     virtual void setPosition(Point point);
     virtual void setColor(ObjectColor bcolor);
     virtual void setColor(GLfloat br, GLfloat bg, GLfloat bb);
+    virtual void setTexture(Texture& texture);
     // virtual void setAttitude() = 0; implement someday
 };
 
