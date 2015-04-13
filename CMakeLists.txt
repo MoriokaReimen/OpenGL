@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(OpenGLTest)
 add_subdirectory(src)
+add_subdirectory(spike)
 add_subdirectory(resource)
 add_subdirectory(bin)
 add_subdirectory(include)
@@ -12,3 +13,6 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 
 add_executable(OpenGLTest src/DropBox.cpp src/Object.cpp src/ObjectUtil.cpp include/Object.hpp include/ObjectUtil.hpp include/GL.hpp src/GL.cpp src/Texture.cpp include/Texture.hpp)
 target_link_libraries(OpenGLTest ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)
+
+add_executable(spike spike/spike.cpp)
+target_link_libraries(spike ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)

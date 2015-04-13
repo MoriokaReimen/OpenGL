@@ -94,12 +94,14 @@ void Floor::draw() // protect someday
         "toyoura.png",
         SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
-        SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+        0
     );
 // allocate a texture name
 
     glBindTexture(GL_TEXTURE_2D, texture[0]);
-  glBegin(GL_QUADS);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBegin(GL_QUADS);
     glNormal3f(0.0, 1.0, 0.0);
     glTexCoord2f(0.f, 0.f);glVertex3f(-100.0, 0.0, -100.0);
     glTexCoord2f(0.f, 1.f);glVertex3f(-100.0, 0.0,  100.0);
