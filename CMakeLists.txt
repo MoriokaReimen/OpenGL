@@ -18,4 +18,4 @@ add_executable(spike spike/spike.cpp)
 target_link_libraries(spike ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)
 
 add_executable(spike2 spike/spike2.cpp)
-target_link_libraries(spike ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)
+target_link_libraries(spike2 ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)
