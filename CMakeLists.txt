@@ -9,7 +9,7 @@ LINK_DIRECTORIES("/usr/local/lib/" "/usr/lib" "/usr/lib/freeglut")
 INCLUDE_DIRECTORIES("/usr/include" "/usr/local/include/ode" "/usr/include/freeglut" "${CMAKE_BINARY_DIR}/include")
 LINK_DIRECTORIES("/usr/local/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
+set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 
 add_executable(OpenGLTest src/DropBox.cpp src/Object.cpp src/ObjectUtil.cpp include/Object.hpp include/ObjectUtil.hpp include/GL.hpp src/GL.cpp src/Texture.cpp include/Texture.hpp)
 target_link_libraries(OpenGLTest ode joints OPCODE GLU GL glut pthread stdc++ X11 SOIL)

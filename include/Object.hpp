@@ -9,7 +9,7 @@ class Object
 protected:
     Point xyz {0, 0, 0};
     // Attitude attitude; implement someday
-    ObjectColor color {0,0,0};
+    ObjectColor color {1.f,1.f,1.f};
     Texture texture;
 public:
     Object() = default;

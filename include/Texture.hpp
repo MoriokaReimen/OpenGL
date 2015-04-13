@@ -14,5 +14,5 @@ public:
     Texture();
     Texture(const std::string& filename);
     ~Texture();
-    unsigned int getID();
+    GLuint getID();
 };

@@ -14,9 +14,9 @@ public:
 class ObjectColor
 {
 public:
-    GLfloat r {0.f};
-    GLfloat g {0.f};
-    GLfloat b {0.f};
+    GLfloat r {1.f};
+    GLfloat g {1.f};
+    GLfloat b {1.f};
     GLfloat rgb[3];
     ObjectColor() = default;
     ObjectColor(GLfloat br, GLfloat bg, GLfloat bb) : r(br), g(bg), b(bb) {}

@@ -58,12 +58,11 @@ void Cube::draw() // protect someday
 
 void Floor::draw() // protect someday
 {
-  GLuint texture[0];
   if(this->texture.getID())
   {
-    //glEnable(GL_TEXTURE_2D);
-    //glBindTexture(GL_TEXTURE_2D, this->texture.getID());
-    //glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, this->texture.getID());
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
     glPushMatrix();
     glBegin(GL_QUADS);
     glNormal3f(0.0, 1.0, 0.0);
@@ -73,8 +72,7 @@ void Floor::draw() // protect someday
     glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
     glEnd();
     glPopMatrix();
-    //glDisable(GL_TEXTURE_2D);
-    //glDisable(GL_BLEND);
+    glDisable(GL_TEXTURE_2D);
   } else {
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());

@@ -3,11 +3,12 @@
 
 int main(int argc, char *argv[])
 {
+    GL gl(argc, argv);
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
     ObjectColor gray(0.5, 0.5, 0.5);
-    Texture texture("toyoura.png");
+    Texture texture("toyoura.jpg");
 
     pSphere   sphere(new Sphere);
     pFloor    floor(new Floor);
@@ -15,10 +16,8 @@ int main(int argc, char *argv[])
     pCylinder cylinder(new Cylinder);
     sphere -> setColor(red);
     sphere -> setPosition(0, 10, 0);
-    floor  -> setColor(gray);
     floor  -> setTexture(texture);
     cylinder -> setColor(blue);
-    GL gl(argc, argv);
     gl.pushObject(floor);
     gl.pushObject(sphere);
     gl.pushObject(axis);
