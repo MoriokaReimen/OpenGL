@@ -59,12 +59,11 @@ void Cube::draw() // protect someday
 void Floor::draw() // protect someday
 {
   GLuint texture[0];
-  /* if(this->texture.getID())
+  if(this->texture.getID())
   {
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, this->texture.getID());
-    glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
-    glEnable(GL_BLEND);
+    //glEnable(GL_TEXTURE_2D);
+    //glBindTexture(GL_TEXTURE_2D, this->texture.getID());
+    //glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA);
     glPushMatrix();
     glBegin(GL_QUADS);
     glNormal3f(0.0, 1.0, 0.0);
@@ -74,8 +73,8 @@ void Floor::draw() // protect someday
     glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
     glEnd();
     glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
-    glDisable(GL_BLEND);
+    //glDisable(GL_TEXTURE_2D);
+    //glDisable(GL_BLEND);
   } else {
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
@@ -88,26 +87,6 @@ void Floor::draw() // protect someday
     glEnd();
     glPopMatrix();
   }
-  */
- texture[0] = SOIL_load_OGL_texture // load an image file directly as a new OpenGL texture
-    (
-        "toyoura.png",
-        SOIL_LOAD_AUTO,
-        SOIL_CREATE_NEW_ID,
-        0
-    );
-// allocate a texture name
-
-    glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBegin(GL_QUADS);
-    glNormal3f(0.0, 1.0, 0.0);
-    glTexCoord2f(0.f, 0.f);glVertex3f(-100.0, 0.0, -100.0);
-    glTexCoord2f(0.f, 1.f);glVertex3f(-100.0, 0.0,  100.0);
-    glTexCoord2f(1.f, 1.f);glVertex3f( 100.0, 0.0,  100.0);
-    glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
-    glEnd();
     return;
 }
 
