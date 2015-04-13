@@ -67,9 +67,9 @@ void Floor::draw() // protect someday
     glBegin(GL_QUADS);
     glNormal3f(0.0, 1.0, 0.0);
     glTexCoord2f(0.f, 0.f);glVertex3f(-100.0, 0.0, -100.0);
-    glTexCoord2f(0.f, 1.f);glVertex3f(-100.0, 0.0,  100.0);
-    glTexCoord2f(1.f, 1.f);glVertex3f( 100.0, 0.0,  100.0);
-    glTexCoord2f(1.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
+    glTexCoord2f(0.f, 5.f);glVertex3f(-100.0, 0.0,  100.0);
+    glTexCoord2f(5.f, 5.f);glVertex3f( 100.0, 0.0,  100.0);
+    glTexCoord2f(5.f, 0.f);glVertex3f( 100.0, 0.0, -100.0);
     glEnd();
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
