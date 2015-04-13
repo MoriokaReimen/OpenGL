@@ -9,7 +9,7 @@ typedef unsigned char ubyte_t;
 class Texture
 {
     std::string filename;
-    GLuint id[0]; // texture id for gl 
+    GLuint id; // texture id for gl 
 public:
     Texture();
     Texture(const std::string& filename);
