@@ -43,11 +43,11 @@ void Object::setTexture(Texture& texture)
 void Sphere::draw() // protect someday
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAxisAngle(x, y, z, angle);
+    this->quat.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
     glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-    glRotatef(x, y, z, angle);
+    glRotatef(angle, x, y, z);
     glutSolidSphere(3, 30, 30);
     glPopMatrix();
     return;
@@ -56,11 +56,11 @@ void Sphere::draw() // protect someday
 void Cube::draw() // protect someday
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAxisAngle(x, y, z, angle);
+    this->quat.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
     glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-    glRotatef(x, y, z, angle);
+    glRotatef(angle, x, y, z);
     glutSolidCube(3);
     glPopMatrix();
     return;
@@ -69,7 +69,7 @@ void Cube::draw() // protect someday
 void Floor::draw() // protect someday
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAxisAngle(x, y, z, angle);
+    this->quat.toGLAngleAxis(angle, x, y, z);
     if(this->texture.getID()) {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texture.getID());
@@ -87,7 +87,7 @@ void Floor::draw() // protect someday
         glVertex3f( 100.0, 0.0, -100.0);
         glEnd();
         glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-        glRotatef(x, y, z, angle);
+        glRotatef(angle, x, y, z);
         glPopMatrix();
         glDisable(GL_TEXTURE_2D);
     } else {
@@ -101,7 +101,7 @@ void Floor::draw() // protect someday
         glVertex3f( 100.0, 0.0, -100.0);
         glEnd();
         glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-        glRotatef(x, y, z, angle);
+        glRotatef(angle, x, y, z);
         glPopMatrix();
     }
     return;
@@ -110,10 +110,10 @@ void Floor::draw() // protect someday
 void Axis::draw()
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAxisAngle(x, y, z, angle);
+    this->quat.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
     glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-    glRotatef(x, y, z, angle);
+    glRotatef(angle, x, y, z);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
@@ -155,19 +155,35 @@ Cylinder::Cylinder()
 void Cylinder::draw()
 {
     GLfloat radius = 10;
-    GLfloat height = 30;
+    GLfloat height = 20;
     GLfloat x, y, z, angle;
-    this->quat.toGLAxisAngle(x, y, z, angle);
-    glPushMatrix();
+    this->quat.toGLAngleAxis(angle, x, y, z);
+
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+
+    glPushMatrix();
+    //glTranslatef(0, 0, height / 2);
+    glRotatef(angle, x, y, z);
+    glTranslatef(0, 0, - height / 2);
     gluCylinder(this->quad, radius, radius, height, 50, 50);
+    glPopMatrix();
+
+    // draw top
+    glPushMatrix();
+    glRotatef(angle, x, y, z);
     glNormal3f(0.0, 0.0, 1.0);
-    gluDisk(quad, 0.f, radius, 50, 1);
-    glTranslatef(0, 0, height);
-    glRotatef(x, y, z, angle);
-    glNormal3f(0.0, 0.0, -1.0);
+    glTranslatef(0, 0, height/2);
     gluDisk(quad, 0.f, radius, 50, 1);
     glPopMatrix();
+
+    // draw base
+    glPushMatrix();
+    glRotatef(angle, x, y, z);
+    glNormal3f(0.0, 0.0, -1.0);
+    glTranslatef(0, 0, -height/2);
+    gluDisk(quad, 0.f, radius, 50, 1);
+    glPopMatrix();
+
     return;
 }
 

@@ -9,7 +9,7 @@ GLfloat* ObjectColor::toArray()
 }
 
 Quaternion::Quaternion()
-    : w(0.f), x(0.f), y(0.f), z(0.f)
+    : w(1.f), x(0.f), y(0.f), z(0.f)
 {
     return;
 }
@@ -29,7 +29,7 @@ void Quaternion::set(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, co
     return;
 }
 
-void Quaternion::toAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle)
+void Quaternion::toAngleAxis(GLfloat& angle, GLfloat& bx, GLfloat& by, GLfloat& bz)
 {
     angle = 2 * std::acos(this->w) * 180 / M_PI;
     GLfloat s = 1 - this->w * this->w;
@@ -46,7 +46,7 @@ void Quaternion::toAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& ang
     }
 }
 
-void Quaternion::toGLAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle)
+void Quaternion::toGLAngleAxis(GLfloat& angle, GLfloat& bx, GLfloat& by, GLfloat& bz)
 {
     angle = 2 * std::acos(this->w) * 180 / M_PI;
     GLfloat s = 1 - this->w * this->w;
@@ -63,7 +63,7 @@ void Quaternion::toGLAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& a
     }
 }
 
-void Quaternion::fromAxisAngle(const GLfloat& bx,const GLfloat& by,const GLfloat& bz,const GLfloat& angle)
+void Quaternion::fromAngleAxis(const GLfloat& angle, const GLfloat& bx,const GLfloat& by,const GLfloat& bz)
 {
     GLfloat s = std::sin(angle * M_PI / 2 / 180.f);
     this->w = std::cos(angle * M_PI / 2 / 180.f);

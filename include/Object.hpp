@@ -11,7 +11,7 @@ protected:
     // Attitude attitude; implement someday
     ObjectColor color {1.f,1.f,1.f};
     Texture texture;
-    Quaternion quat;
+    Quaternion quat{1.f, 0.f, 0.f, 0.f};
 public:
     Object() = default;
     virtual ~Object() = default;
