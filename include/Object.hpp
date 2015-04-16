@@ -11,6 +11,7 @@ protected:
     // Attitude attitude; implement someday
     ObjectColor color {1.f,1.f,1.f};
     Texture texture;
+    Quaternion quat;
 public:
     Object() = default;
     virtual ~Object() = default;
@@ -20,7 +21,7 @@ public:
     virtual void setColor(ObjectColor bcolor);
     virtual void setColor(GLfloat br, GLfloat bg, GLfloat bb);
     virtual void setTexture(Texture& texture);
-    // virtual void setAttitude() = 0; implement someday
+    virtual void setAttitude(const Quaternion& bquat);
 };
 
 class Sphere : public Object
@@ -51,11 +52,11 @@ public:
 
 class Cylinder : public Object
 {
-  GLUquadric* quad;
+    GLUquadric* quad;
 public:
-  Cylinder();
-  ~Cylinder();
-  void draw() override;
+    Cylinder();
+    ~Cylinder();
+    void draw() override;
 };
 
 typedef std::shared_ptr<Sphere> pSphere;

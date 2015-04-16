@@ -27,13 +27,13 @@ public:
 
 class Quaternion
 {
-  GLfloat w, x, y, z;
+    GLfloat w, x, y, z;
 public:
-  Quaternion();
-  Quaternion(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
-  virtual ~Quaternion() = default;
-  void set(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
-  void toAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle);
-  void toGLAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle);
-  void fromAxisAngle(const GLfloat& bx,const GLfloat& by,const GLfloat& bz,const GLfloat& angle);
+    Quaternion();
+    Quaternion(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
+    virtual ~Quaternion() = default;
+    void set(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
+    void toAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle);
+    void toGLAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle);
+    void fromAxisAngle(const GLfloat& bx,const GLfloat& by,const GLfloat& bz,const GLfloat& angle);
 };

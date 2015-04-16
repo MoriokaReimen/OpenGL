@@ -6,16 +6,16 @@ Texture::Texture()
 }
 
 Texture::Texture(const std::string& fname)
-  : filename(fname)
+    : filename(fname)
 {
     //glShadeModel(GL_SMOOTH);
     // Load graphic
     id = SOIL_load_OGL_texture(
-          filename.c_str(),
-          SOIL_LOAD_AUTO,
-          SOIL_CREATE_NEW_ID,
-          SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-        );
+             filename.c_str(),
+             SOIL_LOAD_AUTO,
+             SOIL_CREATE_NEW_ID,
+             SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+         );
     std::cout << id << std::endl;
     if(!id) throw;
 
@@ -31,4 +31,6 @@ Texture::~Texture()
 }
 
 GLuint Texture::getID()
-{ return id; }
+{
+    return id;
+}
