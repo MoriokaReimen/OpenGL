@@ -36,8 +36,27 @@ void Quaternion::toAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& ang
   if(s > 0.001)
   {
     bx    = this->x / std::sqrt(1 - this->w * this->w);
-    bx    = this->y / std::sqrt(1 - this->w * this->w);
-    bx    = this->z / std::sqrt(1 - this->w * this->w);
+    by    = this->y / std::sqrt(1 - this->w * this->w);
+    bz    = this->z / std::sqrt(1 - this->w * this->w);
+    return;
+  }
+  else {
+    bx = 1;
+    by = 0;
+    bz = 0;
+    return;
+  }
+}
+
+void Quaternion::toGLAxisAngle(GLfloat& bx, GLfloat& by, GLfloat& bz, GLfloat& angle)
+{
+  angle = 2 * std::acos(this->w) * 180 / M_PI;
+  GLfloat s = 1 - this->w * this->w;
+  if(s > 0.001)
+  {
+    bx    = this->x / std::sqrt(1 - this->w * this->w);
+    by    = this->z / std::sqrt(1 - this->w * this->w);
+    bz    = this->y / std::sqrt(1 - this->w * this->w);
     return;
   }
   else {
