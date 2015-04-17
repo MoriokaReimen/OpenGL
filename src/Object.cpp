@@ -48,7 +48,28 @@ void Sphere::draw() // protect someday
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
     glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
     glRotatef(angle, x, y, z);
-    glutSolidSphere(3, 30, 30);
+    for(int i = 0; i <= 30; i++) {
+        double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
+        double z0  = sin(lat0);
+        double zr0 =  cos(lat0);
+
+        double lat1 = M_PI * (-0.5 + (double) i / 30);
+        double z1 = sin(lat1);
+        double zr1 = cos(lat1);
+
+        glBegin(GL_QUAD_STRIP);
+        for(int j = 0; j <= 30; j++) {
+            double lng = 2 * M_PI * (double) (j - 1) / 30;
+            double x = cos(lng);
+            double y = sin(lng);
+
+            glNormal3f(x * zr0, y * zr0, z0);
+            glVertex3f(x * zr0, y * zr0, z0);
+            glNormal3f(x * zr1, y * zr1, z1);
+            glVertex3f(x * zr1, y * zr1, z1);
+        }
+        glEnd();
+    }
     glPopMatrix();
     return;
 }
