@@ -12,13 +12,13 @@ int main(int argc, char *argv[])
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
     Texture texture("./resource/toyoura.jpg");
 
-    pSphere   sphere(new Sphere);
+    pCube   sphere(new Cube);
     pFloor    floor(new Floor);
     pAxis     axis(new Axis);
     pCylinder cylinder(new Cylinder);
     sphere -> setColor(red);
     sphere -> setPosition(0, 10, 0);
-    //sphere -> setAttitude(quat);
+    sphere -> setAttitude(quat);
     floor  -> setTexture(texture);
     floor  -> setAttitude(quat);
     cylinder -> setColor(blue);

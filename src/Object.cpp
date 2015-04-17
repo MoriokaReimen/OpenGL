@@ -76,15 +76,55 @@ void Sphere::draw() // protect someday
 
 void Cube::draw() // protect someday
 {
-    GLfloat x, y, z, angle;
-    this->quat.toGLAngleAxis(angle, x, y, z);
-    glPushMatrix();
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-    glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-    glRotatef(angle, x, y, z);
-    glutSolidCube(3);
-    glPopMatrix();
-    return;
+  GLfloat x, y, z, angle;
+  this->quat.toGLAngleAxis(angle, x, y, z);
+  glPushMatrix();
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+  glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+  glRotatef(angle, x, y, z);
+
+  GLfloat lx = 30.0 * 0.5f; // modify some day
+  GLfloat ly = 30.0 * 0.5f;
+  GLfloat lz = 30.0 * 0.5f;
+
+  // sides
+  glBegin (GL_TRIANGLE_STRIP);
+  glNormal3f (-1,0,0);
+  glVertex3f (-lx,-ly,-lz);
+  glVertex3f (-lx,-ly,lz);
+  glVertex3f (-lx,ly,-lz);
+  glVertex3f (-lx,ly,lz);
+  glNormal3f (0,1,0);
+  glVertex3f (lx,ly,-lz);
+  glVertex3f (lx,ly,lz);
+  glNormal3f (1,0,0);
+  glVertex3f (lx,-ly,-lz);
+  glVertex3f (lx,-ly,lz);
+  glNormal3f (0,-1,0);
+  glVertex3f (-lx,-ly,-lz);
+  glVertex3f (-lx,-ly,lz);
+  glEnd();
+
+  // top face
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3f (0,0,1);
+  glVertex3f (-lx,-ly,lz);
+  glVertex3f (lx,-ly,lz);
+  glVertex3f (lx,ly,lz);
+  glVertex3f (-lx,ly,lz);
+  glEnd();
+
+  // bottom face
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3f (0,0,-1);
+  glVertex3f (-lx,-ly,-lz);
+  glVertex3f (-lx,ly,-lz);
+  glVertex3f (lx,ly,-lz);
+  glVertex3f (lx,-ly,-lz);
+  glEnd();
+
+  glPopMatrix();
+  return;
 }
 
 void Floor::draw() // protect someday

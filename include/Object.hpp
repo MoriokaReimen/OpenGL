@@ -64,3 +64,4 @@ typedef std::shared_ptr<Object> pObject;
 typedef std::shared_ptr<Floor> pFloor;
 typedef std::shared_ptr<Axis> pAxis;
 typedef std::shared_ptr<Cylinder> pCylinder;
+typedef std::shared_ptr<Cube> pCube;
