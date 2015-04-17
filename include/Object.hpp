@@ -27,36 +27,50 @@ public:
 class Sphere : public Object
 {
 protected:
+  GLfloat radius{10};
 public:
     void draw() override; // protect someday
+    void setSize(const GLfloat& bradius);
 };
 
 class Cube : public Object
 {
 protected:
+  GLfloat a{10};
+  GLfloat b{10};
+  GLfloat c{10};
 public:
     void draw() override; // protect someday
+    void setSize(const GLfloat& ba, const GLfloat& bb, const GLfloat& bc);
 };
 
 class Floor : public Object
 {
+protected:
+  GLfloat a{10};
+  GLfloat b{10};
 public:
     void draw() override; // protect someday
+    void setSize(const GLfloat& ba, const GLfloat& bb);
 };
 
 class Axis : public Object
 {
+protected:
+  GLfloat width{10};
+  GLfloat length{10};
 public:
     void draw() override;
+    void setSize(const GLfloat& bwidth, const GLfloat& blength);
 };
 
 class Cylinder : public Object
 {
-    GLUquadric* quad;
+  GLfloat radius{10};
+  GLfloat height{10};
 public:
-    Cylinder();
-    ~Cylinder();
     void draw() override;
+    void setSize(const GLfloat& bradius, const GLfloat& bheight);
 };
 
 typedef std::shared_ptr<Sphere> pSphere;

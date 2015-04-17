@@ -51,27 +51,33 @@ void Sphere::draw() // protect someday
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
         double z0  = sin(lat0);
-        double zr0 =  cos(lat0);
+        double zr0 = cos(lat0);
 
         double lat1 = M_PI * (-0.5 + (double) i / 30);
-        double z1 = sin(lat1);
+        double z1  = sin(lat1);
         double zr1 = cos(lat1);
 
         glBegin(GL_QUAD_STRIP);
         for(int j = 0; j <= 30; j++) {
             double lng = 2 * M_PI * (double) (j - 1) / 30;
-            double x = cos(lng);
-            double y = sin(lng);
+            double rx = cos(lng);
+            double ry = sin(lng);
 
-            glNormal3f(x * zr0, y * zr0, z0);
-            glVertex3f(x * zr0, y * zr0, z0);
-            glNormal3f(x * zr1, y * zr1, z1);
-            glVertex3f(x * zr1, y * zr1, z1);
+            glNormal3f(rx * zr0, ry * zr0, z0);
+            glVertex3f(this->radius * rx * zr0, this->radius * ry * zr0, this->radius * z0);
+            glNormal3f(rx * zr1, ry * zr1, z1);
+            glVertex3f(this->radius * rx * zr1, this->radius * ry * zr1, this->radius * z1);
         }
         glEnd();
     }
     glPopMatrix();
     return;
+}
+
+void Sphere::setSize(const GLfloat& bradius)
+{
+  this->radius = bradius;
+  return;
 }
 
 void Cube::draw() // protect someday
@@ -83,47 +89,55 @@ void Cube::draw() // protect someday
   glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
   glRotatef(angle, x, y, z);
 
-  GLfloat lx = 30.0 * 0.5f; // modify some day
-  GLfloat ly = 30.0 * 0.5f;
-  GLfloat lz = 30.0 * 0.5f;
+  GLfloat la = this->a * 0.5f; // modify some day
+  GLfloat lb = this->b * 0.5f;
+  GLfloat lc = this->c * 0.5f;
 
   // sides
   glBegin (GL_TRIANGLE_STRIP);
-  glNormal3f (-1,0,0);
-  glVertex3f (-lx,-ly,-lz);
-  glVertex3f (-lx,-ly,lz);
-  glVertex3f (-lx,ly,-lz);
-  glVertex3f (-lx,ly,lz);
-  glNormal3f (0,1,0);
-  glVertex3f (lx,ly,-lz);
-  glVertex3f (lx,ly,lz);
-  glNormal3f (1,0,0);
-  glVertex3f (lx,-ly,-lz);
-  glVertex3f (lx,-ly,lz);
-  glNormal3f (0,-1,0);
-  glVertex3f (-lx,-ly,-lz);
-  glVertex3f (-lx,-ly,lz);
+  glNormal3f(-1,0,0);
+  glVertex3f(-la, -lc, -lb);
+  glVertex3f(-la, -lc,  lb);
+  glVertex3f(-la,  lc, -lb);
+  glVertex3f(-la,  lc,  lb);
+  glNormal3f(0,1,0);
+  glVertex3f( la,  lc, -lb);
+  glVertex3f( la,  lc,  lb);
+  glNormal3f(1,0,0);
+  glVertex3f(la, -lc, -lb);
+  glVertex3f(la, -lc,  lb);
+  glNormal3f(0,-1,0);
+  glVertex3f(-la, -lc, -lb);
+  glVertex3f(-la, -lc,  lb);
   glEnd();
 
   // top face
   glBegin (GL_TRIANGLE_FAN);
-  glNormal3f (0,0,1);
-  glVertex3f (-lx,-ly,lz);
-  glVertex3f (lx,-ly,lz);
-  glVertex3f (lx,ly,lz);
-  glVertex3f (-lx,ly,lz);
+  glNormal3f(0,0,1);
+  glVertex3f(-la, -lc,  lb);
+  glVertex3f( la, -lc,  lb);
+  glVertex3f( la,  lc,  lb);
+  glVertex3f(-la,  lc,  lb);
   glEnd();
 
   // bottom face
   glBegin (GL_TRIANGLE_FAN);
-  glNormal3f (0,0,-1);
-  glVertex3f (-lx,-ly,-lz);
-  glVertex3f (-lx,ly,-lz);
-  glVertex3f (lx,ly,-lz);
-  glVertex3f (lx,-ly,-lz);
+  glNormal3f(0,0,-1);
+  glVertex3f(-la, -lc, -lb);
+  glVertex3f(-la,  lc, -lb);
+  glVertex3f( la,  lc, -lb);
+  glVertex3f( la, -lc, -lb);
   glEnd();
 
   glPopMatrix();
+  return;
+}
+
+void Cube::setSize(const GLfloat& ba, const GLfloat& bb, const GLfloat& bc)
+{
+  this->a = ba;
+  this->b = bb;
+  this->c = bc;
   return;
 }
 
@@ -141,13 +155,13 @@ void Floor::draw() // protect someday
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
-        glVertex3f(-100.0, 0.0, -100.0);
+        glVertex3f(this->a/2, 0.0, - this->b/2);
         glTexCoord2f(0.f, 5.f);
-        glVertex3f(-100.0, 0.0,  100.0);
+        glVertex3f(this->a/2, 0.0, this->b/2);
         glTexCoord2f(5.f, 5.f);
-        glVertex3f( 100.0, 0.0,  100.0);
+        glVertex3f(- this->a/2, 0.0,  this->b/2);
         glTexCoord2f(5.f, 0.f);
-        glVertex3f( 100.0, 0.0, -100.0);
+        glVertex3f(- this->a/2, 0.0, - this->b/2);
         glEnd();
         glPopMatrix();
         glDisable(GL_TEXTURE_2D);
@@ -158,14 +172,21 @@ void Floor::draw() // protect someday
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
-        glVertex3f(-100.0, 0.0, -100.0);
-        glVertex3f(-100.0, 0.0,  100.0);
-        glVertex3f( 100.0, 0.0,  100.0);
-        glVertex3f( 100.0, 0.0, -100.0);
+        glVertex3f(this->a/2, 0.0, - this->b/2);
+        glVertex3f(this->a/2, 0.0, this->b/2);
+        glVertex3f(- this->a/2, 0.0,  this->b/2);
+        glVertex3f(- this->a/2, 0.0, - this->b/2);
         glEnd();
         glPopMatrix();
     }
     return;
+}
+
+void Floor::setSize(const GLfloat& ba, const GLfloat& bb)
+{
+  this->a = ba;
+  this->b = bb;
+  return;
 }
 
 void Axis::draw()
@@ -178,27 +199,27 @@ void Axis::draw()
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
-    glLineWidth(10);
+    glLineWidth(this->width);
 
     /* X axis */
     glBegin(GL_LINES);
     glColor3d(1.0, 0.0, 0.0);
     glVertex3f(0.0 + xyz.x, 0.0, 0.0);
-    glVertex3f(15.0 + xyz.x, 0.0, 0.0);
+    glVertex3f(this->length + xyz.x, 0.0, 0.0);
     glEnd();
 
     /* Y axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 1.0, 0.0);
     glVertex3f(0.0,  0.0 + xyz.y, 0.0);
-    glVertex3f(0.0, 15.0 + xyz.y, 0.0);
+    glVertex3f(0.0, this->length + xyz.y, 0.0);
     glEnd();
 
     /* Z axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 0.0, 1.0);
     glVertex3f(0.0, 0.0, 0.0 + xyz.z);
-    glVertex3f(0.0, 0.0, 15.0 + xyz.z);
+    glVertex3f(0.0, 0.0, this->length + xyz.z);
     glEnd();
 
     glDisable(GL_COLOR_MATERIAL);
@@ -207,18 +228,15 @@ void Axis::draw()
     return;
 }
 
-Cylinder::Cylinder()
+void Axis::setSize(const GLfloat& bwidth, const GLfloat& blength)
 {
-    this->quad = gluNewQuadric();
-    if(!quad)
-        throw;
-    return;
+  this->width = bwidth;
+  this->length = blength;
+  return;
 }
 
 void Cylinder::draw()
 {
-    GLfloat radius = 10;
-    GLfloat height = 20;
     GLfloat x, y, z, angle;
     float tmp,ny,nz;
     const int sides = 24;     // number of sides to the cylinder (divisible by 4)
@@ -286,9 +304,8 @@ void Cylinder::draw()
   return;
 }
 
-Cylinder::~Cylinder()
+void Cylinder::setSize(const GLfloat& bradius, const GLfloat& bheight)
 {
-    if(quad)
-        gluDeleteQuadric(quad);
+  this->radius = bradius;
+  this->height = bheight;
 }
-
