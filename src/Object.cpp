@@ -220,34 +220,70 @@ void Cylinder::draw()
     GLfloat radius = 10;
     GLfloat height = 20;
     GLfloat x, y, z, angle;
+    float tmp,ny,nz;
+    const int sides = 24;     // number of sides to the cylinder (divisible by 4)
     this->quat.toGLAngleAxis(angle, x, y, z);
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
 
     glPushMatrix();
-    //glTranslatef(0, 0, height / 2);
+    glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
     glRotatef(angle, x, y, z);
-    glTranslatef(0, 0, - height / 2);
-    gluCylinder(this->quad, radius, radius, height, 50, 50);
-    glPopMatrix();
 
-    // draw top
-    glPushMatrix();
-    glRotatef(angle, x, y, z);
-    glNormal3f(0.0, 0.0, 1.0);
-    glTranslatef(0, 0, height/2);
-    gluDisk(quad, 0.f, radius, 50, 1);
-    glPopMatrix();
 
-    // draw base
-    glPushMatrix();
-    glRotatef(angle, x, y, z);
-    glNormal3f(0.0, 0.0, -1.0);
-    glTranslatef(0, 0, -height/2);
-    gluDisk(quad, 0.f, radius, 50, 1);
-    glPopMatrix();
+  float a = float(M_PI*2.0)/float(sides);
+  float sa = std::sin(a);
+  float ca = std::cos(a);
 
-    return;
+  // draw cylinder body
+  ny=1; nz=0;             // normal vector = (0,ny,nz)
+  glBegin (GL_TRIANGLE_STRIP);
+  for (int i=0; i<=sides; i++) {
+    glNormal3d(ny,nz,0);
+    glVertex3d(ny*radius, nz*radius, height / 2);
+    glNormal3d(ny, nz, 0);
+    glVertex3d(ny*radius, nz*radius, -height / 2);
+    // rotate ny,nz
+    tmp = ca*ny - sa*nz;
+    nz = sa*ny + ca*nz;
+    ny = tmp;
+  }
+  glEnd();
+
+  // draw top cap
+  ny=1; nz=0;             // normal vector = (0,ny,nz)
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3d (0,0,1);
+  glVertex3d (0,0,height / 2);
+  for (int i=0; i<=sides; i++) {
+    glNormal3d (0,0,1);
+    glVertex3d (ny*radius,nz*radius,height / 2);
+
+    // rotate ny,nz
+    tmp = ca*ny - sa*nz;
+    nz = sa*ny + ca*nz;
+    ny = tmp;
+  }
+  glEnd();
+
+  // draw bottom cap
+  ny=1; nz=0;             // normal vector = (0,ny,nz)
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3d (0,0,-1);
+  glVertex3d (0,0,-height / 2);
+  for (int i=0; i<=sides; i++) {
+    glNormal3d (0,0,-1);
+    glVertex3d (ny*radius,nz*radius,-height / 2);
+
+    // rotate ny,nz
+    tmp = ca*ny + sa*nz;
+    nz = -sa*ny + ca*nz;
+    ny = tmp;
+  }
+  glEnd();
+  glPopMatrix();
+
+  return;
 }
 
 Cylinder::~Cylinder()

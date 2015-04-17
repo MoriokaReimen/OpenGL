@@ -22,11 +22,11 @@ int main(int argc, char *argv[])
     floor  -> setTexture(texture);
     floor  -> setAttitude(quat);
     cylinder -> setColor(blue);
-    cylinder -> setAttitude(quat);
+    //cylinder -> setAttitude(quat);
     gl.pushObject(floor);
     //gl.pushObject(sphere);
     gl.pushObject(axis);
-    //gl.pushObject(cylinder);
+    gl.pushObject(cylinder);
     gl.setCamera();
     gl.setLight();
     gl.run();
