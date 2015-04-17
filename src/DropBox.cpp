@@ -18,13 +18,13 @@ int main(int argc, char *argv[])
     pCylinder cylinder(new Cylinder);
     sphere -> setColor(red);
     sphere -> setPosition(0, 10, 0);
-    sphere -> setAttitude(quat);
+    //sphere -> setAttitude(quat);
     floor  -> setTexture(texture);
     floor  -> setAttitude(quat);
     cylinder -> setColor(blue);
     cylinder -> setAttitude(quat);
     gl.pushObject(floor);
-    gl.pushObject(sphere);
+    //gl.pushObject(sphere);
     gl.pushObject(axis);
     //gl.pushObject(cylinder);
     gl.setCamera();

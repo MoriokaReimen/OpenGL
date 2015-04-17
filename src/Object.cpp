@@ -136,7 +136,9 @@ void Floor::draw() // protect someday
         glBindTexture(GL_TEXTURE_2D, this->texture.getID());
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
         glPushMatrix();
-        glBegin(GL_QUADS);
+        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+        glRotatef(angle, x, y, z);
+        glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
         glVertex3f(-100.0, 0.0, -100.0);
@@ -147,22 +149,20 @@ void Floor::draw() // protect someday
         glTexCoord2f(5.f, 0.f);
         glVertex3f( 100.0, 0.0, -100.0);
         glEnd();
-        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-        glRotatef(angle, x, y, z);
         glPopMatrix();
         glDisable(GL_TEXTURE_2D);
     } else {
         glPushMatrix();
+        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+        glRotatef(angle, x, y, z);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-        glBegin(GL_QUADS);
+        glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glVertex3f(-100.0, 0.0, -100.0);
         glVertex3f(-100.0, 0.0,  100.0);
         glVertex3f( 100.0, 0.0,  100.0);
         glVertex3f( 100.0, 0.0, -100.0);
         glEnd();
-        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
-        glRotatef(angle, x, y, z);
         glPopMatrix();
     }
     return;
@@ -178,25 +178,27 @@ void Axis::draw()
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
+    glLineWidth(10);
+
     /* X axis */
     glBegin(GL_LINES);
     glColor3d(1.0, 0.0, 0.0);
     glVertex3f(0.0 + xyz.x, 0.0, 0.0);
-    glVertex3f(5.0 + xyz.x, 0.0, 0.0);
+    glVertex3f(15.0 + xyz.x, 0.0, 0.0);
     glEnd();
 
     /* Y axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 1.0, 0.0);
     glVertex3f(0.0,  0.0 + xyz.y, 0.0);
-    glVertex3f(0.0, 5.0 + xyz.y, 0.0);
+    glVertex3f(0.0, 15.0 + xyz.y, 0.0);
     glEnd();
 
     /* Z axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 0.0, 1.0);
     glVertex3f(0.0, 0.0, 0.0 + xyz.z);
-    glVertex3f(0.0, 0.0, 5.0 + xyz.z);
+    glVertex3f(0.0, 0.0, 15.0 + xyz.z);
     glEnd();
 
     glDisable(GL_COLOR_MATERIAL);
