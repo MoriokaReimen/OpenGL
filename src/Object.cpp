@@ -46,7 +46,7 @@ void Sphere::draw() // protect someday
     this->quat.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-    glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
     glRotatef(angle, x, y, z);
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
@@ -86,7 +86,7 @@ void Cube::draw() // protect someday
   this->quat.toGLAngleAxis(angle, x, y, z);
   glPushMatrix();
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-  glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+  glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
   glRotatef(angle, x, y, z);
 
   GLfloat la = this->a * 0.5f; // modify some day
@@ -150,7 +150,7 @@ void Floor::draw() // protect someday
         glBindTexture(GL_TEXTURE_2D, this->texture.getID());
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
         glPushMatrix();
-        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+        glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
         glRotatef(angle, x, y, z);
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
@@ -167,7 +167,7 @@ void Floor::draw() // protect someday
         glDisable(GL_TEXTURE_2D);
     } else {
         glPushMatrix();
-        glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+        glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
         glRotatef(angle, x, y, z);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
         glBegin (GL_TRIANGLE_FAN);
@@ -194,7 +194,7 @@ void Axis::draw()
     GLfloat x, y, z, angle;
     this->quat.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
-    glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
     glRotatef(angle, x, y, z);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
@@ -211,16 +211,17 @@ void Axis::draw()
     /* Y axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 1.0, 0.0);
-    glVertex3f(0.0,  0.0 + xyz.y, 0.0);
-    glVertex3f(0.0, this->length + xyz.y, 0.0);
+    glVertex3f(0.0, 0.0, 0.0 + xyz.y);
+    glVertex3f(0.0, 0.0, this->length + xyz.y);
     glEnd();
 
     /* Z axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 0.0, 1.0);
-    glVertex3f(0.0, 0.0, 0.0 + xyz.z);
-    glVertex3f(0.0, 0.0, this->length + xyz.z);
+    glVertex3f(0.0,  0.0 + xyz.z, 0.0);
+    glVertex3f(0.0, this->length + xyz.z, 0.0);
     glEnd();
+
 
     glDisable(GL_COLOR_MATERIAL);
     glEnable(GL_LIGHTING);
@@ -245,7 +246,7 @@ void Cylinder::draw()
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
 
     glPushMatrix();
-    glTranslatef(this->xyz.x, this->xyz.y, this->xyz.z);
+    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
     glRotatef(angle, x, y, z);
 
 
