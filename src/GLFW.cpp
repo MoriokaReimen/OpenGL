@@ -7,7 +7,8 @@ GLFW::GLFW()
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
-    this->window = glfwCreateWindow( width, height, this->window_title.c_str(), NULL, NULL);
+    this->window = glfwCreateWindow(this->width, this->height, this->window_title.c_str(), NULL, NULL);
+    //this->window = glfwCreateWindow(640, 640, this->window_title.c_str(), NULL, NULL);
     if( window == NULL ) throw std::runtime_error("Failed to Open window");
     glfwMakeContextCurrent(this->window);
 

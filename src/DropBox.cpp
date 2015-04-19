@@ -1,9 +1,9 @@
-#include "GL.hpp"
+#include "GLFW.hpp"
 #include "Object.hpp"
 
 int main(int argc, char *argv[])
 {
-    GL gl(argc, argv);
+    GLFW glfw;
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
@@ -35,14 +35,14 @@ int main(int argc, char *argv[])
     cylinder -> setAttitude(quat);
     cylinder -> setSize(5, 10);
 
-    gl.pushObject(floor);
-    gl.pushObject(sphere);
-    gl.pushObject(axis);
-    gl.pushObject(cylinder);
-    gl.pushObject(cube);
-    gl.setCamera();
-    gl.setLight();
-    gl.run();
+    glfw.pushObject(floor);
+    glfw.pushObject(sphere);
+    glfw.pushObject(axis);
+    glfw.pushObject(cylinder);
+    glfw.pushObject(cube);
+    glfw.setCamera();
+    glfw.setLight();
+    glfw.run();
 
     return 0;
 }
