@@ -1,9 +1,9 @@
-#include "GLFW.hpp"
+#include "BulletGLFW.hpp"
 #include "Object.hpp"
 
 int main(int argc, char *argv[])
 {
-    GLFW glfw;
+    BulletGLFW glfw;
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);

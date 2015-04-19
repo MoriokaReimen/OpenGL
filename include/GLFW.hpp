@@ -9,6 +9,7 @@
 
 class GLFW
 {
+protected:
   /* window title and size */
   std::string window_title{"test"};
   int width{1024};
@@ -20,10 +21,10 @@ class GLFW
 public:
   GLFW();
   ~GLFW();
-  void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
-  void setLight(const Point& xyz);
-  void setCamera();
-  void setCamera(const Point& camera_pos, const Point& look_at);
-  void run();
-  void pushObject(pObject object);
+  virtual void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
+  virtual void setLight(const Point& xyz);
+  virtual void setCamera();
+  virtual void setCamera(const Point& camera_pos, const Point& look_at);
+  virtual void run();
+  virtual void pushObject(pObject object);
 };
