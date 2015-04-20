@@ -11,6 +11,7 @@ public:
     GLdouble z{0.0};
     Point() = default;
     Point(GLdouble x, GLdouble y, GLdouble z) : x(x), y(y), z(z) {};
+    void set(const GLdouble& x, const GLdouble& y, const GLdouble& z);
 };
 
 class ObjectColor
@@ -27,8 +28,8 @@ public:
 
 class Quaternion
 {
-    GLfloat w_, x_, y_, z_;
 public:
+    GLfloat w, x, y, z;
     Quaternion();
     Quaternion(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
     virtual ~Quaternion() = default;

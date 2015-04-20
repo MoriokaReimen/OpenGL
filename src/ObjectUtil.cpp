@@ -1,5 +1,13 @@
 #include "ObjectUtil.hpp"
 
+void Point::set(const GLdouble& x, const GLdouble& y, const GLdouble& z)
+{
+  this->x = x;
+  this->y = y;
+  this->z = z;
+  return;
+}
+
 GLfloat* ObjectColor::toArray()
 {
     this->rgb[0] = this->r;
@@ -9,51 +17,51 @@ GLfloat* ObjectColor::toArray()
 }
 
 Quaternion::Quaternion()
-    : w_(1.f), x_(0.f), y_(0.f), z_(0.f)
+    : w(1.f), x(0.f), y(0.f), z(0.f)
 {
     return;
 }
 
 Quaternion::Quaternion(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z)
-    : w_(w), x_(x), y_(y), z_(z)
+    : w(w), x(x), y(y), z(z)
 {
     return;
 }
 
 void Quaternion::set(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z)
 {
-    this->w_ = w;
-    this->x_ = x;
-    this->y_ = y;
-    this->z_ = z;
+    this->w = w;
+    this->x = x;
+    this->y = y;
+    this->z = z;
     return;
 }
 
 void Quaternion::toAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z)
 {
-    angle = 2 * std::acos(this->w_) * 180 / M_PI;
-    GLfloat s = 1 - this->w_ * this->w_;
+    angle = 2 * std::acos(this->w) * 180 / M_PI;
+    GLfloat s = 1 - this->w * this->w;
     if(s > 0.001) {
-        x    = this->x_ / std::sqrt(1 - this->w_ * this->w_);
-        y    = this->y_ / std::sqrt(1 - this->w_ * this->w_);
-        z    = this->z_ / std::sqrt(1 - this->w_ * this->w_);
+        x    = this->x / std::sqrt(1 - this->w * this->w);
+        y    = this->y / std::sqrt(1 - this->w * this->w);
+        z    = this->z / std::sqrt(1 - this->w * this->w);
         return;
     } else {
-        x_ = 1;
-        y_ = 0;
-        z_ = 0;
+        x = 1;
+        y = 0;
+        z = 0;
         return;
     }
 }
 
 void Quaternion::toGLAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z)
 {
-    angle = 2 * std::acos(this->w_) * 180 / M_PI;
-    GLfloat s = 1 - this->w_ * this->w_;
+    angle = 2 * std::acos(this->w) * 180 / M_PI;
+    GLfloat s = 1 - this->w * this->w;
     if(s > 0.001) {
-        x    = this->x_ / std::sqrt(1 - this->w_ * this->w_);
-        y    = this->z_ / std::sqrt(1 - this->w_ * this->w_);
-        z    = this->y_ / std::sqrt(1 - this->w_ * this->w_);
+        x    = this->x / std::sqrt(1 - this->w * this->w);
+        y    = this->z / std::sqrt(1 - this->w * this->w);
+        z    = this->y / std::sqrt(1 - this->w * this->w);
         return;
     } else {
         x = 1;
@@ -66,10 +74,10 @@ void Quaternion::toGLAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& 
 void Quaternion::fromAngleAxis(const GLfloat& angle, const GLfloat& x,const GLfloat& y,const GLfloat& z)
 {
     GLfloat s = std::sin(angle * M_PI / 2 / 180.f);
-    this->w_ = std::cos(angle * M_PI / 2 / 180.f);
-    this->x_ = x / s;
-    this->y_ = y / s;
-    this->z_ = z / s;
+    this->w = std::cos(angle * M_PI / 2 / 180.f);
+    this->x = x / s;
+    this->y = y / s;
+    this->z = z / s;
     return;
 }
 

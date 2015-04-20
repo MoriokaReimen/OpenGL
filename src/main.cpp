@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
     Quaternion quat;
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
     Texture texture("./resource/toyoura.jpg");
-
+    pBulletSphere   sphere(new Sphere);
+/*
     pCube     cube(new Cube);
     pSphere   sphere(new Sphere);
     pFloor    floor(new Floor);
@@ -36,10 +37,11 @@ int main(int argc, char *argv[])
     cylinder -> setSize(5, 10);
 
     glfw.pushObject(floor);
-    glfw.pushObject(sphere);
     glfw.pushObject(axis);
     glfw.pushObject(cylinder);
     glfw.pushObject(cube);
+*/
+    glfw.pushObject(sphere);
     glfw.setCamera();
     glfw.setLight();
     glfw.run();

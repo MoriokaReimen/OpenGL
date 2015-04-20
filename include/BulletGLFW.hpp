@@ -1,5 +1,7 @@
 #pragma once
 #include "GLFW.hpp"
+#include "BulletObject.hpp"
+
 #include <btBulletDynamicsCommon.h>
 
 class BulletGLFW : public GLFW
@@ -12,6 +14,13 @@ class BulletGLFW : public GLFW
   double gravity_{9.80665};
 public:
   BulletGLFW();
-  ~BulletGLFW();
+  virtual ~BulletGLFW();
   virtual void run() override;
+  void pushObject(pBulletObject object)
+  {
+    GLFW::pushObject(object);
+    this->world_->addRigidBody(object->getRigidBody());
+    return;
+  }
 };
+

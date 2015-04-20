@@ -1,4 +1,5 @@
 #include "BulletGLFW.hpp"
+
 BulletGLFW::BulletGLFW()
   : GLFW()
 {
@@ -15,6 +16,12 @@ BulletGLFW::BulletGLFW()
 
 BulletGLFW::~BulletGLFW()
 {
+  for(auto it = this->body_list_.begin(); it != this->body_list_.end(); ++it)
+  {
+    auto buff = dynamic_cast<pBulletObject>(*it);
+    this->world_->removeRigidBody(buff->getRigidBody());
+    buff->destroy();
+  }
   delete this->world_;
   delete this->solver_;
   delete this->collision_config_;

@@ -16,7 +16,9 @@ add_executable(OpenGLTest src/main.cpp
   src/ObjectUtil.cpp include/ObjectUtil.hpp
   src/Texture.cpp include/Texture.hpp
   src/GLFW.cpp include/GLFW.hpp
-  src/BulletGLFW.cpp include/BulletGLFW.hpp)
+  src/BulletGLFW.cpp include/BulletGLFW.hpp
+  include/BulletObject.hpp)
+  # src/BulletObject.cpp include/BulletObject.hpp)
 target_link_libraries(OpenGLTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
