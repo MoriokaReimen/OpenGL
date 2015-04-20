@@ -4,12 +4,12 @@
 
 class BulletGLFW : public GLFW
 {
-  btBroadphaseInterface* broadphase;
-  btDefaultCollisionConfiguration* collisionConfiguration;
-  btCollisionDispatcher* dispatcher;
-  btSequentialImpulseConstraintSolver* solver;
-  btDiscreteDynamicsWorld* dynamicsWorld;
-  double gravity{9.80665};
+  btBroadphaseInterface* broadphase_;
+  btDefaultCollisionConfiguration* collision_config_;
+  btCollisionDispatcher* dispatcher_;
+  btSequentialImpulseConstraintSolver* solver_;
+  btDiscreteDynamicsWorld* world_;
+  double gravity_{9.80665};
 public:
   BulletGLFW();
   ~BulletGLFW();

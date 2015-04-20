@@ -2,24 +2,24 @@
 BulletGLFW::BulletGLFW()
   : GLFW()
 {
-  this->broadphase = new btDbvtBroadphase();
-  this->collisionConfiguration = new btDefaultCollisionConfiguration();
-  this->dispatcher = new btCollisionDispatcher(collisionConfiguration);
-  this->solver = new btSequentialImpulseConstraintSolver;
-  this->dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+  this->broadphase_ = new btDbvtBroadphase();
+  this->collision_config_ = new btDefaultCollisionConfiguration();
+  this->dispatcher_ = new btCollisionDispatcher(this->collision_config_);
+  this->solver_ = new btSequentialImpulseConstraintSolver;
+  this->world_ = new btDiscreteDynamicsWorld(this->dispatcher_, this->broadphase_, this->solver_, this->collision_config_);
 
-  this->dynamicsWorld->setGravity(btVector3(0, 0, - this->gravity));
+  this->world_->setGravity(btVector3(0, 0, - this->gravity_));
 
   return;
 }
 
 BulletGLFW::~BulletGLFW()
 {
-  delete this->dynamicsWorld;
-  delete this->solver;
-  delete this->collisionConfiguration;
-  delete this->dispatcher;
-  delete this->broadphase;
+  delete this->world_;
+  delete this->solver_;
+  delete this->collision_config_;
+  delete this->dispatcher_;
+  delete this->broadphase_;
 
   return;
 }
@@ -27,16 +27,7 @@ BulletGLFW::~BulletGLFW()
 void BulletGLFW::run()
 {
   do {
-    this->dynamicsWorld->stepSimulation(1/ 60.f, 10);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    for(auto it = this->object_list.begin(); it != this->object_list.end(); ++it) {
-        (*it) -> draw();
-    }
-    glfwSwapBuffers(window);
-    glfwPollEvents();
-
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-      glfwSetWindowShouldClose(window, GL_FALSE);
-
-  } while(!glfwWindowShouldClose(window));
+    this->world_->stepSimulation(1/ 60.f, 10);
+    this->display();
+  } while(!glfwWindowShouldClose(this->window_));
 }

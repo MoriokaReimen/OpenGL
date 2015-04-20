@@ -11,12 +11,12 @@ class GLFW
 {
 protected:
   /* window title and size */
-  std::string window_title{"test"};
-  int width{1024};
-  int height{769};
+  std::string window_title_{"test"};
+  int width_{1024};
+  int height_{769};
 
-  GLFWwindow* window;
-  std::list<pObject> object_list;
+  GLFWwindow* window_;
+  std::list<pObject> object_list_;
 
 public:
   GLFW();
@@ -27,4 +27,5 @@ public:
   virtual void setCamera(const Point& camera_pos, const Point& look_at);
   virtual void run();
   virtual void pushObject(pObject object);
+  virtual void display();
 };

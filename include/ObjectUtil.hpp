@@ -6,11 +6,11 @@
 class Point
 {
 public:
-    GLdouble x {0.0};
-    GLdouble y {0.0};
-    GLdouble z {0.0};
+    GLdouble x{0.0};
+    GLdouble y{0.0};
+    GLdouble z{0.0};
     Point() = default;
-    Point(GLdouble bx, GLdouble by, GLdouble bz) : x(bx), y(by), z(bz) {};
+    Point(GLdouble x, GLdouble y, GLdouble z) : x(x), y(y), z(z) {};
 };
 
 class ObjectColor
@@ -21,19 +21,19 @@ public:
     GLfloat b {1.f};
     GLfloat rgb[3];
     ObjectColor() = default;
-    ObjectColor(GLfloat br, GLfloat bg, GLfloat bb) : r(br), g(bg), b(bb) {}
+    ObjectColor(GLfloat r, GLfloat g, GLfloat b) : r(r), g(g), b(b) {}
     GLfloat* toArray();
 };
 
 class Quaternion
 {
-    GLfloat w, x, y, z;
+    GLfloat w_, x_, y_, z_;
 public:
     Quaternion();
-    Quaternion(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
+    Quaternion(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
     virtual ~Quaternion() = default;
-    void set(const GLfloat& bw, const GLfloat& bx, const GLfloat& by, const GLfloat& bz);
-    void toAngleAxis(GLfloat& angle, GLfloat& bx, GLfloat& by, GLfloat& bz);
-    void toGLAngleAxis(GLfloat& angle, GLfloat& bx, GLfloat& by, GLfloat& bz);
-    void fromAngleAxis(const GLfloat& angle, const GLfloat& bx,const GLfloat& by,const GLfloat& bz);
+    void set(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
+    void toAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z);
+    void toGLAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z);
+    void fromAngleAxis(const GLfloat& angle, const GLfloat& x,const GLfloat& y,const GLfloat& z);
 };

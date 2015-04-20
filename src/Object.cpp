@@ -4,49 +4,49 @@
 void Object::setPosition(double x, double y, double z)
 {
     Point buff(x, y, z);
-    this->xyz = buff;
+    this->xyz_ = buff;
     return;
 }
 
 void Object::setPosition(Point point)
 {
-    this->xyz = point;
+    this->xyz_ = point;
     return;
 }
 
-void Object::setColor(ObjectColor bcolor)
+void Object::setColor(ObjectColor color)
 {
-    this->color = bcolor;
+    this->color_ = color;
     return;
 }
 
-void Object::setColor(GLfloat br, GLfloat bg, GLfloat bb)
+void Object::setColor(GLfloat r, GLfloat g, GLfloat b)
 {
-    this->color.r = br;
-    this->color.g = bg;
-    this->color.b = bb;
+    this->color_.r = r;
+    this->color_.g = g;
+    this->color_.b = b;
     return;
 }
 
-void Object::setAttitude(const Quaternion& bquat)
+void Object::setAttitude(const Quaternion& quat)
 {
-    this->quat = bquat;
+    this->quat_ = quat;
     return;
 }
 
 void Object::setTexture(Texture& texture)
 {
-    this-> texture = texture;
+    this->texture_ = texture;
     return;
 }
 
 void Sphere::draw() // protect someday
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAngleAxis(angle, x, y, z);
+    this->quat_.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
+    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
     glRotatef(angle, x, y, z);
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
@@ -64,9 +64,9 @@ void Sphere::draw() // protect someday
             double ry = sin(lng);
 
             glNormal3f(rx * zr0, ry * zr0, z0);
-            glVertex3f(this->radius * rx * zr0, this->radius * ry * zr0, this->radius * z0);
+            glVertex3f(this->radius_ * rx * zr0, this->radius_ * ry * zr0, this->radius_ * z0);
             glNormal3f(rx * zr1, ry * zr1, z1);
-            glVertex3f(this->radius * rx * zr1, this->radius * ry * zr1, this->radius * z1);
+            glVertex3f(this->radius_ * rx * zr1, this->radius_ * ry * zr1, this->radius_ * z1);
         }
         glEnd();
     }
@@ -74,24 +74,24 @@ void Sphere::draw() // protect someday
     return;
 }
 
-void Sphere::setSize(const GLfloat& bradius)
+void Sphere::setSize(const GLfloat& radius)
 {
-  this->radius = bradius;
+  this->radius_ = radius;
   return;
 }
 
 void Cube::draw() // protect someday
 {
   GLfloat x, y, z, angle;
-  this->quat.toGLAngleAxis(angle, x, y, z);
+  this->quat_.toGLAngleAxis(angle, x, y, z);
   glPushMatrix();
-  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
-  glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+  glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
+  glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
   glRotatef(angle, x, y, z);
 
-  GLfloat la = this->a * 0.5f; // modify some day
-  GLfloat lb = this->b * 0.5f;
-  GLfloat lc = this->c * 0.5f;
+  GLfloat la = this->a_ * 0.5f; // modify some day
+  GLfloat lb = this->b_ * 0.5f;
+  GLfloat lc = this->c_ * 0.5f;
 
   // sides
   glBegin (GL_TRIANGLE_STRIP);
@@ -133,93 +133,93 @@ void Cube::draw() // protect someday
   return;
 }
 
-void Cube::setSize(const GLfloat& ba, const GLfloat& bb, const GLfloat& bc)
+void Cube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
 {
-  this->a = ba;
-  this->b = bb;
-  this->c = bc;
+  this->a_ = a;
+  this->b_ = b;
+  this->c_ = c;
   return;
 }
 
 void Floor::draw() // protect someday
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAngleAxis(angle, x, y, z);
-    if(this->texture.getID()) {
+    this->quat_.toGLAngleAxis(angle, x, y, z);
+    if(this->texture_.getID()) {
         glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, this->texture.getID());
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+        glBindTexture(GL_TEXTURE_2D, this->texture_.getID());
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glPushMatrix();
-        glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+        glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
         glRotatef(angle, x, y, z);
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
-        glVertex3f(this->a/2, 0.0, - this->b/2);
+        glVertex3f(this->a_/2, 0.0, - this->b_/2);
         glTexCoord2f(0.f, 5.f);
-        glVertex3f(this->a/2, 0.0, this->b/2);
+        glVertex3f(this->a_/2, 0.0, this->b_/2);
         glTexCoord2f(5.f, 5.f);
-        glVertex3f(- this->a/2, 0.0,  this->b/2);
+        glVertex3f(- this->a_/2, 0.0,  this->b_/2);
         glTexCoord2f(5.f, 0.f);
-        glVertex3f(- this->a/2, 0.0, - this->b/2);
+        glVertex3f(- this->a_/2, 0.0, - this->b_/2);
         glEnd();
         glPopMatrix();
         glDisable(GL_TEXTURE_2D);
     } else {
         glPushMatrix();
-        glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+        glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
         glRotatef(angle, x, y, z);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
-        glVertex3f(this->a/2, 0.0, - this->b/2);
-        glVertex3f(this->a/2, 0.0, this->b/2);
-        glVertex3f(- this->a/2, 0.0,  this->b/2);
-        glVertex3f(- this->a/2, 0.0, - this->b/2);
+        glVertex3f(  this->a_/2, 0.0, - this->b_/2);
+        glVertex3f(  this->a_/2, 0.0, this->b_/2);
+        glVertex3f(- this->a_/2, 0.0,  this->b_/2);
+        glVertex3f(- this->a_/2, 0.0, - this->b_/2);
         glEnd();
         glPopMatrix();
     }
     return;
 }
 
-void Floor::setSize(const GLfloat& ba, const GLfloat& bb)
+void Floor::setSize(const GLfloat& a, const GLfloat& b)
 {
-  this->a = ba;
-  this->b = bb;
+  this->a_ = a;
+  this->b_ = b;
   return;
 }
 
 void Axis::draw()
 {
     GLfloat x, y, z, angle;
-    this->quat.toGLAngleAxis(angle, x, y, z);
+    this->quat_.toGLAngleAxis(angle, x, y, z);
     glPushMatrix();
-    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
     glRotatef(angle, x, y, z);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
-    glLineWidth(this->width);
+    glLineWidth(this->width_);
 
     /* X axis */
     glBegin(GL_LINES);
     glColor3d(1.0, 0.0, 0.0);
-    glVertex3f(0.0 + xyz.x, 0.0, 0.0);
-    glVertex3f(this->length + xyz.x, 0.0, 0.0);
+    glVertex3f(0.0 + this->xyz_.x, 0.0, 0.0);
+    glVertex3f(this->length_ + this->xyz_.x, 0.0, 0.0);
     glEnd();
 
     /* Y axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 1.0, 0.0);
-    glVertex3f(0.0, 0.0, 0.0 + xyz.y);
-    glVertex3f(0.0, 0.0, this->length + xyz.y);
+    glVertex3f(0.0, 0.0, 0.0 + this->xyz_.y);
+    glVertex3f(0.0, 0.0, this->length_ + this->xyz_.y);
     glEnd();
 
     /* Z axis */
     glBegin(GL_LINES);
     glColor3d(0.0, 0.0, 1.0);
-    glVertex3f(0.0,  0.0 + xyz.z, 0.0);
-    glVertex3f(0.0, this->length + xyz.z, 0.0);
+    glVertex3f(0.0,  0.0 + this->xyz_.z, 0.0);
+    glVertex3f(0.0, this->length_ + this->xyz_.z, 0.0);
     glEnd();
 
 
@@ -229,10 +229,10 @@ void Axis::draw()
     return;
 }
 
-void Axis::setSize(const GLfloat& bwidth, const GLfloat& blength)
+void Axis::setSize(const GLfloat& width, const GLfloat& length)
 {
-  this->width = bwidth;
-  this->length = blength;
+  this->width_  = width;
+  this->length_ = length;
   return;
 }
 
@@ -241,12 +241,12 @@ void Cylinder::draw()
     GLfloat x, y, z, angle;
     float tmp,ny,nz;
     const int sides = 24;     // number of sides to the cylinder (divisible by 4)
-    this->quat.toGLAngleAxis(angle, x, y, z);
+    this->quat_.toGLAngleAxis(angle, x, y, z);
 
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, color.toArray());
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
 
     glPushMatrix();
-    glTranslatef(this->xyz.x, this->xyz.z, this->xyz.y);
+    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
     glRotatef(angle, x, y, z);
 
 
@@ -259,9 +259,9 @@ void Cylinder::draw()
   glBegin (GL_TRIANGLE_STRIP);
   for (int i=0; i<=sides; i++) {
     glNormal3d(ny,nz,0);
-    glVertex3d(ny*radius, nz*radius, height / 2);
+    glVertex3d(ny * this->radius_, nz * this->radius_,   this->height_ / 2);
     glNormal3d(ny, nz, 0);
-    glVertex3d(ny*radius, nz*radius, -height / 2);
+    glVertex3d(ny * this->radius_, nz * this->radius_, - this->height_ / 2);
     // rotate ny,nz
     tmp = ca*ny - sa*nz;
     nz = sa*ny + ca*nz;
@@ -273,10 +273,10 @@ void Cylinder::draw()
   ny=1; nz=0;             // normal vector = (0,ny,nz)
   glBegin (GL_TRIANGLE_FAN);
   glNormal3d (0,0,1);
-  glVertex3d (0,0,height / 2);
+  glVertex3d (0,0,this->height_ / 2);
   for (int i=0; i<=sides; i++) {
     glNormal3d (0,0,1);
-    glVertex3d (ny*radius,nz*radius,height / 2);
+    glVertex3d (ny * this->radius_, nz * this->radius_, this->height_ / 2);
 
     // rotate ny,nz
     tmp = ca*ny - sa*nz;
@@ -289,10 +289,10 @@ void Cylinder::draw()
   ny=1; nz=0;             // normal vector = (0,ny,nz)
   glBegin (GL_TRIANGLE_FAN);
   glNormal3d (0,0,-1);
-  glVertex3d (0,0,-height / 2);
+  glVertex3d (0,0,- this->height_ / 2);
   for (int i=0; i<=sides; i++) {
     glNormal3d (0,0,-1);
-    glVertex3d (ny*radius,nz*radius,-height / 2);
+    glVertex3d (ny * this->radius_, nz * this->radius_, - this->height_ / 2);
 
     // rotate ny,nz
     tmp = ca*ny + sa*nz;
@@ -305,8 +305,8 @@ void Cylinder::draw()
   return;
 }
 
-void Cylinder::setSize(const GLfloat& bradius, const GLfloat& bheight)
+void Cylinder::setSize(const GLfloat& radius, const GLfloat& height)
 {
-  this->radius = bradius;
-  this->height = bheight;
+  this->radius_ = radius;
+  this->height_ = height;
 }
