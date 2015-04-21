@@ -18,8 +18,7 @@ BaseBullet::~BaseBullet()
 {
   for(auto it = this->object_list_.begin(); it != this->object_list_.end(); ++it)
   {
-    this->world_->removeRigidBody((*it)->getRigidBody());
-    (*it)->destroy();
+    this->world_->removeRigidBody((*it)->getBody());
   }
   delete this->world_;
   delete this->solver_;
@@ -38,7 +37,7 @@ void BaseBullet::step()
 
 void BaseBullet::pushObject(pBaseBulletObject object)
 {
-  this->world_->addRigidBody(object->getRigidBody());
+  this->world_->addRigidBody(object->getBody());
   this->object_list_.push_back(object);
   return;
 }

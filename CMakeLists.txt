@@ -23,3 +23,16 @@ target_link_libraries(OpenGLTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
   BulletDynamics BulletCollision LinearMath)
+
+add_executable(BulletTest src/bullet_test.cpp
+  src/Object.cpp include/Object.hpp
+  src/ObjectUtil.cpp include/ObjectUtil.hpp
+  src/Texture.cpp include/Texture.hpp
+  src/GLFW.cpp include/GLFW.hpp
+  src/BaseBullet.cpp include/BaseBullet.hpp
+  include/BaseBulletObject.hpp)
+  # src/BulletObject.cpp include/BulletObject.hpp)
+target_link_libraries(BulletTest
+  pthread stdc++
+  GLU GL X11 SOIL glfw GLEW
+  BulletDynamics BulletCollision LinearMath)
