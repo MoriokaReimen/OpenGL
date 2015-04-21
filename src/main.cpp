@@ -1,9 +1,9 @@
-#include "BulletGLFW.hpp"
+#include "GLFW.hpp"
 #include "Object.hpp"
 
 int main(int argc, char *argv[])
 {
-    BulletGLFW glfw;
+    GLFW glfw;
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     Quaternion quat;
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
     Texture texture("./resource/toyoura.jpg");
-    pBulletSphere   sphere(new Sphere);
+    pSphere   sphere(new Sphere);
 /*
     pCube     cube(new Cube);
     pSphere   sphere(new Sphere);

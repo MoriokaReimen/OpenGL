@@ -16,8 +16,8 @@ add_executable(OpenGLTest src/main.cpp
   src/ObjectUtil.cpp include/ObjectUtil.hpp
   src/Texture.cpp include/Texture.hpp
   src/GLFW.cpp include/GLFW.hpp
-  src/BulletGLFW.cpp include/BulletGLFW.hpp
-  include/BulletObject.hpp)
+  src/BaseBullet.cpp include/BaseBullet.hpp
+  include/BaseBulletObject.hpp)
   # src/BulletObject.cpp include/BulletObject.hpp)
 target_link_libraries(OpenGLTest
   pthread stdc++

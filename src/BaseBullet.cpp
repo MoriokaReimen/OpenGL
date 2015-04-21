@@ -1,7 +1,6 @@
-#include "BulletGLFW.hpp"
+#include "BaseBullet.hpp"
 
-BulletGLFW::BulletGLFW()
-  : GLFW()
+BaseBullet::BaseBullet()
 {
   this->broadphase_ = new btDbvtBroadphase();
   this->collision_config_ = new btDefaultCollisionConfiguration();
@@ -14,13 +13,13 @@ BulletGLFW::BulletGLFW()
   return;
 }
 
-BulletGLFW::~BulletGLFW()
+
+BaseBullet::~BaseBullet()
 {
-  for(auto it = this->body_list_.begin(); it != this->body_list_.end(); ++it)
+  for(auto it = this->object_list_.begin(); it != this->object_list_.end(); ++it)
   {
-    auto buff = dynamic_cast<pBulletObject>(*it);
-    this->world_->removeRigidBody(buff->getRigidBody());
-    buff->destroy();
+    this->world_->removeRigidBody((*it)->getRigidBody());
+    (*it)->destroy();
   }
   delete this->world_;
   delete this->solver_;
@@ -31,10 +30,15 @@ BulletGLFW::~BulletGLFW()
   return;
 }
 
-void BulletGLFW::run()
+void BaseBullet::step()
 {
-  do {
     this->world_->stepSimulation(1/ 60.f, 10);
-    this->display();
-  } while(!glfwWindowShouldClose(this->window_));
+    return;
+}
+
+void BaseBullet::pushObject(pBaseBulletObject object)
+{
+  this->world_->addRigidBody(object->getRigidBody());
+  this->object_list_.push_back(object);
+  return;
 }
