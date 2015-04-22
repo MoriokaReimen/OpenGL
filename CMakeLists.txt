@@ -17,8 +17,7 @@ add_executable(OpenGLTest src/main.cpp
   src/Texture.cpp include/Texture.hpp
   src/GLFW.cpp include/GLFW.hpp
   src/BaseBullet.cpp include/BaseBullet.hpp
-  include/BaseBulletObject.hpp)
-  # src/BulletObject.cpp include/BulletObject.hpp)
+  src/BaseBulletObject.cpp include/BaseBulletObject.hpp)
 target_link_libraries(OpenGLTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
@@ -30,8 +29,7 @@ add_executable(BulletTest src/bullet_test.cpp
   src/Texture.cpp include/Texture.hpp
   src/GLFW.cpp include/GLFW.hpp
   src/BaseBullet.cpp include/BaseBullet.hpp
-  include/BaseBulletObject.hpp)
-  # src/BulletObject.cpp include/BulletObject.hpp)
+  src/BaseBulletObject.cpp include/BaseBulletObject.hpp)
 target_link_libraries(BulletTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW

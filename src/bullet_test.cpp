@@ -4,10 +4,8 @@
 int main()
 {
   BaseBullet bullet;
-  BaseBulletSphereFactory factory;
-  factory.xyz.z = 100;
-  pBaseBulletObject sphere = factory.spawn();
-  //sphere->init();
+  BaseBulletObjectFactory::xyz.z = 100;
+  pBaseBulletObject sphere = BaseBulletObjectFactory::spawnSphere(10.0);
   bullet.pushObject(sphere);
   for(int i = 0; i < 100; ++i)
   {
