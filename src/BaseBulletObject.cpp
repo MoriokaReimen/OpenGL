@@ -63,3 +63,22 @@ pBaseBulletObject BaseBulletObjectFactory::spawnSphere(double radius)
   pBaseBulletObject sphere(new BaseBulletObject(body, shape));
  return sphere;
 }
+
+pBaseBulletObject BaseBulletObjectFactory::spawnStaticPlane()
+{
+  btVector3 inertia{0.f, 0.f, 0.f};
+  btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
+
+  btDefaultMotionState* motion_state =
+      new btDefaultMotionState(btTransform(
+            btQuaternion(quat.w, quat.x, quat.y, quat.z),
+            btVector3(xyz.x, xyz.y, xyz.z)));
+
+  btRigidBody::btRigidBodyConstructionInfo construction_info(
+       mass, motion_state,
+       shape,       inertia);
+
+  btRigidBody* body = new btRigidBody(construction_info);
+  pBaseBulletObject static_plane(new BaseBulletObject(body, shape));
+  return static_plane;
+}

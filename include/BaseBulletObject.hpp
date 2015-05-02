@@ -26,5 +26,6 @@ public:
   static Point xyz;
   static Quaternion quat;
   static pBaseBulletObject spawnSphere(double radius);
+  static pBaseBulletObject spawnStaticPlane();
 };
 
