@@ -1,5 +1,15 @@
 #include "Object.hpp"
 
+class BulletGLObject
+{
+  pObject gl_object;
+  pBulletObject bullet_object;
+public:
+  BulletGLObject()
+  {
+  }
+};
+
 
 void Object::setPosition(double x, double y, double z)
 {
