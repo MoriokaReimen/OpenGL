@@ -3,9 +3,9 @@
 #include <btBulletDynamicsCommon.h>
 #include <list>
 
-class BaseBullet
+class Bullet
 {
-  std::list<pBaseBulletObject> object_list_;
+  std::list<pBulletObject> object_list_;
   btBroadphaseInterface* broadphase_;
   btDefaultCollisionConfiguration* collision_config_;
   btCollisionDispatcher* dispatcher_;
@@ -13,9 +13,9 @@ class BaseBullet
   btDiscreteDynamicsWorld* world_;
   double gravity_{9.80665};
 public:
-  BaseBullet();
-  virtual ~BaseBullet();
+  Bullet();
+  virtual ~Bullet();
   virtual void step();
-  void pushObject(pBaseBulletObject object);
+  void pushObject(pBulletObject object);
 };
 

@@ -1,6 +1,6 @@
-#include "BaseBullet.hpp"
+#include "Bullet.hpp"
 
-BaseBullet::BaseBullet()
+Bullet::Bullet()
 {
   this->broadphase_ = new btDbvtBroadphase();
   this->collision_config_ = new btDefaultCollisionConfiguration();
@@ -14,7 +14,7 @@ BaseBullet::BaseBullet()
 }
 
 
-BaseBullet::~BaseBullet()
+Bullet::~Bullet()
 {
   for(auto it = this->object_list_.begin(); it != this->object_list_.end(); ++it)
   {
@@ -29,13 +29,13 @@ BaseBullet::~BaseBullet()
   return;
 }
 
-void BaseBullet::step()
+void Bullet::step()
 {
     this->world_->stepSimulation(1/ 60.f, 10);
     return;
 }
 
-void BaseBullet::pushObject(pBaseBulletObject object)
+void Bullet::pushObject(pBulletObject object)
 {
   this->world_->addRigidBody(object->getBody());
   this->object_list_.push_back(object);
