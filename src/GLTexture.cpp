@@ -1,11 +1,11 @@
-#include"Texture.hpp"
+#include"GLTexture.hpp"
 #include <iostream>
 
-Texture::Texture()
+GLTexture::GLTexture()
 {
 }
 
-Texture::Texture(const std::string& fname)
+GLTexture::GLTexture(const std::string& fname)
     : filename(fname)
 {
     //glShadeModel(GL_SMOOTH);
@@ -26,11 +26,11 @@ Texture::Texture(const std::string& fname)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 }
 
-Texture::~Texture()
+GLTexture::~GLTexture()
 {
 }
 
-GLuint Texture::getID()
+GLuint GLTexture::getID()
 {
     return id;
 }

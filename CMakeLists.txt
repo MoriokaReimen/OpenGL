@@ -12,22 +12,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 
 add_executable(OpenGLTest src/main.cpp
-  src/Object.cpp include/Object.hpp
-  src/ObjectUtil.cpp include/ObjectUtil.hpp
-  src/Texture.cpp include/Texture.hpp
-  src/GLFW.cpp include/GLFW.hpp
-  src/BaseBullet.cpp include/BaseBullet.hpp
-  src/BaseBulletObject.cpp include/BaseBulletObject.hpp)
+  src/GLObject.cpp include/GLObject.hpp
+  src/GLObjectUtil.cpp include/GLObjectUtil.hpp
+  src/GLTexture.cpp include/GLTexture.hpp
+  src/GL.cpp include/GL.hpp)
 target_link_libraries(OpenGLTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
   BulletDynamics BulletCollision LinearMath)
 
 add_executable(BulletTest src/bullet_test.cpp
-  src/Object.cpp include/Object.hpp
-  src/ObjectUtil.cpp include/ObjectUtil.hpp
-  src/Texture.cpp include/Texture.hpp
-  src/GLFW.cpp include/GLFW.hpp
+  src/GLObjectUtil.cpp include/GLObjectUtil.hpp
   src/BaseBullet.cpp include/BaseBullet.hpp
   src/BaseBulletObject.cpp include/BaseBulletObject.hpp)
 target_link_libraries(BulletTest

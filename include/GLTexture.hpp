@@ -6,13 +6,13 @@
 #include<SOIL/SOIL.h>
 
 typedef unsigned char ubyte_t;
-class Texture
+class GLTexture
 {
     std::string filename;
     GLuint id; // texture id for gl
 public:
-    Texture();
-    Texture(const std::string& filename);
-    ~Texture();
+    GLTexture();
+    GLTexture(const std::string& filename);
+    ~GLTexture();
     GLuint getID();
 };

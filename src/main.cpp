@@ -1,17 +1,17 @@
-#include "GLFW.hpp"
-#include "Object.hpp"
+#include "GL.hpp"
+#include "GLObject.hpp"
 
 int main(int argc, char *argv[])
 {
-    GLFW glfw;
+    GL gl;
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
     ObjectColor gray(0.5, 0.5, 0.5);
     Quaternion quat;
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
-    Texture texture("./resource/toyoura.jpg");
-    pSphere   sphere(new Sphere);
+    GLTexture texture("./resource/toyoura.jpg");
+    pGLSphere   sphere(new GLSphere);
 /*
     pCube     cube(new Cube);
     pSphere   sphere(new Sphere);
@@ -41,10 +41,10 @@ int main(int argc, char *argv[])
     glfw.pushObject(cylinder);
     glfw.pushObject(cube);
 */
-    glfw.pushObject(sphere);
-    glfw.setCamera();
-    glfw.setLight();
-    glfw.run();
+    gl.pushObject(sphere);
+    gl.setCamera();
+    gl.setLight();
+    gl.run();
 
     return 0;
 }

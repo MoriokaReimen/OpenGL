@@ -4,7 +4,7 @@
 #include <memory>
 
 
-class Object
+class GLObject
 {
 protected:
     Point xyz_ {0, 0, 0};
@@ -13,8 +13,8 @@ protected:
     Texture texture_;
     Quaternion quat_{1.f, 0.f, 0.f, 0.f};
 public:
-    Object() = default;
-    virtual ~Object() = default;
+    GLObject() = default;
+    virtual ~GLObject() = default;
     virtual void draw() {};
     virtual void setPosition(double x, double y, double z);
     virtual void setPosition(Point point);
@@ -24,7 +24,7 @@ public:
     virtual void setAttitude(const Quaternion& quat);
 };
 
-class Sphere : public Object
+class GLSphere : public GLObject
 {
 protected:
   GLfloat radius_{10};
@@ -33,7 +33,7 @@ public:
     virtual void setSize(const GLfloat& bradius);
 };
 
-class Cube : public Object
+class GLCube : public GLObject
 {
 protected:
   GLfloat a_{10};
@@ -44,7 +44,7 @@ public:
     virtual void setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c);
 };
 
-class Floor : public Object
+class GLFloor : public GLObject
 {
 protected:
   GLfloat a_{10};
@@ -54,7 +54,7 @@ public:
     virtual void setSize(const GLfloat& a, const GLfloat& b);
 };
 
-class Axis : public Object
+class GLAxis : public GLObject
 {
 protected:
   GLfloat width_{10};
@@ -64,7 +64,7 @@ public:
     virtual void setSize(const GLfloat& width, const GLfloat& length);
 };
 
-class Cylinder : public Object
+class GLCylinder : public GLObject
 {
   GLfloat radius_{10};
   GLfloat height_{10};
@@ -73,9 +73,9 @@ public:
     virtual void setSize(const GLfloat& radius, const GLfloat& height);
 };
 
-typedef std::shared_ptr<Sphere> pSphere;
-typedef std::shared_ptr<Object> pObject;
-typedef std::shared_ptr<Floor> pFloor;
-typedef std::shared_ptr<Axis> pAxis;
-typedef std::shared_ptr<Cylinder> pCylinder;
-typedef std::shared_ptr<Cube> pCube;
+typedef std::shared_ptr<GLSphere> pGLSphere;
+typedef std::shared_ptr<GLObject> pGLObject;
+typedef std::shared_ptr<GLFloor> pGLFloor;
+typedef std::shared_ptr<GLAxis> pGLAxis;
+typedef std::shared_ptr<GLCylinder> pGLCylinder;
+typedef std::shared_ptr<GLCube> pGLCube;

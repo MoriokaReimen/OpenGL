@@ -3,14 +3,14 @@
 #include <cmath>
 #define _USE_MATH_DEFINES
 
-class Point
+class GLPoint
 {
 public:
     GLdouble x{0.0};
     GLdouble y{0.0};
     GLdouble z{0.0};
-    Point() = default;
-    Point(GLdouble x, GLdouble y, GLdouble z) : x(x), y(y), z(z) {};
+    GLPoint() = default;
+    GLPoint(GLdouble x, GLdouble y, GLdouble z) : x(x), y(y), z(z) {};
     void set(const GLdouble& x, const GLdouble& y, const GLdouble& z);
 };
 
@@ -21,18 +21,18 @@ public:
     GLfloat g {1.f};
     GLfloat b {1.f};
     GLfloat rgb[3];
-    ObjectColor() = default;
-    ObjectColor(GLfloat r, GLfloat g, GLfloat b) : r(r), g(g), b(b) {}
+    GLObjectColor() = default;
+    GLObjectColor(GLfloat r, GLfloat g, GLfloat b) : r(r), g(g), b(b) {}
     GLfloat* toArray();
 };
 
-class Quaternion
+class GLQuaternion
 {
 public:
     GLfloat w, x, y, z;
-    Quaternion();
-    Quaternion(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
-    virtual ~Quaternion() = default;
+    GLQuaternion();
+    GLQuaternion(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
+    virtual ~GLQuaternion() = default;
     void set(const GLfloat& w, const GLfloat& x, const GLfloat& y, const GLfloat& z);
     void toAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z);
     void toGLAngleAxis(GLfloat& angle, GLfloat& x, GLfloat& y, GLfloat& z);

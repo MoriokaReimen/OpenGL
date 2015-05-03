@@ -1,36 +1,25 @@
-#include "Object.hpp"
+#include "GLObject.hpp"
 
-class BulletGLObject
-{
-  pObject gl_object;
-  pBulletObject bullet_object;
-public:
-  BulletGLObject()
-  {
-  }
-};
-
-
-void Object::setPosition(double x, double y, double z)
+void GLObject::setPosition(double x, double y, double z)
 {
     Point buff(x, y, z);
     this->xyz_ = buff;
     return;
 }
 
-void Object::setPosition(Point point)
+void GLObject::setPosition(Point point)
 {
     this->xyz_ = point;
     return;
 }
 
-void Object::setColor(ObjectColor color)
+void GLObject::setColor(GLObjectColor color)
 {
     this->color_ = color;
     return;
 }
 
-void Object::setColor(GLfloat r, GLfloat g, GLfloat b)
+void GLObject::setColor(GLfloat r, GLfloat g, GLfloat b)
 {
     this->color_.r = r;
     this->color_.g = g;
@@ -38,19 +27,19 @@ void Object::setColor(GLfloat r, GLfloat g, GLfloat b)
     return;
 }
 
-void Object::setAttitude(const Quaternion& quat)
+void GLObject::setAttitude(const Quaternion& quat)
 {
     this->quat_ = quat;
     return;
 }
 
-void Object::setTexture(Texture& texture)
+void GLObject::setTexture(Texture& texture)
 {
     this->texture_ = texture;
     return;
 }
 
-void Sphere::draw() // protect someday
+void GLSphere::draw() // protect someday
 {
     GLfloat x, y, z, angle;
     this->quat_.toGLAngleAxis(angle, x, y, z);
@@ -84,13 +73,13 @@ void Sphere::draw() // protect someday
     return;
 }
 
-void Sphere::setSize(const GLfloat& radius)
+void GLSphere::setSize(const GLfloat& radius)
 {
   this->radius_ = radius;
   return;
 }
 
-void Cube::draw() // protect someday
+void GLCube::draw() // protect someday
 {
   GLfloat x, y, z, angle;
   this->quat_.toGLAngleAxis(angle, x, y, z);
@@ -143,7 +132,7 @@ void Cube::draw() // protect someday
   return;
 }
 
-void Cube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
+void GLCube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
 {
   this->a_ = a;
   this->b_ = b;
@@ -151,7 +140,7 @@ void Cube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
   return;
 }
 
-void Floor::draw() // protect someday
+void GLFloor::draw() // protect someday
 {
     GLfloat x, y, z, angle;
     this->quat_.toGLAngleAxis(angle, x, y, z);
@@ -192,14 +181,14 @@ void Floor::draw() // protect someday
     return;
 }
 
-void Floor::setSize(const GLfloat& a, const GLfloat& b)
+void GLFloor::setSize(const GLfloat& a, const GLfloat& b)
 {
   this->a_ = a;
   this->b_ = b;
   return;
 }
 
-void Axis::draw()
+void GLAxis::draw()
 {
     GLfloat x, y, z, angle;
     this->quat_.toGLAngleAxis(angle, x, y, z);
@@ -239,14 +228,14 @@ void Axis::draw()
     return;
 }
 
-void Axis::setSize(const GLfloat& width, const GLfloat& length)
+void GLAxis::setSize(const GLfloat& width, const GLfloat& length)
 {
   this->width_  = width;
   this->length_ = length;
   return;
 }
 
-void Cylinder::draw()
+void GLCylinder::draw()
 {
     GLfloat x, y, z, angle;
     float tmp,ny,nz;
@@ -315,7 +304,7 @@ void Cylinder::draw()
   return;
 }
 
-void Cylinder::setSize(const GLfloat& radius, const GLfloat& height)
+void GLCylinder::setSize(const GLfloat& radius, const GLfloat& height)
 {
   this->radius_ = radius;
   this->height_ = height;
