@@ -1,6 +1,6 @@
-#include "GLFW.hpp"
+#include "GL.hpp"
 
-GLFW::GLFW()
+GL::GL()
   {
     /* Initialize glfw */
     if(!glfwInit()) throw std::runtime_error("Failed to Init glfw");
@@ -25,12 +25,12 @@ GLFW::GLFW()
     return;
   }
 
-GLFW::~GLFW()
+GL::~GL()
   {
     glfwTerminate();
   }
 
-  void GLFW::setLight(GLfloat x, GLfloat y, GLfloat z)
+  void GL::setLight(GLfloat x, GLfloat y, GLfloat z)
   {
       GLfloat lightpos[4];
       lightpos[0] = x;
@@ -45,7 +45,7 @@ GLFW::~GLFW()
       return;
   }
 
-  void GLFW::setLight(const Point& xyz)
+  void GL::setLight(const Point& xyz)
   {
       GLfloat lightpos[4];
       lightpos[0] = xyz.x;
@@ -60,7 +60,7 @@ GLFW::~GLFW()
       return;
   }
 
-  void GLFW::setCamera()
+  void GL::setCamera()
   {
     //視点の設定
     glViewport(0, 0, this->width_, this->height_);
@@ -77,7 +77,7 @@ GLFW::~GLFW()
     return;
   }
 
-  void GLFW::setCamera(const Point& camera_pos, const Point& look_at)
+  void GL::setCamera(const Point& camera_pos, const Point& look_at)
   {
     //視点の設定
     glViewport(0, 0, this->width_, this->height_);
@@ -94,20 +94,20 @@ GLFW::~GLFW()
     return;
   }
 
-  void GLFW::run()
+  void GL::run()
   {
     do {
       this->display();
     } while(!glfwWindowShouldClose(this->window_));
   }
 
-  void GLFW::pushObject(pObject object)
+  void GL::pushObject(pObject object)
   {
     this->object_list_.push_back(object);
     return;
   }
 
-void GLFW::display()
+void GL::display()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     for(auto it = this->object_list_.begin(); it != this->object_list_.end(); ++it) {

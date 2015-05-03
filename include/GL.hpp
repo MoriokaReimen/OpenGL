@@ -7,7 +7,7 @@
 
 #include "Object.hpp"
 
-class GLFW
+class GL
 {
 protected:
   /* window title and size */
@@ -19,8 +19,8 @@ protected:
   std::list<pObject> object_list_;
 
 public:
-  GLFW();
-  ~GLFW();
+  GL();
+  ~GL();
   virtual void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
   virtual void setLight(const Point& xyz);
   virtual void setCamera();
