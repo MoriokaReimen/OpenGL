@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(OpenGLTest)
 add_subdirectory(src)
 add_subdirectory(spike)
+add_subdirectory(test)
 add_subdirectory(resource)
 add_subdirectory(bin)
 add_subdirectory(include)
@@ -11,7 +12,7 @@ LINK_DIRECTORIES("/usr/local/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 
-add_executable(OpenGLTest src/main.cpp
+add_executable(OpenGLTest test/GLTest.cpp
   src/GLObject.cpp include/GLObject.hpp
   src/3dMath.cpp include/3dMath.hpp
   src/GLTexture.cpp include/GLTexture.hpp
@@ -21,7 +22,7 @@ target_link_libraries(OpenGLTest
   GLU GL X11 SOIL glfw GLEW
   BulletDynamics BulletCollision LinearMath)
 
-add_executable(BulletTest src/bullet_test.cpp
+add_executable(BulletTest test/BulletTest.cpp
   src/3dMath.cpp include/3dMath.hpp
   src/Bullet.cpp include/Bullet.hpp
   src/BulletObject.cpp include/BulletObject.hpp)
