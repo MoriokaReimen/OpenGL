@@ -101,7 +101,7 @@ GL::~GL()
     } while(!glfwWindowShouldClose(this->window_));
   }
 
-  void GL::pushObject(pObject object)
+  void GL::pushObject(pGLObject object)
   {
     this->object_list_.push_back(object);
     return;
@@ -121,17 +121,3 @@ void GL::display()
 
       return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

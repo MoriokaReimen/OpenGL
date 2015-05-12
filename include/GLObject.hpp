@@ -1,6 +1,6 @@
 #pragma once
-#include "ObjectUtil.hpp"
-#include "Texture.hpp"
+#include "3dMath.hpp"
+#include "GLTexture.hpp"
 #include <memory>
 
 
@@ -10,7 +10,7 @@ protected:
     Point xyz_ {0, 0, 0};
     // Attitude attitude; implement someday
     ObjectColor color_ {1.f,1.f,1.f};
-    Texture texture_;
+    GLTexture texture_;
     Quaternion quat_{1.f, 0.f, 0.f, 0.f};
 public:
     GLObject() = default;
@@ -20,7 +20,7 @@ public:
     virtual void setPosition(Point point);
     virtual void setColor(ObjectColor bcolor);
     virtual void setColor(GLfloat r, GLfloat g, GLfloat b);
-    virtual void setTexture(Texture& texture);
+    virtual void setTexture(GLTexture& texture);
     virtual void setAttitude(const Quaternion& quat);
 };
 

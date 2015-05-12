@@ -3,7 +3,7 @@
 #include <memory>
 #include <exception>
 #include <btBulletDynamicsCommon.h>
-#include "GLObjectUtil.hpp"
+#include "3dMath.hpp"
 
 class BulletObject
 {
@@ -12,8 +12,8 @@ class BulletObject
 public:
   BulletObject(btRigidBody* body, btCollisionShape* shape);
   ~BulletObject();
-  GLPoint getPoint();
-  GLQuaternion getQuat();
+  Point getPoint();
+  Quaternion getQuat();
   btRigidBody* getBody();
 };
 
@@ -23,9 +23,8 @@ class BulletObjectFactory
 {
 public:
   static btScalar mass;
-  static GLPoint xyz;
-  static GLQuaternion quat;
+  static Point xyz;
+  static Quaternion quat;
   static pBulletObject spawnSphere(double radius);
   static pBulletObject spawnStaticPlane();
 };
-

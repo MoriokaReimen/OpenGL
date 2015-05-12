@@ -1,4 +1,4 @@
-class BulletGL
+class World
 {
   GLFW glfw;
   BaseBullet bullet;

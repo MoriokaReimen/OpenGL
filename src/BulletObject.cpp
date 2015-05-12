@@ -1,17 +1,17 @@
-#include "BaseBulletObject.hpp"
-btScalar BaseBulletObjectFactory::mass{1};
-Point BaseBulletObjectFactory::xyz{0, 0, 0};
-Quaternion BaseBulletObjectFactory::quat{1, 0, 0, 0};
+#include "BulletObject.hpp"
+btScalar BulletObjectFactory::mass{1};
+Point BulletObjectFactory::xyz{0, 0, 0};
+Quaternion BulletObjectFactory::quat{1, 0, 0, 0};
 
 
 
-BaseBulletObject::BaseBulletObject(btRigidBody* body, btCollisionShape* shape)
+BulletObject::BulletObject(btRigidBody* body, btCollisionShape* shape)
   : body_(body), shape_(shape)
 {
   return;
 }
 
-BaseBulletObject::~BaseBulletObject()
+BulletObject::~BulletObject()
 {
     delete body_->getMotionState();
     delete body_;
@@ -19,7 +19,7 @@ BaseBulletObject::~BaseBulletObject()
     return;
 }
 
-Point BaseBulletObject::getPoint()
+Point BulletObject::getPoint()
 {
   btTransform trans;
   btVector3 buff;
@@ -29,7 +29,7 @@ Point BaseBulletObject::getPoint()
   return xyz;
 }
 
-Quaternion BaseBulletObject::getQuat()
+Quaternion BulletObject::getQuat()
 {
   btTransform trans;
   btQuaternion buff;
@@ -39,12 +39,12 @@ Quaternion BaseBulletObject::getQuat()
   return quat;
 }
 
-btRigidBody* BaseBulletObject::getBody()
+btRigidBody* BulletObject::getBody()
 {
   return this->body_;
 }
 
-pBaseBulletObject BaseBulletObjectFactory::spawnSphere(double radius)
+pBulletObject BulletObjectFactory::spawnSphere(double radius)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
   btCollisionShape* shape = new btSphereShape(radius);
@@ -60,11 +60,11 @@ pBaseBulletObject BaseBulletObjectFactory::spawnSphere(double radius)
        shape,       inertia);
 
   btRigidBody* body = new btRigidBody(construction_info);
-  pBaseBulletObject sphere(new BaseBulletObject(body, shape));
+  pBulletObject sphere(new BulletObject(body, shape));
  return sphere;
 }
 
-pBaseBulletObject BaseBulletObjectFactory::spawnStaticPlane()
+pBulletObject BulletObjectFactory::spawnStaticPlane()
 {
   btVector3 inertia{0.f, 0.f, 0.f};
   btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
@@ -79,6 +79,6 @@ pBaseBulletObject BaseBulletObjectFactory::spawnStaticPlane()
        shape,       inertia);
 
   btRigidBody* body = new btRigidBody(construction_info);
-  pBaseBulletObject static_plane(new BaseBulletObject(body, shape));
+  pBulletObject static_plane(new BulletObject(body, shape));
   return static_plane;
 }

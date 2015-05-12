@@ -1,5 +1,5 @@
 #pragma once
-#include "BaseBulletObject.hpp"
+#include "BulletObject.hpp"
 #include <btBulletDynamicsCommon.h>
 #include <list>
 

@@ -13,7 +13,7 @@ void GLObject::setPosition(Point point)
     return;
 }
 
-void GLObject::setColor(GLObjectColor color)
+void GLObject::setColor(ObjectColor color)
 {
     this->color_ = color;
     return;
@@ -33,7 +33,7 @@ void GLObject::setAttitude(const Quaternion& quat)
     return;
 }
 
-void GLObject::setTexture(Texture& texture)
+void GLObject::setTexture(GLTexture& texture)
 {
     this->texture_ = texture;
     return;

@@ -5,7 +5,7 @@
 #include <list>
 #include <memory>
 
-#include "Object.hpp"
+#include "GLObject.hpp"
 
 class GL
 {
@@ -16,7 +16,7 @@ protected:
   int height_{769};
 
   GLFWwindow* window_;
-  std::list<pObject> object_list_;
+  std::list<pGLObject> object_list_;
 
 public:
   GL();
@@ -26,6 +26,6 @@ public:
   virtual void setCamera();
   virtual void setCamera(const Point& camera_pos, const Point& look_at);
   virtual void run();
-  virtual void pushObject(pObject object);
+  virtual void pushObject(pGLObject object);
   virtual void display();
 };

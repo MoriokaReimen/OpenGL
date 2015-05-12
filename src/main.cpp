@@ -12,6 +12,12 @@ int main(int argc, char *argv[])
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
     GLTexture texture("./resource/toyoura.jpg");
     pGLSphere   sphere(new GLSphere);
+    pGLFloor   floor(new GLFloor);
+    sphere -> setColor(red);
+    sphere -> setSize(10);
+    floor  -> setTexture(texture);
+    floor  -> setAttitude(quat);
+    floor  -> setSize(100.f, 100.f);
 /*
     pCube     cube(new Cube);
     pSphere   sphere(new Sphere);
@@ -22,14 +28,9 @@ int main(int argc, char *argv[])
     cube-> setSize(5, 5, 5);
     cube-> setPosition(30, 0, 0);
 
-    sphere -> setColor(red);
     sphere -> setPosition(0, 10, 0);
     sphere -> setAttitude(quat);
-    sphere -> setSize(10);
 
-    floor  -> setTexture(texture);
-    floor  -> setAttitude(quat);
-    floor  -> setSize(100.f, 100.f);
 
     cylinder -> setColor(blue);
     cylinder -> setAttitude(quat);
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
     glfw.pushObject(cube);
 */
     gl.pushObject(sphere);
+    gl.pushObject(floor);
     gl.setCamera();
     gl.setLight();
     gl.run();

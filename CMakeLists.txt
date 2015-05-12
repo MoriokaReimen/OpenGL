@@ -13,7 +13,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 
 add_executable(OpenGLTest src/main.cpp
   src/GLObject.cpp include/GLObject.hpp
-  src/GLObjectUtil.cpp include/GLObjectUtil.hpp
+  src/3dMath.cpp include/3dMath.hpp
   src/GLTexture.cpp include/GLTexture.hpp
   src/GL.cpp include/GL.hpp)
 target_link_libraries(OpenGLTest
@@ -22,9 +22,9 @@ target_link_libraries(OpenGLTest
   BulletDynamics BulletCollision LinearMath)
 
 add_executable(BulletTest src/bullet_test.cpp
-  src/GLObjectUtil.cpp include/GLObjectUtil.hpp
-  src/BaseBullet.cpp include/BaseBullet.hpp
-  src/BaseBulletObject.cpp include/BaseBulletObject.hpp)
+  src/3dMath.cpp include/3dMath.hpp
+  src/Bullet.cpp include/Bullet.hpp
+  src/BulletObject.cpp include/BulletObject.hpp)
 target_link_libraries(BulletTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
