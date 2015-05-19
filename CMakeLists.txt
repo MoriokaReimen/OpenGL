@@ -7,7 +7,9 @@ add_subdirectory(resource)
 add_subdirectory(bin)
 add_subdirectory(include)
 LINK_DIRECTORIES("/usr/local/lib/" "/usr/lib" "/usr/lib/freeglut")
-INCLUDE_DIRECTORIES("/usr/include" "/usr/local/include/bullet" "/usr/include/freeglut" "${CMAKE_BINARY_DIR}/include")
+INCLUDE_DIRECTORIES("/usr/include" "/usr/local/include/bullet" "/usr/include/freeglut"
+    "${CMAKE_BINARY_DIR}/include"
+    "${CMAKE_BINARY_DIR}/resource")
 LINK_DIRECTORIES("/usr/local/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
@@ -16,7 +18,8 @@ add_executable(OpenGLTest test/GLTest.cpp
   src/GLObject.cpp include/GLObject.hpp
   src/3dMath.cpp include/3dMath.hpp
   src/GLTexture.cpp include/GLTexture.hpp
-  src/GL.cpp include/GL.hpp)
+  src/GL.cpp include/GL.hpp
+  resource/PNG.cpp resource/PNG.hpp)
 target_link_libraries(OpenGLTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW

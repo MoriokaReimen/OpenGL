@@ -4,13 +4,14 @@
 int main(int argc, char *argv[])
 {
     GL gl;
+    ToyouraPNG toyoura;
     ObjectColor red(1.0, 0.0, 0.0);
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
     ObjectColor gray(0.5, 0.5, 0.5);
     Quaternion quat;
     quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
-    GLTexture texture("./resource/toyoura.jpg");
+    GLTexture texture(toyoura);
     pGLSphere   sphere(new GLSphere);
     pGLFloor   floor(new GLFloor);
     sphere -> setColor(red);
