@@ -8,6 +8,8 @@ Makefile
 *.cmake
 CMakeCache.txt
 CMakeFiles
-bin/moon_simulator
-
-
+bin/BulletTest
+bin/OpenGLTest
+bin/SimulatorTest
+bin/spike
+bin/spike2
