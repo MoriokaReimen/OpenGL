@@ -121,3 +121,8 @@ void GL::display()
 
       return;
 }
+
+bool GL::isClose()
+{
+     return !glfwWindowShouldClose(this->window_);
+}

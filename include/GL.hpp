@@ -28,4 +28,5 @@ public:
   virtual void run();
   virtual void pushObject(pGLObject object);
   virtual void display();
+  virtual bool isClose();
 };
