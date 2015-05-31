@@ -10,7 +10,7 @@ int main()
   for(int i = 0; i < 100; ++i)
   {
     bullet.step();
-    Point xyz = sphere->getPoint();
+    Math3D::Vector3 xyz = sphere->getPoint();
     std::cout << xyz.z << std::endl;
   }
   return 0;

@@ -4,6 +4,7 @@
 #include <exception>
 #include <list>
 #include <memory>
+#include <Math3D/Math3D.hpp>
 
 #include "GLObject.hpp"
 
@@ -22,9 +23,9 @@ public:
   GL();
   ~GL();
   virtual void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
-  virtual void setLight(const Point& xyz);
+  virtual void setLight(const Math3D::Vector3& xyz);
   virtual void setCamera();
-  virtual void setCamera(const Point& camera_pos, const Point& look_at);
+  virtual void setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at);
   virtual void run();
   virtual void pushObject(pGLObject object);
   virtual void display();

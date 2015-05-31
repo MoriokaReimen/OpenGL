@@ -1,27 +1,28 @@
 #pragma once
-#include "3dMath.hpp"
+#include <Math3D/Math3D.hpp>
 #include "GLTexture.hpp"
+#include "ObjectColor.hpp"
 #include <memory>
 
 
 class GLObject
 {
 protected:
-    Point xyz_ {0, 0, 0};
+    Math3D::Vector3 xyz_ {0, 0, 0};
     // Attitude attitude; implement someday
     ObjectColor color_ {1.f,1.f,1.f};
     GLTexture texture_;
-    Quaternion quat_{1.f, 0.f, 0.f, 0.f};
+    Math3D::Quaternion quat_{1.f, 0.f, 0.f, 0.f};
 public:
     GLObject() = default;
     virtual ~GLObject() = default;
     virtual void draw() {};
     virtual void setPosition(double x, double y, double z);
-    virtual void setPosition(Point point);
+    virtual void setPosition(Math3D::Vector3 point);
     virtual void setColor(ObjectColor bcolor);
     virtual void setColor(GLfloat r, GLfloat g, GLfloat b);
     virtual void setTexture(GLTexture& texture);
-    virtual void setAttitude(const Quaternion& quat);
+    virtual void setAttitude(const Math3D::Quaternion& quat);
 };
 
 class GLSphere : public GLObject

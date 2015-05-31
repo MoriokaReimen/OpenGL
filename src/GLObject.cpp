@@ -2,12 +2,12 @@
 
 void GLObject::setPosition(double x, double y, double z)
 {
-    Point buff(x, y, z);
+    Math3D::Vector3 buff(x, y, z);
     this->xyz_ = buff;
     return;
 }
 
-void GLObject::setPosition(Point point)
+void GLObject::setPosition(Math3D::Vector3 point)
 {
     this->xyz_ = point;
     return;
@@ -27,7 +27,7 @@ void GLObject::setColor(GLfloat r, GLfloat g, GLfloat b)
     return;
 }
 
-void GLObject::setAttitude(const Quaternion& quat)
+void GLObject::setAttitude(const Math3D::Quaternion& quat)
 {
     this->quat_ = quat;
     return;
@@ -41,12 +41,13 @@ void GLObject::setTexture(GLTexture& texture)
 
 void GLSphere::draw() // protect someday
 {
-    GLfloat x, y, z, angle;
-    this->quat_.toGLAngleAxis(angle, x, y, z);
+    Math3D::Degree angle;
+    Math3D::Vector3 axis;
+    this->quat_.toAngleAxis(angle, axis);
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
-    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-    glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
         double z0  = sin(lat0);
@@ -81,12 +82,13 @@ void GLSphere::setSize(const GLfloat& radius)
 
 void GLCube::draw() // protect someday
 {
-  GLfloat x, y, z, angle;
-  this->quat_.toGLAngleAxis(angle, x, y, z);
+    Math3D::Degree angle;
+    Math3D::Vector3 axis;
+    this->quat_.toAngleAxis(angle, axis);
   glPushMatrix();
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
-  glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-  glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
 
   GLfloat la = this->a_ * 0.5f; // modify some day
   GLfloat lb = this->b_ * 0.5f;
@@ -142,15 +144,16 @@ void GLCube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
 
 void GLFloor::draw() // protect someday
 {
-    GLfloat x, y, z, angle;
-    this->quat_.toGLAngleAxis(angle, x, y, z);
+    Math3D::Degree angle;
+    Math3D::Vector3 axis;
+    this->quat_.toAngleAxis(angle, axis);
     if(this->texture_.getID()) {
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, this->texture_.getID());
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glPushMatrix();
-        glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-        glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
@@ -166,8 +169,8 @@ void GLFloor::draw() // protect someday
         glDisable(GL_TEXTURE_2D);
     } else {
         glPushMatrix();
-        glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-        glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
@@ -190,11 +193,12 @@ void GLFloor::setSize(const GLfloat& a, const GLfloat& b)
 
 void GLAxis::draw()
 {
-    GLfloat x, y, z, angle;
-    this->quat_.toGLAngleAxis(angle, x, y, z);
+    Math3D::Degree angle;
+    Math3D::Vector3 axis;
+    this->quat_.toAngleAxis(angle, axis);
     glPushMatrix();
-    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-    glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
@@ -237,16 +241,17 @@ void GLAxis::setSize(const GLfloat& width, const GLfloat& length)
 
 void GLCylinder::draw()
 {
-    GLfloat x, y, z, angle;
+    Math3D::Degree angle;
+    Math3D::Vector3 axis;
     float tmp,ny,nz;
     const int sides = 24;     // number of sides to the cylinder (divisible by 4)
-    this->quat_.toGLAngleAxis(angle, x, y, z);
+    this->quat_.toAngleAxis(angle, axis);
 
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
 
     glPushMatrix();
-    glTranslatef(this->xyz_.x, this->xyz_.z, this->xyz_.y);
-    glRotatef(angle, x, y, z);
+    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
+    glRotatef(angle, -axis.y, axis.z, axis.x);
 
 
   float a = float(M_PI*2.0)/float(sides);

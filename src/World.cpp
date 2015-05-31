@@ -16,7 +16,7 @@ void World::setLight(GLfloat x, GLfloat y, GLfloat z)
     return;
 }
 
-void World::setLight(const Point& xyz)
+void World::setLight(const Math3D::Vector3& xyz)
 {
     this->gl.setLight(xyz);
     return;
@@ -28,7 +28,7 @@ void World::setCamera()
     return;
 }
 
-void World::setCamera(const Point& camera_pos, const Point& look_at)
+void World::setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at)
 {
     this->gl.setCamera(camera_pos, look_at);
     return;

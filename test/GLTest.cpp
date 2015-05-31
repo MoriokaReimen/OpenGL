@@ -9,8 +9,10 @@ int main(int argc, char *argv[])
     ObjectColor blue(0.0, 1.0, 0.0);
     ObjectColor white(1.f, 1.f, 1.f);
     ObjectColor gray(0.5, 0.5, 0.5);
-    Quaternion quat;
-    quat.fromAngleAxis(120, 0.f, 0.f, 1.f);
+    Math3D::Quaternion quat;
+    Math3D::Degree angle(120);
+    Math3D::Vector3 pos(0, 0, 1);
+    quat.fromAngleAxis(angle, pos);
     GLTexture texture(toyoura);
     pGLSphere   sphere(new GLSphere);
     pGLFloor   floor(new GLFloor);

@@ -1,4 +1,5 @@
 #pragma once
+#include <Math3D/Math3D.hpp>
 #include "GL.hpp"
 #include "Bullet.hpp"
 
@@ -10,9 +11,9 @@ public:
   World();
   virtual ~World();
   void setLight(GLfloat x, GLfloat y, GLfloat z);
-  void setLight(const Point& xyz);
+  void setLight(const Math3D::Vector3& xyz);
   void setCamera();
-  void setCamera(const Point& camera_pos, const Point& look_at);
+  void setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at);
   void run();
   //void pushObject(pBulletGLObject object);
   void display();

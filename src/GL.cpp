@@ -45,7 +45,7 @@ GL::~GL()
       return;
   }
 
-  void GL::setLight(const Point& xyz)
+  void GL::setLight(const Math3D::Vector3& xyz)
   {
       GLfloat lightpos[4];
       lightpos[0] = xyz.x;
@@ -77,7 +77,7 @@ GL::~GL()
     return;
   }
 
-  void GL::setCamera(const Point& camera_pos, const Point& look_at)
+  void GL::setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at)
   {
     //視点の設定
     glViewport(0, 0, this->width_, this->height_);

@@ -1,7 +1,7 @@
 #include "BulletObject.hpp"
 btScalar BulletObjectFactory::mass{1};
-Point BulletObjectFactory::xyz{0, 0, 0};
-Quaternion BulletObjectFactory::quat{1, 0, 0, 0};
+Math3D::Vector3 BulletObjectFactory::xyz{0, 0, 0};
+Math3D::Quaternion BulletObjectFactory::quat{1, 0, 0, 0};
 
 
 
@@ -19,23 +19,23 @@ BulletObject::~BulletObject()
     return;
 }
 
-Point BulletObject::getPoint()
+Math3D::Vector3 BulletObject::getPoint()
 {
   btTransform trans;
   btVector3 buff;
   this->body_->getMotionState()->getWorldTransform(trans);
   buff = trans.getOrigin();
-  Point xyz(buff.x(), buff.y(), buff.z());
+  Math3D::Vector3 xyz(buff.x(), buff.y(), buff.z());
   return xyz;
 }
 
-Quaternion BulletObject::getQuat()
+Math3D::Quaternion BulletObject::getQuat()
 {
   btTransform trans;
   btQuaternion buff;
   this->body_->getMotionState()->getWorldTransform(trans);
   buff = trans.getRotation();
-  Quaternion quat(buff.w(), buff.x(), buff.y(), buff.z());
+  Math3D::Quaternion quat(buff.w(), buff.x(), buff.y(), buff.z());
   return quat;
 }
 

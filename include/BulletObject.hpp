@@ -3,7 +3,8 @@
 #include <memory>
 #include <exception>
 #include <btBulletDynamicsCommon.h>
-#include "3dMath.hpp"
+#include <Math3D/Math3D.hpp>
+#include "ObjectColor.hpp"
 
 class BulletObject
 {
@@ -12,8 +13,8 @@ class BulletObject
 public:
   BulletObject(btRigidBody* body, btCollisionShape* shape);
   ~BulletObject();
-  Point getPoint();
-  Quaternion getQuat();
+  Math3D::Vector3 getPoint();
+  Math3D::Quaternion getQuat();
   btRigidBody* getBody();
 };
 
@@ -23,8 +24,8 @@ class BulletObjectFactory
 {
 public:
   static btScalar mass;
-  static Point xyz;
-  static Quaternion quat;
+  static Math3D::Vector3 xyz;
+  static Math3D::Quaternion quat;
   static pBulletObject spawnSphere(double radius);
   static pBulletObject spawnStaticPlane();
 };
