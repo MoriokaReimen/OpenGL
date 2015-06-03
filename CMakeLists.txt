@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 project(OpenGLTest)
-add_subdirectory(bin)
-add_subdirectory(include)
+
 LINK_DIRECTORIES("/usr/local/lib/" "/usr/lib" "/usr/lib/freeglut")
 INCLUDE_DIRECTORIES("/usr/include" "/usr/local/include/bullet" "/usr/include/freeglut"
     "${CMAKE_BINARY_DIR}/include"
