@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
+
+add_subdirectory(external)
+
 project(OpenGLTest)
 
 LINK_DIRECTORIES("/usr/local/lib/" "/usr/lib" "/usr/lib/freeglut")
