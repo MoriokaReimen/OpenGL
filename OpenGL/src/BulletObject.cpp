@@ -8,17 +8,16 @@ BulletObject::~BulletObject()
     return;
 }
 
-Math3D::Vector3 BulletObject::getPoint()
+Math3D::Vector3 BulletObject::getPosition()
 {
   btTransform trans;
   btVector3 buff;
-  this->body_->getMotionState()->getWorldTransform(trans);
-  buff = trans.getOrigin();
+  buff = this->body_->getCenterOfMassPosition();
   Math3D::Vector3 xyz(buff.x(), buff.y(), buff.z());
   return xyz;
 }
 
-Math3D::Quaternion BulletObject::getQuat()
+Math3D::Quaternion BulletObject::getAttitude()
 {
   btTransform trans;
   btQuaternion buff;
@@ -53,7 +52,7 @@ void BulletObject::setAttitude(const Math3D::Quaternion& quat)
     return;
 }
 
-BulletSphere::BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat, const double& mass, const double& radius)
+BulletSphere::BulletSphere(const double& mass, const double& radius)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
   this->shape_ = new btSphereShape(radius);
@@ -61,8 +60,8 @@ BulletSphere::BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion&
 
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(
-            btQuaternion(quat.w, quat.x, quat.y, quat.z),
-            btVector3(xyz.x, xyz.y, xyz.z)));
+            btQuaternion(1, 0, 0, 0),
+            btVector3(0, 0, 1)));
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
        mass, motion_state,
@@ -72,12 +71,12 @@ BulletSphere::BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion&
   return;
 }
 
-BulletPlane::BulletPlane(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat)
+BulletPlane::BulletPlane()
 {
     this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
-    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(quat.w, quat.x, quat.y, quat.z), btVector3(xyz.x, xyz.y, xyz.z-1)));
+    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 1)));
     btRigidBody::btRigidBodyConstructionInfo
     groundRigidBodyCI(0, groundMotionState, this->shape_, btVector3(0, 0, 0));
     this->body_ = new btRigidBody(groundRigidBodyCI);
-  return;
+    return;
 }

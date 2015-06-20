@@ -13,8 +13,8 @@ protected:
   btCollisionShape* shape_;
 public:
   ~BulletObject();
-  Math3D::Vector3 getPoint();
-  Math3D::Quaternion getQuat();
+  Math3D::Vector3 getPosition();
+  Math3D::Quaternion getAttitude();
   btRigidBody* getBody();
     void setPosition(const Math3D::Vector3& pos);
     void setAttitude(const Math3D::Quaternion& quat);
@@ -23,11 +23,11 @@ public:
 class BulletSphere : public BulletObject
 {
 public:
-    BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat, const double& mass, const double& radius);
+    BulletSphere(const double& mass, const double& radius);
 };
 
 class BulletPlane : public BulletObject
 {
 public:
-    BulletPlane(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat);
+    BulletPlane();
 };

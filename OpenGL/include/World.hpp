@@ -5,8 +5,8 @@
 
 class World
 {
-  GL gl{};
-  Bullet bullet{};
+  GL* gl;
+  Bullet* bullet;
 public:
   World();
   virtual ~World();
@@ -15,6 +15,6 @@ public:
   void setCamera();
   void setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at);
   void run();
-  //void pushObject(pBulletGLObject object);
+  void pushObject(Object* object);
   void display();
 };
