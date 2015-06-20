@@ -75,7 +75,7 @@ BulletSphere::BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double 
 BulletPlane::BulletPlane(Math3D::Vector3 xyz, Math3D::Quaternion quat)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
-  btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
+  this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
 
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(

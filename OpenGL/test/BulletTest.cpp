@@ -10,7 +10,6 @@ int main()
   bullet.pushObject(sphere);
   for(int i = 0; i < 10000; ++i)
   {
-    if(i%10 == 0) sphere->setPosition(h);
     bullet.step();
     Math3D::Vector3 xyz = sphere->getPoint();
     std::cout << xyz.z << std::endl;
