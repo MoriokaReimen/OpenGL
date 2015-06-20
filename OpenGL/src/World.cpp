@@ -26,6 +26,12 @@ void World::setLight(const Math3D::Vector3& xyz)
     return;
 }
 
+void World::setLight()
+{
+    this->gl_->setLight();
+    return;
+}
+
 void World::setCamera()
 {
     this->gl_->setCamera();

@@ -12,6 +12,7 @@ class World
 public:
   World();
   virtual ~World();
+  void setLight();
   void setLight(GLfloat x, GLfloat y, GLfloat z);
   void setLight(const Math3D::Vector3& xyz);
   void setCamera();
