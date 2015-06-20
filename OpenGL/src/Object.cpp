@@ -1,16 +1,27 @@
 class Object
 {
 public:
+    GLSphere* gl_;
+    BulletSphere* bullet_;
     virtual ~Object() = default;
-    virtual pGLObject getGLObject() = 0;
-    virtual pBulletObject getBullet() = 0;
+    void setPosition(Math3D::Vector3 xyz)
+    {
+        this->gl_->setPosition(xyz);
+        this->bullet_->setPosition(xyz);
+        return;
+    }
+
+    void setAttitude(Math3D::Quaternion quat);
+    {
+        this->gl_->setAttitude(quat);
+        this->bullet_->setAttitude(quat);
+        return;
+    }
 };
 
 class Sphere : public Object
 {
 public:
-    pGLSphere gl;
-    pBulletSphere bullet;
     Sphere(const double radius) : gl(new GLSphere)
     {
         this->gl->setSize(quat);
@@ -19,35 +30,10 @@ public:
     }
         return;
     }
-    ~Sphere() = default;
 
-    void setPosition(const double x, const y, const z)
+    ~Sphere()
     {
-        this->gl->setPosition(x,y,z);
-        this->bullet->setPosition(x,y,z);
-        return;
-    }
-
-    void setPosition(Point point);
-    {
-        this->gl->setPosition(point);
-        this->bullet->setPosition(point);
-        return;
-    }
-    virtual void setAttitude(const Quaternion& quat);
-    {
-        this->gl->setAttitude(quat);
-        this->bullet->setAttitude(quat);
-        return;
-    }
-
-    pGLObject getGLObject() override
-    {
-         return this->gl;
-    }
-
-    pBulletObject getBullet() override
-    {
-        return this->bullet;
+        delete this->bullet_;
+        delete this->gl_;
     }
 };

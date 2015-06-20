@@ -17,7 +17,7 @@ protected:
   int height_{769};
 
   GLFWwindow* window_;
-  std::list<pGLObject> object_list_;
+  std::list<GLObject*> object_list_;
 
 public:
   GL();
@@ -27,7 +27,7 @@ public:
   virtual void setCamera();
   virtual void setCamera(const Math3D::Vector3& camera_pos, const Math3D::Vector3& look_at);
   virtual void run();
-  virtual void pushObject(pGLObject object);
+  virtual void pushObject(GLObject* object);
   virtual void display();
   virtual bool isClose();
 };

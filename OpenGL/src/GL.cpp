@@ -101,7 +101,7 @@ GL::~GL()
     } while(!glfwWindowShouldClose(this->window_));
   }
 
-  void GL::pushObject(pGLObject object)
+  void GL::pushObject(GLObject* object)
   {
     this->object_list_.push_back(object);
     return;
