@@ -33,7 +33,7 @@ btRigidBody* BulletObject::getBody()
   return this->body_;
 }
 
-void BulletObject::setPosition(Math3D::Vector3 pos)
+void BulletObject::setPosition(const Math3D::Vector3& pos)
 {
     btTransform transform;
     btVector3 position(pos.x, pos.y, pos.z);
@@ -43,7 +43,7 @@ void BulletObject::setPosition(Math3D::Vector3 pos)
     return;
 }
 
-void BulletObject::setAttitude(Math3D::Quaternion quat)
+void BulletObject::setAttitude(const Math3D::Quaternion& quat)
 {
     btTransform transform;
     btQuaternion rotation(quat.w, quat.x, quat.y, quat.z);
@@ -53,7 +53,7 @@ void BulletObject::setAttitude(Math3D::Quaternion quat)
     return;
 }
 
-BulletSphere::BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double mass, double radius)
+BulletSphere::BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat, const double& mass, const double& radius)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
   this->shape_ = new btSphereShape(radius);
@@ -72,7 +72,7 @@ BulletSphere::BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double 
   return;
 }
 
-BulletPlane::BulletPlane(Math3D::Vector3 xyz, Math3D::Quaternion quat)
+BulletPlane::BulletPlane(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat)
 {
     this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
     btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(quat.w, quat.x, quat.y, quat.z), btVector3(xyz.x, xyz.y, xyz.z-1)));

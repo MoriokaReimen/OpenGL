@@ -16,18 +16,18 @@ public:
   Math3D::Vector3 getPoint();
   Math3D::Quaternion getQuat();
   btRigidBody* getBody();
-    void setPosition(Math3D::Vector3 pos);
-    void setAttitude(Math3D::Quaternion quat);
+    void setPosition(const Math3D::Vector3& pos);
+    void setAttitude(const Math3D::Quaternion& quat);
 };
 
 class BulletSphere : public BulletObject
 {
 public:
-    BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double mass, double radius);
+    BulletSphere(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat, const double& mass, const double& radius);
 };
 
 class BulletPlane : public BulletObject
 {
 public:
-    BulletPlane(Math3D::Vector3 xyz, Math3D::Quaternion quat);
+    BulletPlane(const Math3D::Vector3& xyz, const Math3D::Quaternion& quat);
 };
