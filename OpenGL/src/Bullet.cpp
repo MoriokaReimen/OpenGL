@@ -17,10 +17,6 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
-  for(auto it = this->object_list_.begin(); it != this->object_list_.end(); ++it)
-  {
-    this->world_->removeRigidBody((*it)->getBody());
-  }
   delete this->world_;
   delete this->solver_;
   delete this->collision_config_;

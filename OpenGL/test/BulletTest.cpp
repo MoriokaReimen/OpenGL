@@ -16,5 +16,7 @@ int main()
     Math3D::Vector3 xyz = sphere->getPoint();
     std::cout << bullet.time << ", " << xyz.z << std::endl;
   }
+  delete sphere;
+  delete plane;
   return 0;
 }
