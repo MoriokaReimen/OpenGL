@@ -10,7 +10,7 @@ int main()
   BulletPlane* plane = new BulletPlane(zero, quat);
   bullet.pushObject(sphere);
   bullet.pushObject(plane);
-  for(int i = 0; i < 10000; ++i)
+  for(int i = 0; i < 300; ++i)
   {
     bullet.step();
     Math3D::Vector3 xyz = sphere->getPoint();

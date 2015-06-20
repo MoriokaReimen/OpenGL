@@ -74,18 +74,10 @@ BulletSphere::BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double 
 
 BulletPlane::BulletPlane(Math3D::Vector3 xyz, Math3D::Quaternion quat)
 {
-  btVector3 inertia{0.f, 0.f, 0.f};
-  this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
-
-  btDefaultMotionState* motion_state =
-      new btDefaultMotionState(btTransform(
-            btQuaternion(quat.w, quat.x, quat.y, quat.z),
-            btVector3(xyz.x, xyz.y, xyz.z)));
-
-  btRigidBody::btRigidBodyConstructionInfo construction_info(
-       10, motion_state,
-       this->shape_,       inertia);
-
-  this->body_ = new btRigidBody(construction_info);
+    this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
+    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(quat.w, quat.x, quat.y, quat.z), btVector3(xyz.x, xyz.y, xyz.z-1)));
+    btRigidBody::btRigidBodyConstructionInfo
+    groundRigidBodyCI(0, groundMotionState, this->shape_, btVector3(0, 0, 0));
+    this->body_ = new btRigidBody(groundRigidBodyCI);
   return;
 }
