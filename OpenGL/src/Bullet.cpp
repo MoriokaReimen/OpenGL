@@ -1,6 +1,6 @@
 #include "Bullet.hpp"
 
-constexpr double TIME_STEP = 1/ 10000.f;
+constexpr double TIME_STEP = 1/ 1000.f;
 Bullet::Bullet()
 {
   this->broadphase_ = new btDbvtBroadphase();

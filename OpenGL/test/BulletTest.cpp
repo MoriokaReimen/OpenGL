@@ -12,7 +12,7 @@ int main()
   sphere->setPosition(h);
   bullet.pushObject(sphere);
   bullet.pushObject(plane);
-  for(int i = 0; i < 300; ++i)
+  for(int i = 0; i < 1000; ++i)
   {
     bullet.step();
     Math3D::Vector3 xyz = sphere->getPosition();
