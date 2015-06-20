@@ -1,15 +1,4 @@
 #include "BulletObject.hpp"
-btScalar BulletObjectFactory::mass{1};
-Math3D::Vector3 BulletObjectFactory::xyz{0, 0, 0};
-Math3D::Quaternion BulletObjectFactory::quat{1, 0, 0, 0};
-
-
-
-BulletObject::BulletObject(btRigidBody* body, btCollisionShape* shape)
-  : body_(body), shape_(shape)
-{
-  return;
-}
 
 BulletObject::~BulletObject()
 {
@@ -44,11 +33,31 @@ btRigidBody* BulletObject::getBody()
   return this->body_;
 }
 
-pBulletObject BulletObjectFactory::spawnSphere(double radius)
+void BulletObject::setPosition(Math3D::Vector3 pos)
+{
+    btTransform transform;
+    btVector3 position(pos.x, pos.y, pos.z);
+    this->body_->getMotionState()->getWorldTransform(transform);
+    transform.setOrigin(position);
+    this->body_->setCenterOfMassTransform(transform);
+    return;
+}
+
+void BulletObject::setAttitude(Math3D::Quaternion quat)
+{
+    btTransform transform;
+    btQuaternion rotation(quat.w, quat.x, quat.y, quat.z);
+    this->body_->getMotionState()->getWorldTransform(transform);
+    transform.setRotation(rotation);
+    this->body_->getMotionState()->setWorldTransform(transform);
+    return;
+}
+
+BulletSphere::BulletSphere(Math3D::Vector3 xyz, Math3D::Quaternion quat, double mass, double radius)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
-  btCollisionShape* shape = new btSphereShape(radius);
-  shape->calculateLocalInertia(mass, inertia);
+  this->shape_ = new btSphereShape(radius);
+  this->shape_->calculateLocalInertia(mass, inertia);
 
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(
@@ -57,14 +66,13 @@ pBulletObject BulletObjectFactory::spawnSphere(double radius)
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
        mass, motion_state,
-       shape,       inertia);
+       this->shape_,       inertia);
 
-  btRigidBody* body = new btRigidBody(construction_info);
-  pBulletObject sphere(new BulletObject(body, shape));
- return sphere;
+  this->body_ = new btRigidBody(construction_info);
+  return;
 }
 
-pBulletObject BulletObjectFactory::spawnStaticPlane()
+BulletPlane::BulletPlane(Math3D::Vector3 xyz, Math3D::Quaternion quat)
 {
   btVector3 inertia{0.f, 0.f, 0.f};
   btCollisionShape* shape = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
@@ -75,10 +83,9 @@ pBulletObject BulletObjectFactory::spawnStaticPlane()
             btVector3(xyz.x, xyz.y, xyz.z)));
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
-       mass, motion_state,
-       shape,       inertia);
+       10, motion_state,
+       this->shape_,       inertia);
 
-  btRigidBody* body = new btRigidBody(construction_info);
-  pBulletObject static_plane(new BulletObject(body, shape));
-  return static_plane;
+  this->body_ = new btRigidBody(construction_info);
+  return;
 }

@@ -3,12 +3,14 @@
 
 int main()
 {
+    Math3D::Vector3 h(0, 0, 100);
+    Math3D::Quaternion quat;
   Bullet bullet;
-  BulletObjectFactory::xyz.z = 100;
-  pBulletObject sphere = BulletObjectFactory::spawnSphere(10.0);
+  BulletSphere* sphere = new BulletSphere(h, quat, 10.0, 1.0);
   bullet.pushObject(sphere);
-  for(int i = 0; i < 100; ++i)
+  for(int i = 0; i < 10000; ++i)
   {
+    if(i%10 == 0) sphere->setPosition(h);
     bullet.step();
     Math3D::Vector3 xyz = sphere->getPoint();
     std::cout << xyz.z << std::endl;

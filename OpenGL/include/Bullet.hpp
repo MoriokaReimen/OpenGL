@@ -5,7 +5,7 @@
 
 class Bullet
 {
-  std::list<pBulletObject> object_list_;
+  std::list<BulletObject*> object_list_;
   btBroadphaseInterface* broadphase_;
   btDefaultCollisionConfiguration* collision_config_;
   btCollisionDispatcher* dispatcher_;
@@ -16,6 +16,6 @@ public:
   Bullet();
   virtual ~Bullet();
   virtual void step();
-  void pushObject(pBulletObject object);
+  void pushObject(BulletObject* object);
 };
 

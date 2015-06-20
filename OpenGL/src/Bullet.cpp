@@ -35,7 +35,7 @@ void Bullet::step()
     return;
 }
 
-void Bullet::pushObject(pBulletObject object)
+void Bullet::pushObject(BulletObject* object)
 {
   this->world_->addRigidBody(object->getBody());
   this->object_list_.push_back(object);
