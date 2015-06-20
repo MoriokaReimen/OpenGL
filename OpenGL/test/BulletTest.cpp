@@ -3,11 +3,13 @@
 
 int main()
 {
-    Math3D::Vector3 h(0, 0, 100);
-    Math3D::Quaternion quat;
+    Math3D::Vector3 h(0, 0, 100), zero(0, 0, 10);
+    Math3D::Quaternion quat(0, 0, 0, 1);
   Bullet bullet;
   BulletSphere* sphere = new BulletSphere(h, quat, 10.0, 1.0);
+  BulletPlane* plane = new BulletPlane(zero, quat);
   bullet.pushObject(sphere);
+  bullet.pushObject(plane);
   for(int i = 0; i < 10000; ++i)
   {
     bullet.step();
