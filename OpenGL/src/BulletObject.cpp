@@ -12,7 +12,8 @@ Math3D::Vector3 BulletObject::getPosition()
 {
   btTransform trans;
   btVector3 buff;
-  buff = this->body_->getCenterOfMassPosition();
+  this->body_->getMotionState()->getWorldTransform(trans);
+  buff = trans.getOrigin();
   Math3D::Vector3 xyz(buff.x(), buff.y(), buff.z());
   return xyz;
 }
