@@ -1,5 +1,6 @@
 #include "Bullet.hpp"
 
+constexpr double TIME_STEP = 1/ 60.f;
 Bullet::Bullet()
 {
   this->broadphase_ = new btDbvtBroadphase();
@@ -31,7 +32,8 @@ Bullet::~Bullet()
 
 void Bullet::step()
 {
-    this->world_->stepSimulation(1/ 60.f, 10);
+    this->time += TIME_STEP;
+    this->world_->stepSimulation(TIME_STEP, 10);
     return;
 }
 

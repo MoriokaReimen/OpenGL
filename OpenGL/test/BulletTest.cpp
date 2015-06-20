@@ -14,7 +14,7 @@ int main()
   {
     bullet.step();
     Math3D::Vector3 xyz = sphere->getPoint();
-    std::cout << xyz.z << std::endl;
+    std::cout << bullet.time << ", " << xyz.z << std::endl;
   }
   return 0;
 }

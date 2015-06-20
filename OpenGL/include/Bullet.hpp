@@ -13,6 +13,7 @@ class Bullet
   btDiscreteDynamicsWorld* world_;
   double gravity_{9.80665};
 public:
+  double time{0.0};
   Bullet();
   virtual ~Bullet();
   virtual void step();
