@@ -2,11 +2,13 @@
 #include <Math3D/Math3D.hpp>
 #include "GL.hpp"
 #include "Bullet.hpp"
+#include "Object.hpp"
 
 class World
 {
-  GL* gl;
-  Bullet* bullet;
+    std::list<Object*> object_list_;
+  GL* gl_;
+  Bullet* bullet_;
 public:
   World();
   virtual ~World();

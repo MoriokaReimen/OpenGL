@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 set(OPEN_GL_SRC src/GLObject.cpp src/ObjectColor.cpp src/GLTexture.cpp src/GL.cpp resource/PNG.cpp)
 
 set(BULLET_SRC src/ObjectColor.cpp src/Bullet.cpp src/BulletObject.cpp)
+set(SRC src/Object.cpp src/World.cpp)
 
 
 add_executable(OpenGLTest test/GLTest.cpp
@@ -25,7 +26,7 @@ target_link_libraries(BulletTest
   BulletDynamics BulletCollision LinearMath math3d_static)
 
 add_executable(SimulatorTest test/SimulatorTest.cpp
-    src/World.cpp
+    ${SRC}
     ${OPEN_GL_SRC}
     ${BULLET_SRC})
 target_link_libraries(SimulatorTest

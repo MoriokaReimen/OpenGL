@@ -42,11 +42,12 @@ void World::run()
 {
     do {
         this->display();
-    } while(this->gl->isClose());
+    } while(this->gl_->isClose());
 }
 
 void World::pushObject(Object* object)
 {
+    this->object_list_.push_back(object);
     this->gl_->pushObject(object->gl_);
     this->bullet_->pushObject(object->bullet_);
     return;
@@ -54,6 +55,8 @@ void World::pushObject(Object* object)
 
 void World::display()
 {
+    for(auto x :this->object_list_)
+        x->update();
     this->gl_->display();
     this->bullet_->step();
     return;

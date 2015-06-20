@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     quat.fromAngleAxis(angle, pos);
     GLTexture texture(toyoura);
     GLSphere*   sphere = new GLSphere();
-    GLFloor*   floor = new GLFloor();
+    GLPlane*   floor = new GLPlane();
     sphere -> setColor(red);
     sphere -> setSize(10);
     floor  -> setTexture(texture);

@@ -21,7 +21,7 @@ protected:
 
 public:
   GL();
-  ~GL();
+  virtual ~GL();
   virtual void setLight(GLfloat x = 0.f, GLfloat y = 100.f, GLfloat z = -50.f);
   virtual void setLight(const Math3D::Vector3& xyz);
   virtual void setCamera();

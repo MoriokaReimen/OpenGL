@@ -45,7 +45,7 @@ public:
     virtual void setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c);
 };
 
-class GLFloor : public GLObject
+class GLPlane : public GLObject
 {
 protected:
   GLfloat a_{10};
@@ -76,7 +76,7 @@ public:
 
 typedef std::shared_ptr<GLSphere> pGLSphere;
 typedef std::shared_ptr<GLObject> pGLObject;
-typedef std::shared_ptr<GLFloor> pGLFloor;
+typedef std::shared_ptr<GLPlane> pGLPlane;
 typedef std::shared_ptr<GLAxis> pGLAxis;
 typedef std::shared_ptr<GLCylinder> pGLCylinder;
 typedef std::shared_ptr<GLCube> pGLCube;

@@ -142,7 +142,7 @@ void GLCube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
   return;
 }
 
-void GLFloor::draw() // protect someday
+void GLPlane::draw() // protect someday
 {
     Math3D::Degree angle;
     Math3D::Vector3 axis;
@@ -184,7 +184,7 @@ void GLFloor::draw() // protect someday
     return;
 }
 
-void GLFloor::setSize(const GLfloat& a, const GLfloat& b)
+void GLPlane::setSize(const GLfloat& a, const GLfloat& b)
 {
   this->a_ = a;
   this->b_ = b;
