@@ -61,3 +61,11 @@ Plane::Plane()
     this->bullet_ = new(BulletPlane)();
     return;
 }
+
+Box::Box(const double& mass, const double& a, const double& b, const double& c)
+{
+    this->gl_ = new(GLBox)();
+    static_cast<GLBox*>(this->gl_)->setSize(a, b, c);
+    this->bullet_ = new(BulletBox)(mass, a, b, c);
+    return;
+}

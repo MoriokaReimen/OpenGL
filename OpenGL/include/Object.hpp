@@ -28,3 +28,9 @@ class Plane : public Object
 public:
     Plane();
 };
+
+class Box : public Object
+{
+public:
+    Box(const double& mass, const double& a, const double& b, const double& c);
+};
