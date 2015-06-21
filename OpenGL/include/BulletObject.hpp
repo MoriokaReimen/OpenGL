@@ -31,3 +31,9 @@ class BulletPlane : public BulletObject
 public:
     BulletPlane();
 };
+
+class BulletBox : public BulletObject
+{
+public:
+    BulletBox(const double& mass, const double& a, const double& b, const double c);
+};

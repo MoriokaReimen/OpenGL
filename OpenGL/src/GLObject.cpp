@@ -80,7 +80,7 @@ void GLSphere::setSize(const GLfloat& radius)
   return;
 }
 
-void GLCube::draw() // protect someday
+void GLBox::draw() // protect someday
 {
     Math3D::Degree angle;
     Math3D::Vector3 axis;
@@ -134,7 +134,7 @@ void GLCube::draw() // protect someday
   return;
 }
 
-void GLCube::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
+void GLBox::setSize(const GLfloat& a, const GLfloat& b, const GLfloat& c)
 {
   this->a_ = a;
   this->b_ = b;

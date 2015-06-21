@@ -50,6 +50,7 @@ void BulletObject::setAttitude(const Math3D::Quaternion& quat)
     this->body_->getMotionState()->getWorldTransform(transform);
     transform.setRotation(rotation);
     this->body_->getMotionState()->setWorldTransform(transform);
+    this->body_->activate();
     return;
 }
 
@@ -61,12 +62,13 @@ BulletSphere::BulletSphere(const double& mass, const double& radius)
 
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(
-            btQuaternion(1, 0, 0, 0),
+            btQuaternion(0, 0, 0),
             btVector3(0, 0, 1)));
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
        mass, motion_state,
        this->shape_,       inertia);
+
 
   this->body_ = new btRigidBody(construction_info);
   return;
@@ -74,10 +76,30 @@ BulletSphere::BulletSphere(const double& mass, const double& radius)
 
 BulletPlane::BulletPlane()
 {
-    this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 0);
-    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 1)));
+    this->shape_ = new btStaticPlaneShape(btVector3(0, 0, 1), 1);
+    btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0), btVector3(0, 0, 1)));
     btRigidBody::btRigidBodyConstructionInfo
     groundRigidBodyCI(0, groundMotionState, this->shape_, btVector3(0, 0, 0));
     this->body_ = new btRigidBody(groundRigidBodyCI);
     return;
+}
+
+BulletBox::BulletBox(const double& mass, const double& a, const double& b, const double c)
+{
+  btVector3 inertia{0.f, 0.f, 0.f};
+  this->shape_ = new btBoxShape(btVector3(a,b,c));
+  this->shape_->calculateLocalInertia(mass, inertia);
+
+  btDefaultMotionState* motion_state =
+      new btDefaultMotionState(btTransform(
+            btQuaternion(0, 0, 0),
+            btVector3(0, 0, 1)));
+
+  btRigidBody::btRigidBodyConstructionInfo construction_info(
+       mass, motion_state,
+       this->shape_,       inertia);
+
+
+  this->body_ = new btRigidBody(construction_info);
+  return;
 }

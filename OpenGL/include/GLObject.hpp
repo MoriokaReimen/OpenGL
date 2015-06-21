@@ -34,7 +34,7 @@ public:
     virtual void setSize(const GLfloat& bradius);
 };
 
-class GLCube : public GLObject
+class GLBox : public GLObject
 {
 protected:
   GLfloat a_{10};
@@ -74,9 +74,3 @@ public:
     virtual void setSize(const GLfloat& radius, const GLfloat& height);
 };
 
-typedef std::shared_ptr<GLSphere> pGLSphere;
-typedef std::shared_ptr<GLObject> pGLObject;
-typedef std::shared_ptr<GLPlane> pGLPlane;
-typedef std::shared_ptr<GLAxis> pGLAxis;
-typedef std::shared_ptr<GLCylinder> pGLCylinder;
-typedef std::shared_ptr<GLCube> pGLCube;

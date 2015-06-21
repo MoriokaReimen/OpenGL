@@ -4,8 +4,13 @@
 
 int main()
 {
-    Math3D::Vector3 red_h(0, 0, 50), green_h(0, 10, 50), blue_h(10, 0, 50), zero(0, 0, 0);
-    Math3D::Quaternion quat(0, 0, 0, 1);
+    Math3D::Vector3 red_h(0, 0, 50), green_h(0, 10, 50), blue_h(10, 0, 50), zero(0, 0, 10);
+    Math3D::Quaternion quat(0, 0, 0, 1), slope;
+    Math3D::Degree degree[3];
+    degree[0] = 0;
+    degree[1] = 0;
+    degree[2] = 0;
+    slope.fromRPY(degree[0], degree[1], degree[2]);
     World world;
     world.setCamera();
 
@@ -25,6 +30,7 @@ int main()
     Plane* plane = new Plane();
     plane->setColor(0.3, 0.3, 0.3);
     plane->setPosition(zero);
+    plane->setAttitude(slope);
 
     world.pushObject(red);
     world.pushObject(green);
