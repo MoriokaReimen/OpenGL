@@ -46,8 +46,8 @@ void GLSphere::draw() // protect someday
     this->quat_.toAngleAxis(angle, axis);
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x,  - axis.y,  - axis.z);
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
         double z0  = sin(lat0);
@@ -87,8 +87,8 @@ void GLBox::draw() // protect someday
     this->quat_.toAngleAxis(angle, axis);
   glPushMatrix();
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x, - axis.y, - axis.z);
 
   GLfloat la = this->a_; // modify some day
   GLfloat lb = this->b_;
@@ -98,36 +98,51 @@ void GLBox::draw() // protect someday
   glBegin (GL_TRIANGLE_STRIP);
   glNormal3f(-1,0,0);
   glVertex3f(0, 0, 0);
-  glVertex3f(0, 0,  lb);
-  glVertex3f(0,  lc, 0);
-  glVertex3f(0,  lc,  lb);
-  glNormal3f(0,1,0);
-  glVertex3f( la,  lc, 0);
-  glVertex3f( la,  lc,  lb);
+  glVertex3f(0,  lb, 0);
+  glVertex3f(0,  lb,  lc);
+  glVertex3f(0, 0,  lc);
+  glEnd();
+
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3f(0,0,1);
+  glVertex3f(la, lb, lc);
+  glVertex3f(la, 0,  lc);
+  glVertex3f(0, 0,  lc);
+  glVertex3f( 0,  lb,  lc);
+  glEnd();
+
+  glBegin (GL_TRIANGLE_FAN);
+  glNormal3f(0,0,-1);
+  glVertex3f(0, 0, 0);
+  glVertex3f(la, 0,  0);
+  glVertex3f(la, lb, 0);
+  glVertex3f( 0,  lb, 0);
+  glEnd();
+
+  glBegin (GL_TRIANGLE_FAN);
   glNormal3f(1,0,0);
   glVertex3f(la, 0, 0);
-  glVertex3f(la, 0,  lb);
-  glNormal3f(0,-1,0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0, 0,  lb);
+  glVertex3f(la, 0, lc);
+  glVertex3f(la, lb, lc);
+  glVertex3f(la, lb, 0);
   glEnd();
 
   // top face
   glBegin (GL_TRIANGLE_FAN);
-  glNormal3f(0,0,1);
-  glVertex3f(0, 0,  lb);
-  glVertex3f( la, 0,  lb);
-  glVertex3f( la,  lc,  lb);
-  glVertex3f(0,  lc,  lb);
+  glNormal3f(0,1,0);
+  glVertex3f(0, lb,  0);
+  glVertex3f( la, lb, 0);
+  glVertex3f( la,  lb,  lc);
+  glVertex3f(0,  lb,  lc);
   glEnd();
 
   // bottom face
   glBegin (GL_TRIANGLE_FAN);
-  glNormal3f(0,0,-1);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0,  lc, 0);
-  glVertex3f( la,  lc, 0);
-  glVertex3f( la, 0, 0);
+  glNormal3f( 0,  -1, 0);
+  glVertex3f( 0, 0, 0);
+  glVertex3f(la, 0, 0);
+  glVertex3f(la, 0, lc);
+  glVertex3f(0, 0, lc);
   glEnd();
 
   glPopMatrix();
@@ -152,8 +167,8 @@ void GLPlane::draw() // protect someday
         glBindTexture(GL_TEXTURE_2D, this->texture_.getID());
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glPushMatrix();
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x, - axis.y, - axis.z);
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
@@ -169,8 +184,8 @@ void GLPlane::draw() // protect someday
         glDisable(GL_TEXTURE_2D);
     } else {
         glPushMatrix();
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x, - axis.y, - axis.z);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
@@ -197,8 +212,8 @@ void GLAxis::draw()
     Math3D::Vector3 axis;
     this->quat_.toAngleAxis(angle, axis);
     glPushMatrix();
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x, - axis.y, - axis.z);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
@@ -250,8 +265,8 @@ void GLCylinder::draw()
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
 
     glPushMatrix();
-    glTranslatef(-(this->xyz_.y), this->xyz_.z, this->xyz_.x);
-    glRotatef(angle, -axis.y, axis.z, axis.x);
+    glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
+    glRotatef(angle, - axis.x, - axis.y, - axis.z);
 
 
   float a = float(M_PI*2.0)/float(sides);

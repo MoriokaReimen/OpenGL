@@ -39,18 +39,19 @@ void BulletObject::setPosition(const Math3D::Vector3& pos)
     btVector3 position(pos.x, pos.y, pos.z);
     this->body_->getMotionState()->getWorldTransform(transform);
     transform.setOrigin(position);
-    this->body_->setCenterOfMassTransform(transform);
+    this->body_->getMotionState()->setWorldTransform(transform);
+    this->body_->activate(true);
     return;
 }
 
 void BulletObject::setAttitude(const Math3D::Quaternion& quat)
 {
     btTransform transform;
-    btQuaternion rotation(quat.w, quat.x, quat.y, quat.z);
+    btQuaternion rotation(quat.x, quat.y, quat.z, quat.w);
     this->body_->getMotionState()->getWorldTransform(transform);
     transform.setRotation(rotation);
     this->body_->getMotionState()->setWorldTransform(transform);
-    this->body_->activate();
+    this->body_->activate(true);
     return;
 }
 
@@ -63,7 +64,7 @@ BulletSphere::BulletSphere(const double& mass, const double& radius)
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(
             btQuaternion(0, 0, 0),
-            btVector3(0, 0, 1)));
+            btVector3(0, 1, 0)));
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
        mass, motion_state,
@@ -93,7 +94,7 @@ BulletBox::BulletBox(const double& mass, const double& a, const double& b, const
   btDefaultMotionState* motion_state =
       new btDefaultMotionState(btTransform(
             btQuaternion(0, 0, 0),
-            btVector3(0, 0, 1)));
+            btVector3(0, 1, 0)));
 
   btRigidBody::btRigidBodyConstructionInfo construction_info(
        mass, motion_state,
