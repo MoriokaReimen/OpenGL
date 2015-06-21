@@ -13,7 +13,7 @@ void GLObject::setPosition(Math3D::Vector3 point)
     return;
 }
 
-void GLObject::setColor(ObjectColor color)
+void GLObject::setColor(GLColor color)
 {
     this->color_ = color;
     return;

@@ -5,10 +5,10 @@ int main(int argc, char *argv[])
 {
     GL gl;
     ToyouraPNG toyoura;
-    ObjectColor red(1.0, 0.0, 0.0);
-    ObjectColor blue(0.0, 1.0, 0.0);
-    ObjectColor white(1.f, 1.f, 1.f);
-    ObjectColor gray(0.5, 0.5, 0.5);
+    GLColor red(1.0, 0.0, 0.0);
+    GLColor blue(0.0, 1.0, 0.0);
+    GLColor white(1.f, 1.f, 1.f);
+    GLColor gray(0.5, 0.5, 0.5);
     Math3D::Quaternion quat;
     Math3D::Degree angle(120);
     Math3D::Vector3 pos(0, 0, 1);

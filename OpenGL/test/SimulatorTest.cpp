@@ -35,10 +35,5 @@ int main()
     world.setLight();
     world.run();
 
-    delete plane;
-    delete red;
-    delete green;
-    delete blue;
-
     return EXIT_SUCCESS;
 }

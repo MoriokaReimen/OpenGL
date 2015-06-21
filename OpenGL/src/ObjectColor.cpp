@@ -1,6 +1,6 @@
-#include "ObjectColor.hpp"
+#include "GLColor.hpp"
 
-GLfloat* ObjectColor::toArray()
+GLfloat* GLColor::toArray()
 {
     this->rgb[0] = this->r;
     this->rgb[1] = this->g;

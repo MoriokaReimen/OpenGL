@@ -1,7 +1,7 @@
 #pragma once
 #include <Math3D/Math3D.hpp>
 #include "GLTexture.hpp"
-#include "ObjectColor.hpp"
+#include "GLColor.hpp"
 #include <memory>
 
 
@@ -10,7 +10,7 @@ class GLObject
 protected:
     Math3D::Vector3 xyz_ {0, 0, 0};
     // Attitude attitude; implement someday
-    ObjectColor color_ {1.f,1.f,1.f};
+    GLColor color_ {1.f,1.f,1.f};
     GLTexture texture_;
     Math3D::Quaternion quat_{1.f, 0.f, 0.f, 0.f};
 public:
@@ -19,7 +19,7 @@ public:
     virtual void draw() {};
     virtual void setPosition(double x, double y, double z);
     virtual void setPosition(Math3D::Vector3 point);
-    virtual void setColor(ObjectColor bcolor);
+    virtual void setColor(GLColor bcolor);
     virtual void setColor(GLfloat r, GLfloat g, GLfloat b);
     virtual void setTexture(GLTexture& texture);
     virtual void setAttitude(const Math3D::Quaternion& quat);

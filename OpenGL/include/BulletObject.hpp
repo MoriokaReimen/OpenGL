@@ -4,7 +4,7 @@
 #include <exception>
 #include <btBulletDynamicsCommon.h>
 #include <Math3D/Math3D.hpp>
-#include "ObjectColor.hpp"
+#include "GLColor.hpp"
 
 class BulletObject
 {
