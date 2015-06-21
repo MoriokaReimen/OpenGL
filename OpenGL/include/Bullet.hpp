@@ -11,7 +11,6 @@ class Bullet
   btCollisionDispatcher* dispatcher_;
   btSequentialImpulseConstraintSolver* solver_;
   btDiscreteDynamicsWorld* world_;
-  double gravity_{9.80665};
 public:
   double time{0.0};
   Bullet();

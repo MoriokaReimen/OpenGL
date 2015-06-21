@@ -27,16 +27,16 @@ int main()
     blue->setColor(0, 0, 1);
     blue->setPosition(blue_h);
 
-    Plane* plane = new Plane();
-    plane->setColor(0.3, 0.3, 0.3);
-    plane->setPosition(zero);
-    plane->setAttitude(slope);
+    Box* ground = new Box(0, 10, 10, 10);
+    ground->setColor(0.3, 0.3, 0.3);
+    ground->setPosition(zero);
+    ground->setAttitude(slope);
 
     world.pushObject(red);
     world.pushObject(green);
     world.pushObject(blue);
 
-    world.pushObject(plane);
+    world.pushObject(ground);
 
     world.setLight();
     world.run();

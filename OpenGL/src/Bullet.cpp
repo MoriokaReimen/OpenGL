@@ -1,6 +1,7 @@
 #include "Bullet.hpp"
 
 constexpr double TIME_STEP = 1/ 1000.f;
+constexpr double GRAVITY = 9.8;
 Bullet::Bullet()
 {
   this->broadphase_ = new btDbvtBroadphase();
@@ -9,7 +10,7 @@ Bullet::Bullet()
   this->solver_ = new btSequentialImpulseConstraintSolver;
   this->world_ = new btDiscreteDynamicsWorld(this->dispatcher_, this->broadphase_, this->solver_, this->collision_config_);
 
-  this->world_->setGravity(btVector3(0, 0, - this->gravity_));
+  this->world_->setGravity(btVector3(0, - GRAVITY, 0));
 
   return;
 }
