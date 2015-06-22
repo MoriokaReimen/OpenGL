@@ -97,52 +97,52 @@ void GLBox::draw() // protect someday
   // sides
   glBegin (GL_TRIANGLE_STRIP);
   glNormal3f(-1,0,0);
-  glVertex3f(0, 0, 0);
-  glVertex3f(0,  lb, 0);
-  glVertex3f(0,  lb,  lc);
-  glVertex3f(0, 0,  lc);
+  glVertex3f(-la, lb, lc);
+  glVertex3f(-la, -lb, lc);
+  glVertex3f(-la, -lb, -lc);
+  glVertex3f(-la, lb, -lc);
   glEnd();
 
   glBegin (GL_TRIANGLE_FAN);
   glNormal3f(0,0,1);
   glVertex3f(la, lb, lc);
-  glVertex3f(la, 0,  lc);
-  glVertex3f(0, 0,  lc);
-  glVertex3f( 0,  lb,  lc);
+  glVertex3f(la, -lb, lc);
+  glVertex3f(-la, -lb, lc);
+  glVertex3f(-la, lb, lc);
   glEnd();
 
   glBegin (GL_TRIANGLE_FAN);
   glNormal3f(0,0,-1);
-  glVertex3f(0, 0, 0);
-  glVertex3f(la, 0,  0);
-  glVertex3f(la, lb, 0);
-  glVertex3f( 0,  lb, 0);
+  glVertex3f(la, lb, -lc);
+  glVertex3f(la, -lb, -lc);
+  glVertex3f(-la, -lb, -lc);
+  glVertex3f(-la, lb, -lc);
   glEnd();
 
   glBegin (GL_TRIANGLE_FAN);
   glNormal3f(1,0,0);
-  glVertex3f(la, 0, 0);
-  glVertex3f(la, 0, lc);
   glVertex3f(la, lb, lc);
-  glVertex3f(la, lb, 0);
+  glVertex3f(la, -lb, lc);
+  glVertex3f(la, -lb, -lc);
+  glVertex3f(la, lb, -lc);
   glEnd();
 
   // top face
   glBegin (GL_TRIANGLE_FAN);
   glNormal3f(0,1,0);
-  glVertex3f(0, lb,  0);
-  glVertex3f( la, lb, 0);
-  glVertex3f( la,  lb,  lc);
-  glVertex3f(0,  lb,  lc);
+  glVertex3f(la, lb, lc);
+  glVertex3f(-la, lb, lc);
+  glVertex3f(-la, lb, -lc);
+  glVertex3f(la, lb, -lc);
   glEnd();
 
   // bottom face
   glBegin (GL_TRIANGLE_FAN);
   glNormal3f( 0,  -1, 0);
-  glVertex3f( 0, 0, 0);
-  glVertex3f(la, 0, 0);
-  glVertex3f(la, 0, lc);
-  glVertex3f(0, 0, lc);
+  glVertex3f(la, -lb, lc);
+  glVertex3f(-la, -lb, lc);
+  glVertex3f(-la, -lb, -lc);
+  glVertex3f(la, -lb, -lc);
   glEnd();
 
   glPopMatrix();

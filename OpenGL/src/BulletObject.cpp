@@ -71,6 +71,11 @@ BulletSphere::BulletSphere(const double& mass, const double& radius)
 
 
   this->body_ = new btRigidBody(construction_info);
+    if(mass==0.0)
+    {
+    this->body_->setCollisionFlags(this->body_->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+    this->body_->setActivationState(DISABLE_DEACTIVATION);
+    }
   return;
 }
 
@@ -101,5 +106,10 @@ BulletBox::BulletBox(const double& mass, const double& a, const double& b, const
 
 
   this->body_ = new btRigidBody(construction_info);
+  if(mass==0.0)
+  {
+       this->body_->setCollisionFlags(this->body_->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+       this->body_->setActivationState(DISABLE_DEACTIVATION);
+  }
   return;
 }
