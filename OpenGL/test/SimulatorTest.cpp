@@ -4,7 +4,7 @@
 
 int main()
 {
-    Math3D::Vector3 red_h(10, 100, 0), green_h(-10, 120, 0), blue_h(0, 140, 10), zero(0, 0, 0);
+    Math3D::Vector3 red_h(10, 500, 0), green_h(-10, 520, 0), blue_h(0, 540, 10), zero(0, 0, 0);
     Math3D::Quaternion quat(0, 0, 0, 1), slope;
     Math3D::Degree degree[3];
     degree[0] = 0;
@@ -27,7 +27,7 @@ int main()
     blue->setColor(0, 0, 1);
     blue->setPosition(blue_h);
 
-    Box* ground = new Box(0, 15, 10, 10);
+    Box* ground = new Box(0, 30, 1, 30);
     ground->setColor(0.3, 0.3, 0.3);
     ground->setAttitude(slope);
 
