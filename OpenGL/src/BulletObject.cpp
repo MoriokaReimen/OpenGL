@@ -40,7 +40,7 @@ void BulletObject::setPosition(const Math3D::Vector3& pos)
     this->body_->getMotionState()->getWorldTransform(transform);
     transform.setOrigin(position);
     this->body_->getMotionState()->setWorldTransform(transform);
-    this->body_->activate(true);
+    this->body_->setCenterOfMassTransform(transform);
     return;
 }
 
@@ -50,8 +50,7 @@ void BulletObject::setAttitude(const Math3D::Quaternion& quat)
     btQuaternion rotation(quat.x, quat.y, quat.z, quat.w);
     this->body_->getMotionState()->getWorldTransform(transform);
     transform.setRotation(rotation);
-    this->body_->getMotionState()->setWorldTransform(transform);
-    this->body_->activate(true);
+    this->body_->setCenterOfMassTransform(transform);
     return;
 }
 

@@ -47,7 +47,7 @@ void GLSphere::draw() // protect someday
     glPushMatrix();
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x,  - axis.y,  - axis.z);
+    glRotatef(angle, axis.x,  axis.y,  axis.z);
     for(int i = 0; i <= 30; i++) {
         double lat0 = M_PI * (-0.5 + (double) (i - 1) / 30);
         double z0  = sin(lat0);
@@ -88,7 +88,7 @@ void GLBox::draw() // protect someday
   glPushMatrix();
   glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x, - axis.y, - axis.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
 
   GLfloat la = this->a_; // modify some day
   GLfloat lb = this->b_;
@@ -168,7 +168,7 @@ void GLPlane::draw() // protect someday
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glPushMatrix();
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x, - axis.y, - axis.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
         glTexCoord2f(0.f, 0.f);
@@ -185,7 +185,7 @@ void GLPlane::draw() // protect someday
     } else {
         glPushMatrix();
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x, - axis.y, - axis.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, this->color_.toArray());
         glBegin (GL_TRIANGLE_FAN);
         glNormal3f(0.0, 1.0, 0.0);
@@ -213,7 +213,7 @@ void GLAxis::draw()
     this->quat_.toAngleAxis(angle, axis);
     glPushMatrix();
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x, - axis.y, - axis.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
     glEnable(GL_COLOR_MATERIAL);
     glDisable(GL_LIGHTING);
 
@@ -266,7 +266,7 @@ void GLCylinder::draw()
 
     glPushMatrix();
     glTranslatef(this->xyz_.x, this->xyz_.y, this->xyz_.z);
-    glRotatef(angle, - axis.x, - axis.y, - axis.z);
+    glRotatef(angle, axis.x, axis.y, axis.z);
 
 
   float a = float(M_PI*2.0)/float(sides);
