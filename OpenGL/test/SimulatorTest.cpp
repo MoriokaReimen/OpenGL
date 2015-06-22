@@ -29,6 +29,8 @@ int main()
 
     Box* ground = new Box(0, 15, 10, 10);
     ground->setColor(0.3, 0.3, 0.3);
+    ground->setAttitude(slope);
+
 
 
     world.pushObject(red);
