@@ -33,3 +33,10 @@ target_link_libraries(SimulatorTest
   pthread stdc++
   GLU GL X11 SOIL glfw GLEW
   BulletDynamics BulletCollision LinearMath math3d_static)
+
+add_executable(test spike/Sample_SimpleOpenGL.cpp)
+target_link_libraries(test
+  pthread stdc++
+  glut GLU GL X11 SOIL glfw GLEW
+  assimp
+  )
