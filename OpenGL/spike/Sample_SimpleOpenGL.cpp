@@ -153,8 +153,6 @@ void apply_material(const aiMaterial *mtl)
 /* ---------------------------------------------------------------------------- */
 void recursive_render (const aiScene *sc, const aiNode* nd)
 {
-    unsigned int i;
-    unsigned int n = 0, t;
     aiMatrix4x4 m = nd->mTransformation;
 
     /* update transform */
@@ -163,8 +161,8 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
     glMultMatrixf((float*)&m);
 
     /* draw all meshes assigned to this node */
-    for (; n < nd->mNumMeshes; ++n) {
-        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[n]];
+    for (int i{0}; i < nd->mNumMeshes; ++i) {
+        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[i]];
 
         apply_material(sc->mMaterials[mesh->mMaterialIndex]);
 
@@ -174,8 +172,8 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
             glEnable(GL_LIGHTING);
         }
 
-        for (t = 0; t < mesh->mNumFaces; ++t) {
-            const aiFace* face = &mesh->mFaces[t];
+        for (int j{0}; j < mesh->mNumFaces; ++j) {
+            const aiFace* face = &mesh->mFaces[j];
             GLenum face_mode;
 
             switch(face->mNumIndices) {
@@ -195,8 +193,8 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
 
             glBegin(face_mode);
 
-            for(i = 0; i < face->mNumIndices; i++) {
-                int index = face->mIndices[i];
+            for(int k{0}; k < face->mNumIndices; k++) {
+                int index = face->mIndices[k];
                 if(mesh->mColors[0] != NULL)
                     glColor4fv((GLfloat*)&mesh->mColors[0][index]);
                 if(mesh->mNormals != NULL)
@@ -206,12 +204,11 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
 
             glEnd();
         }
-
     }
 
     /* draw all children */
-    for (n = 0; n < nd->mNumChildren; ++n) {
-        recursive_render(sc, nd->mChildren[n]);
+    for (int i{0}; i < nd->mNumChildren; ++i) {
+        recursive_render(sc, nd->mChildren[i]);
     }
 
     glPopMatrix();
