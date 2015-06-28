@@ -21,12 +21,11 @@ class GLModel
 {
 const aiScene* scene = nullptr;
 GLuint scene_list = 0;
-aiVector3D scene_min, scene_max, scene_center;
+aiVector3D min_xyz{1e10f, 1e10f, 1e10f}, max_xyz{1e10f, 1e10f, 1e10f},
+           center_xyz{1e10f, 1e10f, 1e10f};
 
 /* ---------------------------------------------------------------------------- */
 void get_bounding_box_for_node (const aiNode* nd,
-                                aiVector3D* min,
-                                aiVector3D* max,
                                 aiMatrix4x4* trafo
                                )
 {
@@ -43,31 +42,29 @@ void get_bounding_box_for_node (const aiNode* nd,
             aiVector3D tmp = mesh->mVertices[t];
             aiTransformVecByMatrix4(&tmp,trafo);
 
-            min->x = std::min(min->x,tmp.x);
-            min->y = std::min(min->y,tmp.y);
-            min->z = std::min(min->z,tmp.z);
+            this->min_xyz.x = std::min(this->min_xyz.x,tmp.x);
+            this->min_xyz.y = std::min(this->min_xyz.y,tmp.y);
+            this->min_xyz.z = std::min(this->min_xyz.z,tmp.z);
 
-            max->x = std::max(max->x,tmp.x);
-            max->y = std::max(max->y,tmp.y);
-            max->z = std::max(max->z,tmp.z);
+            this->max_xyz.x = std::max(this->max_xyz.x,tmp.x);
+            this->max_xyz.y = std::max(this->max_xyz.y,tmp.y);
+            this->max_xyz.z = std::max(this->max_xyz.z,tmp.z);
         }
     }
 
     for (n = 0; n < nd->mNumChildren; ++n) {
-        get_bounding_box_for_node(nd->mChildren[n],min,max,trafo);
+        get_bounding_box_for_node(nd->mChildren[n], trafo);
     }
     *trafo = prev;
 }
 
 /* ---------------------------------------------------------------------------- */
-void get_bounding_box (aiVector3D* min, aiVector3D* max)
+void get_bounding_box ()
 {
     aiMatrix4x4 trafo;
     aiIdentityMatrix4(&trafo);
 
-    min->x = min->y = min->z =  1e10f;
-    max->x = max->y = max->z = -1e10f;
-    get_bounding_box_for_node(this->scene->mRootNode,min,max,&trafo);
+    get_bounding_box_for_node(this->scene->mRootNode, &trafo);
 }
 
 /* ---------------------------------------------------------------------------- */
@@ -228,10 +225,10 @@ GLModel(std::string path)
     this->scene = aiImportFile(path.c_str(),aiProcessPreset_TargetRealtime_MaxQuality);
 
     if (this->scene) {
-        get_bounding_box(&scene_min,&scene_max);
-        scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
-        scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
-        scene_center.z = (scene_min.z + scene_max.z) / 2.0f;
+        get_bounding_box();
+        this->center_xyz.x = (this->min_xyz.x + this->max_xyz.x) / 2.0f;
+        this->center_xyz.y = (this->min_xyz.y + this->max_xyz.y) / 2.0f;
+        this->center_xyz.z = (this->min_xyz.z + this->max_xyz.z) / 2.0f;
         return;
     }
     return;
@@ -323,8 +320,6 @@ void display(void)
 /* ---------------------------------------------------------------------------- */
 int main(int argc, char **argv)
 {
-    aiLogStream stream;
-
     glutInitWindowSize(900,600);
     glutInitWindowPosition(100,100);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
