@@ -10,9 +10,6 @@
 #include <assimp/postprocess.h>
 
 /* the global Assimp scene object */
-const aiScene* scene = NULL;
-GLuint scene_list = 0;
-aiVector3D scene_min, scene_max, scene_center;
 
 #include <string>
 #include <cmath>
@@ -20,18 +17,11 @@ aiVector3D scene_min, scene_max, scene_center;
 /* current rotation angle */
 static float angle = 0.f;
 
-
-/* ---------------------------------------------------------------------------- */
-void reshape(int width, int height)
+class GLModel
 {
-    const double aspectRatio = (float) width / height, fieldOfView = 45.0;
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(fieldOfView, aspectRatio,
-                   1.0, 1000.0);  /* Znear and Zfar */
-    glViewport(0, 0, width, height);
-}
+const aiScene* scene = nullptr;
+GLuint scene_list = 0;
+aiVector3D scene_min, scene_max, scene_center;
 
 /* ---------------------------------------------------------------------------- */
 void get_bounding_box_for_node (const aiNode* nd,
@@ -81,16 +71,16 @@ void get_bounding_box (aiVector3D* min, aiVector3D* max)
 }
 
 /* ---------------------------------------------------------------------------- */
-void color4_to_float4(const aiColor4D *c, float f[4])
+void color4_to_float4(const aiColor4D& c, float f[4])
 {
-    f[0] = c->r;
-    f[1] = c->g;
-    f[2] = c->b;
-    f[3] = c->a;
+    f[0] = c.r;
+    f[1] = c.g;
+    f[2] = c.b;
+    f[3] = c.a;
 }
 
 /* ---------------------------------------------------------------------------- */
-void set_float4(float f[4], float a, float b, float c, float d)
+void set_float4(float f[4], const float& a, const float& b, const float& c, const float& d)
 {
     f[0] = a;
     f[1] = b;
@@ -116,22 +106,22 @@ void apply_material(const aiMaterial *mtl)
 
     set_float4(c, 0.8f, 0.8f, 0.8f, 1.0f);
     if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_DIFFUSE, &diffuse))
-        color4_to_float4(&diffuse, c);
+        color4_to_float4(diffuse, c);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, c);
 
     set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
     if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_SPECULAR, &specular))
-        color4_to_float4(&specular, c);
+        color4_to_float4(specular, c);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, c);
 
     set_float4(c, 0.2f, 0.2f, 0.2f, 1.0f);
     if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_AMBIENT, &ambient))
-        color4_to_float4(&ambient, c);
+        color4_to_float4(ambient, c);
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, c);
 
     set_float4(c, 0.0f, 0.0f, 0.0f, 1.0f);
     if(AI_SUCCESS == aiGetMaterialColor(mtl, AI_MATKEY_COLOR_EMISSIVE, &emission))
-        color4_to_float4(&emission, c);
+        color4_to_float4(emission, c);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, c);
 
     max = 1;
@@ -229,6 +219,60 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
 
     glPopMatrix();
 }
+public:
+/* ---------------------------------------------------------------------------- */
+GLModel(const char* path)
+{
+    /* we are taking one of the postprocessing presets to avoid
+       spelling out 20+ single postprocessing flags here. */
+    scene = aiImportFile(path,aiProcessPreset_TargetRealtime_MaxQuality);
+
+    if (scene) {
+        get_bounding_box(&scene_min,&scene_max);
+        scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
+        scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
+        scene_center.z = (scene_min.z + scene_max.z) / 2.0f;
+        return;
+    }
+    return;
+}
+~GLModel()
+{
+    aiReleaseImport(scene);
+    return;
+}
+
+void draw()
+{
+    if(scene_list == 0) {
+        scene_list = glGenLists(1);
+        glNewList(scene_list, GL_COMPILE);
+        /* now begin at the root node of the imported data and traverse
+           the scenegraph by multiplying subsequent local transforms
+           together on GL's matrix stack. */
+        recursive_render(scene, scene->mRootNode);
+        glEndList();
+    }
+
+    glCallList(scene_list);
+    return;
+}
+} miku("miku.obj");
+
+
+
+/* ---------------------------------------------------------------------------- */
+void reshape(int width, int height)
+{
+    const double aspectRatio = (float) width / height, fieldOfView = 45.0;
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(fieldOfView, aspectRatio,
+                   1.0, 1000.0);  /* Znear and Zfar */
+    glViewport(0, 0, width, height);
+}
+
 
 /* ---------------------------------------------------------------------------- */
 void do_motion (void)
@@ -267,51 +311,16 @@ void display(void)
     /* rotate it around the y axis */
     glRotatef(angle,0.f,1.f,0.f);
 
-    /* scale the whole asset to fit into our view frustum */
-    tmp = scene_max.x-scene_min.x;
-    tmp = std::max(scene_max.y - scene_min.y,tmp);
-    tmp = std::max(scene_max.z - scene_min.z,tmp);
-    tmp = 1.f / tmp;
-    glScalef(tmp, tmp, tmp);
-
-    /* center the model */
-    glTranslatef( -scene_center.x, -scene_center.y, -scene_center.z );
-
     /* if the display list has not been made yet, create a new one and
        fill it with scene contents */
-    if(scene_list == 0) {
-        scene_list = glGenLists(1);
-        glNewList(scene_list, GL_COMPILE);
-        /* now begin at the root node of the imported data and traverse
-           the scenegraph by multiplying subsequent local transforms
-           together on GL's matrix stack. */
-        recursive_render(scene, scene->mRootNode);
-        glEndList();
-    }
 
-    glCallList(scene_list);
+    miku.draw();
 
     glutSwapBuffers();
 
     do_motion();
 }
 
-/* ---------------------------------------------------------------------------- */
-int loadasset (const char* path)
-{
-    /* we are taking one of the postprocessing presets to avoid
-       spelling out 20+ single postprocessing flags here. */
-    scene = aiImportFile(path,aiProcessPreset_TargetRealtime_MaxQuality);
-
-    if (scene) {
-        get_bounding_box(&scene_min,&scene_max);
-        scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
-        scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
-        scene_center.z = (scene_min.z + scene_max.z) / 2.0f;
-        return 0;
-    }
-    return 1;
-}
 
 /* ---------------------------------------------------------------------------- */
 int main(int argc, char **argv)
@@ -327,27 +336,6 @@ int main(int argc, char **argv)
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
 
-    /* get a handle to the predefined STDOUT log stream and attach
-       it to the logging system. It remains active for all further
-       calls to aiImportFile(Ex) and aiApplyPostProcessing. */
-    stream = aiGetPredefinedLogStream(aiDefaultLogStream_STDOUT,NULL);
-    aiAttachLogStream(&stream);
-
-    /* ... same procedure, but this stream now writes the
-       log messages to assimp_log.txt */
-    stream = aiGetPredefinedLogStream(aiDefaultLogStream_FILE,"assimp_log.txt");
-    aiAttachLogStream(&stream);
-
-    /* the model name can be specified on the command line. If none
-      is specified, we try to locate one of the more expressive test
-      models from the repository (/models-nonbsd may be missing in
-      some distributions so we need a fallback from /models!). */
-    if( 0 != loadasset( argc >= 2 ? argv[1] : "../../test/models-nonbsd/X/dwarf.x")) {
-        if( argc != 1 || (0 != loadasset( "../../../../test/models-nonbsd/X/dwarf.x") && 0 != loadasset( "../../test/models/X/Testwuson.X"))) {
-            return -1;
-        }
-    }
-
     glClearColor(0.1f,0.1f,0.1f,1.f);
 
     glEnable(GL_LIGHTING);
@@ -358,9 +346,6 @@ int main(int argc, char **argv)
     glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
     glEnable(GL_NORMALIZE);
 
-    /* XXX docs say all polygons are emitted CCW, but tests show that some aren't. */
-    if(getenv("MODEL_IS_BROKEN"))
-        glFrontFace(GL_CW);
 
     glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 
@@ -370,12 +355,7 @@ int main(int argc, char **argv)
     /* cleanup - calling 'aiReleaseImport' is important, as the library
        keeps internal resources until the scene is freed again. Not
        doing so can cause severe resource leaking. */
-    aiReleaseImport(scene);
 
-    /* We added a log stream to the library, it's our job to disable it
-       again. This will definitely release the last resources allocated
-       by Assimp.*/
-    aiDetachAllLogStreams();
     return 0;
 }
 
