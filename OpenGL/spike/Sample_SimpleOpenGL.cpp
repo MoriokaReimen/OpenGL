@@ -30,16 +30,15 @@ void get_bounding_box_for_node (const aiNode* nd,
                                )
 {
     aiMatrix4x4 prev;
-    unsigned int n = 0, t;
 
     prev = *trafo;
     aiMultiplyMatrix4(trafo,&nd->mTransformation);
 
-    for (; n < nd->mNumMeshes; ++n) {
-        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[n]];
-        for (t = 0; t < mesh->mNumVertices; ++t) {
+    for (int i{0}; i < nd->mNumMeshes; ++i) {
+        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[i]];
+        for (int j{0}; j < mesh->mNumVertices; ++j) {
 
-            aiVector3D tmp = mesh->mVertices[t];
+            aiVector3D tmp = mesh->mVertices[j];
             aiTransformVecByMatrix4(&tmp,trafo);
 
             this->min_xyz.x = std::min(this->min_xyz.x,tmp.x);
@@ -52,8 +51,8 @@ void get_bounding_box_for_node (const aiNode* nd,
         }
     }
 
-    for (n = 0; n < nd->mNumChildren; ++n) {
-        get_bounding_box_for_node(nd->mChildren[n], trafo);
+    for (int i{0}; i < nd->mNumChildren; ++i) {
+        get_bounding_box_for_node(nd->mChildren[i], trafo);
     }
     *trafo = prev;
 }
