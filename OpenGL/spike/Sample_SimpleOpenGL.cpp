@@ -37,7 +37,7 @@ void get_bounding_box_for_node (const aiNode* nd,
     aiMultiplyMatrix4(trafo,&nd->mTransformation);
 
     for (; n < nd->mNumMeshes; ++n) {
-        const aiMesh* mesh = scene->mMeshes[nd->mMeshes[n]];
+        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[n]];
         for (t = 0; t < mesh->mNumVertices; ++t) {
 
             aiVector3D tmp = mesh->mVertices[t];
@@ -67,7 +67,7 @@ void get_bounding_box (aiVector3D* min, aiVector3D* max)
 
     min->x = min->y = min->z =  1e10f;
     max->x = max->y = max->z = -1e10f;
-    get_bounding_box_for_node(scene->mRootNode,min,max,&trafo);
+    get_bounding_box_for_node(this->scene->mRootNode,min,max,&trafo);
 }
 
 /* ---------------------------------------------------------------------------- */
@@ -167,7 +167,7 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
 
     /* draw all meshes assigned to this node */
     for (; n < nd->mNumMeshes; ++n) {
-        const aiMesh* mesh = scene->mMeshes[nd->mMeshes[n]];
+        const aiMesh* mesh = this->scene->mMeshes[nd->mMeshes[n]];
 
         apply_material(sc->mMaterials[mesh->mMaterialIndex]);
 
@@ -225,9 +225,9 @@ GLModel(std::string path)
 {
     /* we are taking one of the postprocessing presets to avoid
        spelling out 20+ single postprocessing flags here. */
-    scene = aiImportFile(path.c_str(),aiProcessPreset_TargetRealtime_MaxQuality);
+    this->scene = aiImportFile(path.c_str(),aiProcessPreset_TargetRealtime_MaxQuality);
 
-    if (scene) {
+    if (this->scene) {
         get_bounding_box(&scene_min,&scene_max);
         scene_center.x = (scene_min.x + scene_max.x) / 2.0f;
         scene_center.y = (scene_min.y + scene_max.y) / 2.0f;
@@ -238,7 +238,7 @@ GLModel(std::string path)
 }
 ~GLModel()
 {
-    aiReleaseImport(scene);
+    aiReleaseImport(this->scene);
     return;
 }
 
@@ -250,7 +250,7 @@ void draw()
         /* now begin at the root node of the imported data and traverse
            the scenegraph by multiplying subsequent local transforms
            together on GL's matrix stack. */
-        recursive_render(scene, scene->mRootNode);
+        recursive_render(this->scene, this->scene->mRootNode);
         glEndList();
     }
 
