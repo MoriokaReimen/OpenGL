@@ -5,6 +5,7 @@ INCLUDE_DIRECTORIES("/usr/local/include/bullet/" "/usr/include/freeglut"
     "include" "resource")
 LINK_DIRECTORIES("/usr/local/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "bin")
+set(CMAKE_CXX_COMPILER "clang++")
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -g")
 
 set(OPEN_GL_SRC src/GLObject.cpp src/ObjectColor.cpp src/GLTexture.cpp src/GL.cpp resource/PNG.cpp)

@@ -221,11 +221,11 @@ void recursive_render (const aiScene *sc, const aiNode* nd)
 }
 public:
 /* ---------------------------------------------------------------------------- */
-GLModel(const char* path)
+GLModel(std::string path)
 {
     /* we are taking one of the postprocessing presets to avoid
        spelling out 20+ single postprocessing flags here. */
-    scene = aiImportFile(path,aiProcessPreset_TargetRealtime_MaxQuality);
+    scene = aiImportFile(path.c_str(),aiProcessPreset_TargetRealtime_MaxQuality);
 
     if (scene) {
         get_bounding_box(&scene_min,&scene_max);
@@ -300,8 +300,6 @@ void do_motion (void)
 /* ---------------------------------------------------------------------------- */
 void display(void)
 {
-    float tmp;
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
